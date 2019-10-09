@@ -7,21 +7,41 @@ from sklearn.metrics     import roc_auc_score
 
 #####
 
-"""Setting the basic appearance for the graphs"""
+# Setting the basic appearance for the graphs
 
 sns.set(style = "white", palette = "deep")
 
 #####
 
-def histograms(columns, df, titles, labels, ylabel, ticks, row, col):
-    """Creates histograms for continuous data"""
+def histograms(df, columns, titles, labels, ylabel, ticks, kde = False, row, col):
+    """
+    Parameters:
+    -----------
+    df      : the dataframe source of data               
+    columns : list of columns to be plotted, strings
+    titles  : list of titles for each plot, strings  
+    labels  : list of x-labels for each plot, strings       
+    label   : the y-label for each plot, string
+    ticks   : the list of ranges for each plot's x-ticks, range
+    row     : how many rows will be generated, int
+    col     : how many columns will be generated, int
+
+    Description:
+    ------------
+    Plots histograms for columns containing continuous data in a Pandas dataframe and gives the user greater customization for each plot.
+
+    Returns:
+    --------
+    Creates n number of histograms arranged by the input rows and columns.
+
+    """
     count = 0
     fig   = plt.figure(figsize = (14,7), facecolor = "white")
     for c, column in enumerate(columns):
         count += 1
         ax    = fig.add_subplot(row, col, count)
         plt.title(f"Distribution Of {titles[c]}", size = 18)
-        sns.distplot(df[column], color = "black", kde = False)
+        sns.distplot(df[column], color = "black", kde = kde)
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.ylabel(f"{ylabel}", size = 16)
         plt.xticks(ticks = ticks[c], size = 14)
@@ -31,8 +51,26 @@ def histograms(columns, df, titles, labels, ylabel, ticks, row, col):
 
 #####
 
-def boxplots(columns, df, titles, labels, ticks, row, col):
-    """Creates boxplots for continuous data"""
+def boxplots(df, columns, titles, labels, ticks, row, col):
+    """
+    Parameters:
+    -----------
+    df      : dataframe source of the data
+    columns : list of the columns to be plotted, strings
+    titles  : list of titles for each plot, strings
+    ticks   : list of ranges for the x-ticks, ranges
+    row     : how many rows will be generated
+    col     : how many columns will be generated
+
+    Description:
+    ------------
+    Plots boxplots for columns containing continuous data in a Pandas dataframe and gives the user greater customization for each plot.
+
+    Returns:
+    --------
+    Creates n number of boxplots arranged by the input rows and columns.
+        
+    """
     count = 0
     fig   = plt.figure(figsize = (14,7, facecolor = "white"))
     for c, column in enumerate(columns):
@@ -48,15 +86,40 @@ def boxplots(columns, df, titles, labels, ticks, row, col):
 
 #####
 
-def regressionplots(columns, y, df, titles, labels, ylabel, ticks, row, col, mark, ci = None):
-    """Creates regression plots for continuous data."""
+def regressionplots(df, columns, y, titles, labels, ylabel, ticks, row, col, mark = "*", color = "black", kws = {"color": "red"}, ci = None):
+    """
+    Parameters:
+    -----------
+    df      : dataframe source of data
+    columns : the list of columns to be plotted, strings
+    y       : the column against which the columns are plotted, string
+    titles  : list of the titles for each plot, strings
+    ylabel  : the title of the y-axis, string
+    ticks   : list of ranges of x-ticks for each plot, ranges
+    row     : how many rows will be generated, int
+    col     : how many columns will be generated, int
+    mark    : what character the markers will be
+    color   : what color the markers are, str
+    kws     : what color the regression line is, dictionary
+    ci      : whether or not to plot a confidence interval, Boolean
+
+    Description:
+    ------------
+    Plots a scatter plot for each column of continuous data in a Pandas dataframe with a regression line 
+    and allows the user to have greater control of the appearance of each graph.
+
+    Returns:
+    --------
+    Creates n number of regression plots arranged by the input rows and columns.
+    
+    """
     count = 0
     fig   = plt.figure(figsize = (14,7), facecolor = "white")
     for c, column in enumerate(columns):
         count += 1
         ax    = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
-        sns.regplot(x = column, y = y, data = df, fit_reg = True,  marker = mark, color = "black", line_kws = {"color": "red"}, ci = ci)
+        sns.regplot(x = column, y = y, data = df, fit_reg = True,  marker = mark, color = color, line_kws = kws, ci = ci)
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.ylabel(f"{ylabel}", size = 16)
         plt.xticks(ticks = ticks[c], size = 14)
@@ -66,8 +129,28 @@ def regressionplots(columns, y, df, titles, labels, ylabel, ticks, row, col, mar
 
 #####
 
-def countplots(columns, df, titles, labels, ylabel, row, col):
-    """Creates a count plot for categorical data.  This type of plot explicityly counts the categories in a dataframe column."""
+def countplots(df, columns, titles, labels, ylabel, row, col):
+    """
+    Parameters:
+    -----------
+    df      : dataframe source of data
+    columns : list of the columns to be plotted, strings
+    titles  : list of the titles for each plot, strings
+    labels  : list of the x-labels for each plot, strings
+    ylabel  : list of the ylabel for each plt, string
+    row     : how many rows will be generated, int
+    col     : how many columns will be generated, int
+    
+    Description:
+    -------------   
+    Creates a count plot for columns in a Pandas dataframe containing categorical data.  
+    This type of plot explicityly counts the categories in a dataframe column.
+
+    Returns:
+    --------
+    Creates n number of count plots arranged by the input rows and columns.
+
+    """
     fig   = plt.figure(figsize = (20,30), facecolor = "white")
     count = 0
     for c, column in enumerate(columns):
@@ -86,7 +169,26 @@ def countplots(columns, df, titles, labels, ylabel, row, col):
 #####
 
 def barplots(df, x, y, labels, ylabel, titles, row, col):
-    """Generates barplots for categorical data"""
+    """
+    Parameters:
+    -----------
+    df     : dataframe source of data
+    x      : list of the x inputs for each plot, strings
+    y      : list of the y input for each plot, string
+    labels : list of the x-labels for each plot, strings
+    ylabel : y-label for each plot, string
+    titles : list of the titles for each plot, strings
+    row    : how many rows will be generated, int
+    col    : how many columns will be generated, int
+
+    Description:
+    ------------
+    Plots a bar plot for each column containing categorical data in a Pandas dataframe and allows for greater appearance control.
+
+    Returns:
+    Creates n number of barplots arranged by the input rows and columns.
+
+    """
     fig   = plt.figure(figsize = (20,30), facecolor = "white")
     count = 0
     for c, column in enumerate(columns):
@@ -104,24 +206,63 @@ def barplots(df, x, y, labels, ylabel, titles, row, col):
 
 #####
 
-def heatmap(df, columns, title, vmin, vmax):
-    """Creates a heatmap for dataframe columns.  The visualization includes a a correlation bar for, annotations, and is not mirrored."""
+def heatmap(df, columns, title, vmin, vmax, cmap = "RdBu", annot = True):
+    """
+    Parameters:
+    -----------
+    df      : dataframe source of the data
+    columns : list of the columns to be included, strings
+    title   : title of the graph, string
+    vmin    : minimum correlation value
+    vmax    : maximum correlation value
+    cmap    : the color scheme to be used, string
+    annot   : whether or not the heat map will be annotated, Boolean
+    
+    Description:
+    ------------
+    Plots a heatmap for columns containing continuous data in a Pandas dataframe and allows for increased appearance control.
+    The resulting heatmap is not mirrored
+
+    Returns:
+    --------
+    A heat map displaying the correlations between n number of columns.
+    
+    """
     plt.figure(figsize = (16,8), facecolor = "white")
     plt.title(f"title", size = 18)
     corr = df[columns].corr()
     mask = np.zeros_like(corr)                                                                                
     mask[np.triu_indices_from(mask)] = True
     with sns.axes_style("white"):
-        sns.heatmap(corr, cmap = "RdBu", mask = mask, vmin = vmin, vmax = vmax, annot = True)
+        sns.heatmap(corr, cmap = cmap,  mask = mask, vmin = vmin, vmax = vmax, annot = annot)
     plt.xticks(size = 14)
     plt.yticks(size = 14);
 
 #####  The ROC curve code was modified from code written by Matt Brems during our lesson on classification metrics.
 
-def roc_curve(model_prob, X_test, y_test, y_pred, title, roc_color = "darkorange", baseline_color = ):
-    """Creates a ROC-AUC curve with the AUROC score included in the title."""
-        model_prob    = [i[0] for i in model_prob.predict_proba(X_test)]
-        model_pred_df = pd.DataFrame({"true_values": y_test, "pred_probs": model_prob})
+def roc_curve(model_prob, X_test, y_test, y_predicted, title, roc_color = "darkorange", baseline_color = "navyblue"):
+    """
+    Parameters:
+    -----------
+    model_prob     : the model used for prediction
+    X_test         : the X values
+    y_test         : true y values
+    y_predicted    : the model predictions
+    title          : title of the graph, string
+    roc_color      : color value of the ROC curve, string
+    baseline_color : color value of the baseline, string
+
+    Descriptions:
+    -------------
+    Plots a Receiver Operating Characteristic for a model and includes the AUROC score in the title.
+
+    Returns:
+    --------
+    Creates a ROC graph for a given model's predictions and allows for appearance control.
+    
+    """
+    model_prob    = [i[0] for i in model_prob.predict_proba(X_test)]
+    model_pred_df = pd.DataFrame({"true_values": y_test, "pred_probs": model_prob})
     thresholds = np.linspace(0, 1, 500) 
     def true_positive_rate(df, true_col, pred_prob_col, threshold):
         true_positive  = df[(df[true_col] == 1) & (df[pred_prob_col] >= threshold)].shape[0]
@@ -136,7 +277,7 @@ def roc_curve(model_prob, X_test, y_test, y_pred, title, roc_color = "darkorange
     plt.figure(figsize   = (13,7), facecolor = "white")
     plt.plot(fpr_values, tpr_values, color = roc_color, label = "ROC Curve")
     plt.plot(np.linspace(0, 1, 500), np.linspace(0, 1, 500), color = baseline_color, label = "Baseline")
-    rocauc_score = round(roc_auc_score(y_test, y_preds), 5)
+    rocauc_score = round(roc_auc_score(y_test, y_predicted), 5)
     plt.title(f"{title} With A Score of {}", fontsize = 18)
     plt.ylabel("Sensitivity", size = 16)
     plt.xlabel("1 - Specificity", size = 16)

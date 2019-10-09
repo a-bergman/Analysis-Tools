@@ -54,7 +54,7 @@ def specificity(y, y_pred):
     """
     Parameters:
     -----------
-    y : the true values
+    y           : the true values
     y_predicted : model predictions
 
     Description:
@@ -64,7 +64,6 @@ def specificity(y, y_pred):
     Returns:
     --------
     The specificity score: a floating point number between 0 and 1
-    
     
     """
     cm          = confusion_matrix(y, y_pred)  
