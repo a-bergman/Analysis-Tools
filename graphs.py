@@ -5,8 +5,6 @@ import numpy             as np
 import matplotlib.pyplot as plt
 from sklearn.metrics     import roc_auc_score
 
-#####
-
 # Setting the basic appearance for the graphs
 
 sns.set(style = "white", palette = "deep")
@@ -34,10 +32,9 @@ def histograms(df, columns, titles, labels, ylabel, ticks, dim, row, col):
     Returns:
     --------
     Creates n number of histograms arranged by the input rows and columns.
-
     """
     count = 0
-    fig   = plt.figure(figsize = dim, facecolor = "white")
+    fig = plt.figure(figsize = dim, facecolor = "white")
     for c, column in enumerate(columns):
         count += 1
         ax = fig.add_subplot(row, col, count)
@@ -50,8 +47,6 @@ def histograms(df, columns, titles, labels, ylabel, ticks, dim, row, col):
         plt.yticks(size = 14)
     plt.tight_layout()
     plt.show();
-
-#####
 
 def boxplots(df, columns, titles, labels, ticks, dim, row, col):
     """
@@ -71,14 +66,13 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col):
 
     Returns:
     --------
-    Creates n number of boxplots arranged by the input rows and columns.
-        
+    n number of boxplots arranged by the input rows and columns.
     """
     count = 0
-    fig   = plt.figure(figsize = dim, facecolor = "white")
+    fig = plt.figure(figsize = dim, facecolor = "white")
     for c, column in enumerate(columns):
         count += 1
-        ax    = fig.add_subplot(row, col, count)
+        ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
         sns.boxplot(df[column])
         plt.xlabel(f"{labels[c]}", size = 16)
@@ -86,8 +80,6 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col):
         plt.yticks(size = 14)
     plt.tight_layout()
     plt.show();
-
-#####
 
 def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col, mark = "*", color = "black", kws = {"color": "red"}, ci = None):
     """
@@ -114,14 +106,13 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col
 
     Returns:
     --------
-    Creates n number of regression plots arranged by the input rows and columns.
-    
+    n number of regression plots arranged by the input rows and columns.
     """
     count = 0
-    fig   = plt.figure(figsize = dim, facecolor = "white")
+    fig = plt.figure(figsize = dim, facecolor = "white")
     for c, column in enumerate(columns):
         count += 1
-        ax    = fig.add_subplot(row, col, count)
+        ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
         sns.regplot(x = column, y = y, data = df, fit_reg = True,  marker = mark, color = color, line_kws = kws, ci = ci)
         plt.xlabel(f"{labels[c]}", size = 16)
@@ -130,8 +121,6 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col
         plt.yticks(size = 14)
     plt.tight_layout()
     plt.show();
-
-#####
 
 def countplots(df, columns, titles, labels, ylabel, dim, row, col):
     """
@@ -153,14 +142,13 @@ def countplots(df, columns, titles, labels, ylabel, dim, row, col):
 
     Returns:
     --------
-    Creates n number of count plots arranged by the input rows and columns.
-
+    n number of count plots arranged by the input rows and columns.
     """
-    fig   = plt.figure(figsize = dim, facecolor = "white")
+    fig = plt.figure(figsize = dim, facecolor = "white")
     count = 0
     for c, column in enumerate(columns):
         count += 1
-        ax    = fig.add_subplot(row, col, count)
+        ax = fig.add_subplot(row, col, count)
         title = titles[c]
         plt.title(f"{title}", size = 18)
         sns.countplot(df[column])
@@ -170,8 +158,6 @@ def countplots(df, columns, titles, labels, ylabel, dim, row, col):
         plt.yticks(size = 14)
     plt.tight_layout()
     plt.show();
-
-#####
 
 def barplots(df, x, y, labels, ylabel, titles, dim, row, col):
     """
@@ -192,14 +178,13 @@ def barplots(df, x, y, labels, ylabel, titles, dim, row, col):
     Plots a bar plot for each column containing categorical data in a Pandas dataframe and allows for greater appearance control.
 
     Returns:
-    Creates n number of barplots arranged by the input rows and columns.
-
+    n number of barplots arranged by the input rows and columns.
     """
-    fig   = plt.figure(figsize = dim, facecolor = "white")
+    fig = plt.figure(figsize = dim, facecolor = "white")
     count = 0
     for c, column in enumerate(columns):
         count += 1
-        ax    = fig.add_subplot(row, col, count)
+        ax = fig.add_subplot(row, col, count)
         title = titles[c]
         plt.title(f"{title}", size = 18)
         sns.barplot(x = x, y = y, data = df)
@@ -209,8 +194,6 @@ def barplots(df, x, y, labels, ylabel, titles, dim, row, col):
         plt.yticks(size = 14)
     plt.tight_layout()
     plt.show();
-
-#####
 
 def heatmap(df, columns, dim, title, vmin, vmax, cmap = "RdBu", annot = True):
     """
@@ -233,7 +216,6 @@ def heatmap(df, columns, dim, title, vmin, vmax, cmap = "RdBu", annot = True):
     Returns:
     --------
     A heat map displaying the correlations between n number of columns.
-    
     """
     plt.figure(figsize = dim, facecolor = "white")
     plt.title(f"title", size = 18)
@@ -244,8 +226,6 @@ def heatmap(df, columns, dim, title, vmin, vmax, cmap = "RdBu", annot = True):
         sns.heatmap(corr, cmap = cmap,  mask = mask, vmin = vmin, vmax = vmax, annot = annot)
     plt.xticks(size = 14)
     plt.yticks(size = 14);
-
-#####  The ROC curve code was modified from code written by Matt Brems during our lesson on classification metrics.
 
 def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "darkorange", baseline_color = "navyblue"):
     """
@@ -267,17 +247,20 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "
     Returns:
     --------
     Creates a ROC graph for a given model's predictions and allows for appearance control.
-    
+
+    Credit:
+    -------
+    This code was modified from code written by Matt Brems during our lesson on classification metrics.
     """
-    model_prob    = [i[0] for i in model_prob.predict_proba(X_test)]
+    model_prob = [i[0] for i in model_prob.predict_proba(X_test)]
     model_pred_df = pd.DataFrame({"true_values": y_test, "pred_probs": model_prob})
     thresholds = np.linspace(0, 1, 500) 
     def true_positive_rate(df, true_col, pred_prob_col, threshold):
-        true_positive  = df[(df[true_col] == 1) & (df[pred_prob_col] >= threshold)].shape[0]
+        true_positive = df[(df[true_col] == 1) & (df[pred_prob_col] >= threshold)].shape[0]
         false_negative = df[(df[true_col] == 1) & (df[pred_prob_col] < threshold)].shape[0]
         return true_positive / (true_positive + false_negative)
     def false_positive_rate(df, true_col, pred_prob_col, threshold):
-        true_negative  = df[(df[true_col] == 0) & (df[pred_prob_col] <= threshold)].shape[0]
+        true_negative = df[(df[true_col] == 0) & (df[pred_prob_col] <= threshold)].shape[0]
         false_positive = df[(df[true_col] == 0) & (df[pred_prob_col] > threshold)].shape[0]
         return 1 - (true_negative / (true_negative + false_positive))
     tpr_values = [true_positive_rate(model_pred_df, "true_values", "pred_probs", prob) for prob in thresholds]

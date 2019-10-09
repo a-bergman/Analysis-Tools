@@ -20,9 +20,8 @@ def r2_adj(X, y, y_predicted):
     Returns:
     --------
     The coefficient of correlation: a floating point number between 0 and 1.
-        
     """
-    r2     = r2_score(y_true, y_predicted)
+    r2 = r2_score(y_true, y_predicted)
     r2_adj = 1 - ((1 - r2) * (len(y) - 1)) / (len(y) - len(X.columns)) - 1
     return r2_adj
 
@@ -43,11 +42,10 @@ def confusion_matrix_dataframe(y, y_predicted, columns, index):
 
     Returns:
     --------
-    Returns a Pandas dataframe of the sklearn's `confusion_matrix` making it easier to read
-        
+    A Pandas dataframe of the sklearn's confusion_matrix.
     """
     cm     = confusion_matrix(y, y_predicted)
-    matrix = pd.DataFrame(cm, columns = columns, index   = columns)
+    matrix = pd.DataFrame(cm, columns = columns, index = columns)
     return matrix
 
 def specificity(y, y_pred):
@@ -64,8 +62,7 @@ def specificity(y, y_pred):
     Returns:
     --------
     The specificity score: a floating point number between 0 and 1
-    
     """
-    cm          = confusion_matrix(y, y_pred)  
+    cm = confusion_matrix(y, y_pred)  
     specificity = cm[0,0] / (cm[0,0] + cm[0,1])
     return specificity
