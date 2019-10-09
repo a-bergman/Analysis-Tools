@@ -13,7 +13,7 @@ sns.set(style = "white", palette = "deep")
 
 #####
 
-def histograms(df, columns, titles, labels, ylabel, ticks, row, col):
+def histograms(df, columns, titles, labels, ylabel, ticks, dim, row, col):
     """
     Parameters:
     -----------
@@ -23,6 +23,7 @@ def histograms(df, columns, titles, labels, ylabel, ticks, row, col):
     labels  : list of x-labels for each plot, strings       
     label   : the y-label for each plot, string
     ticks   : the list of ranges for each plot's x-ticks, range
+    dim     : dimensions of each plot, tuple
     row     : how many rows will be generated, int
     col     : how many columns will be generated, int
 
@@ -36,12 +37,13 @@ def histograms(df, columns, titles, labels, ylabel, ticks, row, col):
 
     """
     count = 0
-    fig   = plt.figure(figsize = (14,7), facecolor = "white")
+    fig   = plt.figure(figsize = dim, facecolor = "white")
     for c, column in enumerate(columns):
         count += 1
-        ax    = fig.add_subplot(row, col, count)
+        ax = fig.add_subplot(row, col, count)
         plt.title(f"Distribution Of {titles[c]}", size = 18)
-        sns.distplot(df[column[c]], color = "black", kde = False)
+        sns.distplot(df[column], color = "black", kde = False)
+        plt.axvline(df[column].mean(), color = "red")
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.ylabel(f"{ylabel}", size = 16)
         plt.xticks(ticks = ticks[c], size = 14)
@@ -51,7 +53,7 @@ def histograms(df, columns, titles, labels, ylabel, ticks, row, col):
 
 #####
 
-def boxplots(df, columns, titles, labels, ticks, row, col):
+def boxplots(df, columns, titles, labels, ticks, dim, row, col):
     """
     Parameters:
     -----------
@@ -59,6 +61,7 @@ def boxplots(df, columns, titles, labels, ticks, row, col):
     columns : list of the columns to be plotted, strings
     titles  : list of titles for each plot, strings
     ticks   : list of ranges for the x-ticks, ranges
+    dim     : dimensions of each plot, tuple
     row     : how many rows will be generated
     col     : how many columns will be generated
 
@@ -72,7 +75,7 @@ def boxplots(df, columns, titles, labels, ticks, row, col):
         
     """
     count = 0
-    fig   = plt.figure(figsize = (14,7), facecolor = "white")
+    fig   = plt.figure(figsize = dim, facecolor = "white")
     for c, column in enumerate(columns):
         count += 1
         ax    = fig.add_subplot(row, col, count)
@@ -86,7 +89,7 @@ def boxplots(df, columns, titles, labels, ticks, row, col):
 
 #####
 
-def regressionplots(df, columns, y, titles, labels, ylabel, ticks, row, col, mark = "*", color = "black", kws = {"color": "red"}, ci = None):
+def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col, mark = "*", color = "black", kws = {"color": "red"}, ci = None):
     """
     Parameters:
     -----------
@@ -96,6 +99,7 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, row, col, mar
     titles  : list of the titles for each plot, strings
     ylabel  : the title of the y-axis, string
     ticks   : list of ranges of x-ticks for each plot, ranges
+    dim     : dimensions of each plot, tuple
     row     : how many rows will be generated, int
     col     : how many columns will be generated, int
     mark    : what character the markers will be
@@ -114,7 +118,7 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, row, col, mar
     
     """
     count = 0
-    fig   = plt.figure(figsize = (14,7), facecolor = "white")
+    fig   = plt.figure(figsize = dim, facecolor = "white")
     for c, column in enumerate(columns):
         count += 1
         ax    = fig.add_subplot(row, col, count)
@@ -129,7 +133,7 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, row, col, mar
 
 #####
 
-def countplots(df, columns, titles, labels, ylabel, row, col):
+def countplots(df, columns, titles, labels, ylabel, dim, row, col):
     """
     Parameters:
     -----------
@@ -138,6 +142,7 @@ def countplots(df, columns, titles, labels, ylabel, row, col):
     titles  : list of the titles for each plot, strings
     labels  : list of the x-labels for each plot, strings
     ylabel  : list of the ylabel for each plt, string
+    dim     : dimensions of each plot, tuple
     row     : how many rows will be generated, int
     col     : how many columns will be generated, int
     
@@ -151,7 +156,7 @@ def countplots(df, columns, titles, labels, ylabel, row, col):
     Creates n number of count plots arranged by the input rows and columns.
 
     """
-    fig   = plt.figure(figsize = (20,30), facecolor = "white")
+    fig   = plt.figure(figsize = dim, facecolor = "white")
     count = 0
     for c, column in enumerate(columns):
         count += 1
@@ -168,7 +173,7 @@ def countplots(df, columns, titles, labels, ylabel, row, col):
 
 #####
 
-def barplots(df, x, y, labels, ylabel, titles, row, col):
+def barplots(df, x, y, labels, ylabel, titles, dim, row, col):
     """
     Parameters:
     -----------
@@ -178,6 +183,7 @@ def barplots(df, x, y, labels, ylabel, titles, row, col):
     labels : list of the x-labels for each plot, strings
     ylabel : y-label for each plot, string
     titles : list of the titles for each plot, strings
+    dim    : dimensions of each plot, tuple
     row    : how many rows will be generated, int
     col    : how many columns will be generated, int
 
@@ -189,7 +195,7 @@ def barplots(df, x, y, labels, ylabel, titles, row, col):
     Creates n number of barplots arranged by the input rows and columns.
 
     """
-    fig   = plt.figure(figsize = (20,30), facecolor = "white")
+    fig   = plt.figure(figsize = dim, facecolor = "white")
     count = 0
     for c, column in enumerate(columns):
         count += 1
@@ -206,12 +212,13 @@ def barplots(df, x, y, labels, ylabel, titles, row, col):
 
 #####
 
-def heatmap(df, columns, title, vmin, vmax, cmap = "RdBu", annot = True):
+def heatmap(df, columns, dim, title, vmin, vmax, cmap = "RdBu", annot = True):
     """
     Parameters:
     -----------
     df      : dataframe source of the data
     columns : list of the columns to be included, strings
+    dim     : dimensions of the graph, tuple
     title   : title of the graph, string
     vmin    : minimum correlation value
     vmax    : maximum correlation value
@@ -228,7 +235,7 @@ def heatmap(df, columns, title, vmin, vmax, cmap = "RdBu", annot = True):
     A heat map displaying the correlations between n number of columns.
     
     """
-    plt.figure(figsize = (16,8), facecolor = "white")
+    plt.figure(figsize = dim, facecolor = "white")
     plt.title(f"title", size = 18)
     corr = df[columns].corr()
     mask = np.zeros_like(corr)                                                                                
@@ -240,7 +247,7 @@ def heatmap(df, columns, title, vmin, vmax, cmap = "RdBu", annot = True):
 
 #####  The ROC curve code was modified from code written by Matt Brems during our lesson on classification metrics.
 
-def roc_curve(model_prob, X_test, y_test, y_predicted, title, roc_color = "darkorange", baseline_color = "navyblue"):
+def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "darkorange", baseline_color = "navyblue"):
     """
     Parameters:
     -----------
@@ -249,6 +256,7 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, roc_color = "darko
     y_test         : true y values
     y_predicted    : the model predictions
     title          : title of the graph, string
+    dim            : dimensions of the graph, tuple
     roc_color      : color value of the ROC curve, string
     baseline_color : color value of the baseline, string
 
@@ -274,7 +282,7 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, roc_color = "darko
         return 1 - (true_negative / (true_negative + false_positive))
     tpr_values = [true_positive_rate(model_pred_df, "true_values", "pred_probs", prob) for prob in thresholds]
     fpr_values = [false_positive_rate(model_pred_df, "true_values", "pred_probs", prob) for prob in thresholds]
-    plt.figure(figsize   = (13,7), facecolor = "white")
+    plt.figure(figsize = dim, facecolor = "white")
     plt.plot(fpr_values, tpr_values, color = roc_color, label = "ROC Curve")
     plt.plot(np.linspace(0, 1, 500), np.linspace(0, 1, 500), color = baseline_color, label = "Baseline")
     rocauc_score = round(roc_auc_score(y_test, y_predicted), 5)
