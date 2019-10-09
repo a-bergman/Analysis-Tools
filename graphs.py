@@ -13,7 +13,7 @@ sns.set(style = "white", palette = "deep")
 
 #####
 
-def histograms(df, columns, titles, labels, ylabel, ticks, kde = False, row, col):
+def histograms(df, columns, titles, labels, ylabel, ticks, row, col):
     """
     Parameters:
     -----------
@@ -41,7 +41,7 @@ def histograms(df, columns, titles, labels, ylabel, ticks, kde = False, row, col
         count += 1
         ax    = fig.add_subplot(row, col, count)
         plt.title(f"Distribution Of {titles[c]}", size = 18)
-        sns.distplot(df[column], color = "black", kde = kde)
+        sns.distplot(df[column[c]], color = "black", kde = False)
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.ylabel(f"{ylabel}", size = 16)
         plt.xticks(ticks = ticks[c], size = 14)
@@ -72,7 +72,7 @@ def boxplots(df, columns, titles, labels, ticks, row, col):
         
     """
     count = 0
-    fig   = plt.figure(figsize = (14,7, facecolor = "white"))
+    fig   = plt.figure(figsize = (14,7), facecolor = "white")
     for c, column in enumerate(columns):
         count += 1
         ax    = fig.add_subplot(row, col, count)
@@ -278,7 +278,7 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, roc_color = "darko
     plt.plot(fpr_values, tpr_values, color = roc_color, label = "ROC Curve")
     plt.plot(np.linspace(0, 1, 500), np.linspace(0, 1, 500), color = baseline_color, label = "Baseline")
     rocauc_score = round(roc_auc_score(y_test, y_predicted), 5)
-    plt.title(f"{title} With A Score of {}", fontsize = 18)
+    plt.title(f"{title} With A Score of {rocauc_score}", fontsize = 18)
     plt.ylabel("Sensitivity", size = 16)
     plt.xlabel("1 - Specificity", size = 16)
     plt.xticks(size = 14)
