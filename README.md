@@ -18,6 +18,6 @@ The functions contained in both files are ones I use often enough that I decided
 
 **metrics.py contains functions for:**
 
-- Adjusted R<sup>2<\sup> scores
+- Adjusted R<sup>2</sup> scores
 - Formatted confusion matrices
 - Specificity scores.
