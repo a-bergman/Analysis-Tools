@@ -11,19 +11,34 @@ sns.set(style = "white", palette = "deep")
 
 #####
 
+"""
+
+The docstrings for each graph contain the following:
+
+- parameters  : values which must be entered, some of which have defaults
+- description : what each function does
+- returns     : the output of each function
+
+Additionally, the type of input for each parameter is given after a colon at the end of the description
+
+Each function is designed to output n number of graphs where n > 1, but can output a single graph.
+The only function which is not designed for multiple outputs is the KDE function which only outputs a single graph of two columns.
+
+"""
+
 def histograms(df, columns, titles, labels, ylabel, ticks, dim, row, col):
     """
     Parameters:
     -----------
-    df      : the dataframe source of data               
-    columns : list of columns to be plotted, strings
-    titles  : list of titles for each plot, strings  
-    labels  : list of x-labels for each plot, strings       
-    label   : the y-label for each plot, string
-    ticks   : the list of ranges for each plot's x-ticks, range
-    dim     : dimensions of each plot, tuple
-    row     : how many rows will be generated, int
-    col     : how many columns will be generated, int
+    df      : the dataframe source of data               : dataframe         
+    columns : list of columns to be plotted              : str
+    titles  : list of titles for each plot               : str  
+    labels  : list of x-labels for each plot             : str       
+    label   : the y-label for each plot                  : str
+    ticks   : the list of ranges for each plot's x-ticks : range
+    dim     : tuple of the dimensions of each plot       : int
+    row     : how many rows will be generated            : int
+    col     : how many columns will be generated         : int
 
     Description:
     ------------
@@ -48,17 +63,51 @@ def histograms(df, columns, titles, labels, ylabel, ticks, dim, row, col):
     plt.tight_layout()
     plt.show();
 
+def kdeplots(df, cols, title, dim, colors, labels, xlabel, ylabel, ticks, shade = True):
+    """
+    Parameters:
+    -----------
+    df     : the dataframe source of data                   : dataframe
+    cols   : list of the columns                            : str
+    title  : plot title                                     : str
+    dim    : tuple of the dimensions of each plot           : int
+    colors : list of the colors of each kde plot            : str
+    labels : list of thethe name of each kde                : str
+    xlabel : the label of the x-axis                        : str
+    ylabel : the label of the y-axis                        : str
+    ticks  : list of the x-ticks                            : range
+    shade  : whether or not to shade the area under the kde : Bool
+
+    Description:
+    ------------
+    Overlays two univariate kernel density estimates on the same axis which estimate the distribution of two columns of data.
+
+    Returns:
+    --------
+    A single graph with two overlaid density estimates.
+    
+    """
+    plt.figure(figsize = dim, facecolor = "white")
+    plt.title(f"{title}", size = 18)
+    sns.kdeplot(df[cols[0]], shade = shade, color = colors[0], label = labels[0])
+    sns.kdeplot(df[cols[1]], shade = shade, color = colors[1], label = labels[1])
+    plt.xlabel(f"{xlabel}", size = 16)
+    plt.ylabel(f"{ylabel}", size = 16)
+    plt.xticks(np.arange(0, 3200, 200), size = 14)
+    plt.yticks(size = 14)
+    plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16);
+
 def boxplots(df, columns, titles, labels, ticks, dim, row, col):
     """
     Parameters:
     -----------
-    df      : dataframe source of the data
-    columns : list of the columns to be plotted, strings
-    titles  : list of titles for each plot, strings
-    ticks   : list of ranges for the x-ticks, ranges
-    dim     : dimensions of each plot, tuple
-    row     : how many rows will be generated
-    col     : how many columns will be generated
+    df      : dataframe source of the data         : dataframe
+    columns : list of the columns to be plotted    : str
+    titles  : list of titles for each plot         : str
+    ticks   : list of ranges for the x-ticks       : range
+    dim     : tuple of the dimensions of each plot : int
+    row     : how many rows will be generated      : int
+    col     : how many columns will be generated   : int
 
     Description:
     ------------
@@ -85,19 +134,19 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col
     """
     Parameters:
     -----------
-    df      : dataframe source of data
-    columns : the list of columns to be plotted, strings
-    y       : the column against which the columns are plotted, string
-    titles  : list of the titles for each plot, strings
-    ylabel  : the title of the y-axis, string
-    ticks   : list of ranges of x-ticks for each plot, ranges
-    dim     : dimensions of each plot, tuple
-    row     : how many rows will be generated, int
-    col     : how many columns will be generated, int
-    mark    : what character the markers will be
-    color   : what color the markers are, str
-    kws     : what color the regression line is, dictionary
-    ci      : whether or not to plot a confidence interval, Boolean
+    df      : dataframe source of data                         : dataframe
+    columns : the list of columns to be plotted                : str
+    y       : the column against which the columns are plotted : str
+    titles  : list of the titles for each plot                 : str
+    ylabel  : the title of the y-axis                          : str
+    ticks   : list of ranges of x-ticks for each plot          : ranges
+    dim     : tuple of the dimensions of each plot             : int
+    row     : how many rows will be generated                  : int
+    col     : how many columns will be generated               : int
+    mark    : what character the markers will be               : str
+    color   : what color the markers are                       : str
+    kws     : what color the regression line is                : dict
+    ci      : whether or not to plot a confidence interval     : Bool
 
     Description:
     ------------
@@ -126,14 +175,14 @@ def countplots(df, columns, titles, labels, ylabel, dim, row, col):
     """
     Parameters:
     -----------
-    df      : dataframe source of data
-    columns : list of the columns to be plotted, strings
-    titles  : list of the titles for each plot, strings
-    labels  : list of the x-labels for each plot, strings
-    ylabel  : list of the ylabel for each plt, string
-    dim     : dimensions of each plot, tuple
-    row     : how many rows will be generated, int
-    col     : how many columns will be generated, int
+    df      : dataframe source of data             : dataframe
+    columns : list of the columns to be plotted    : str
+    titles  : list of the titles for each plot     : str
+    labels  : list of the x-labels for each plot   : str
+    ylabel  : list of the ylabel for each plt      : str
+    dim     : tuple of the dimensions of each plot : int
+    row     : how many rows will be generated      : int
+    col     : how many columns will be generated   : int
     
     Description:
     -------------   
@@ -163,15 +212,15 @@ def barplots(df, x, y, labels, ylabel, titles, dim, row, col):
     """
     Parameters:
     -----------
-    df     : dataframe source of data
-    x      : list of the x inputs for each plot, strings
-    y      : list of the y input for each plot, string
-    labels : list of the x-labels for each plot, strings
-    ylabel : y-label for each plot, string
-    titles : list of the titles for each plot, strings
-    dim    : dimensions of each plot, tuple
-    row    : how many rows will be generated, int
-    col    : how many columns will be generated, int
+    df     : dataframe source of data             : dataframe
+    x      : list of the x inputs for each plot   : str
+    y      : list of the y input for each plot    : str
+    labels : list of the x-labels for each plot   : str
+    ylabel : y-label for each plot                : str
+    titles : list of the titles for each plot     : strs
+    dim    : tuple of the dimensions of each plot : tuple
+    row    : how many rows will be generated      : int
+    col    : how many columns will be generated   : int
 
     Description:
     ------------
@@ -199,14 +248,14 @@ def heatmap(df, columns, dim, title, vmin, vmax, cmap = "RdBu", annot = True):
     """
     Parameters:
     -----------
-    df      : dataframe source of the data
-    columns : list of the columns to be included, strings
-    dim     : dimensions of the graph, tuple
-    title   : title of the graph, string
-    vmin    : minimum correlation value
-    vmax    : maximum correlation value
-    cmap    : the color scheme to be used, string
-    annot   : whether or not the heat map will be annotated, Boolean
+    df      : dataframe source of the data                  : dataframe
+    columns : list of the columns to be included            : str
+    dim     : tuple of the dimensions of the graph          : int
+    title   : title of the graph                            : str
+    vmin    : minimum correlation value                     : int
+    vmax    : maximum correlation value                     : int
+    cmap    : the color scheme to be used                   : string
+    annot   : whether or not the heat map will be annotated : Bool
     
     Description:
     ------------
@@ -235,10 +284,10 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "
     X_test         : the X values
     y_test         : true y values
     y_predicted    : the model predictions
-    title          : title of the graph, string
-    dim            : dimensions of the graph, tuple
-    roc_color      : color value of the ROC curve, string
-    baseline_color : color value of the baseline, string
+    title          : title of the graph                   : str
+    dim            : tuple of the dimensions of the graph : int
+    roc_color      : color value of the ROC curve         : str
+    baseline_color : color value of the baseline          : str
 
     Descriptions:
     -------------
