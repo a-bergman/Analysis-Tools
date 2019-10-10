@@ -8,12 +8,13 @@ The functions contained in both files are ones I use often enough that I decided
 
 **graphics.py contains functions for:**
 
-- histograms
-- box plots
-- scatter plots
-- count plots
-- bar plots
-- heat maps
+- Histograms
+- KDE plots
+- Box plots
+- Scatter plots
+- Count plots
+- Bar plots
+- Heat maps
 - ROC curves
 
 **metrics.py contains functions for:**
