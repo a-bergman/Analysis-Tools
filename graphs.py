@@ -93,7 +93,7 @@ def kdeplots(df, cols, title, dim, colors, labels, xlabel, ylabel, ticks, shade 
     sns.kdeplot(df[cols[1]], shade = shade, color = colors[1], label = labels[1])
     plt.xlabel(f"{xlabel}", size = 16)
     plt.ylabel(f"{ylabel}", size = 16)
-    plt.xticks(np.arange(0, 3200, 200), size = 14)
+    plt.xticks(ticks, size = 14)
     plt.yticks(size = 14)
     plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16);
 
