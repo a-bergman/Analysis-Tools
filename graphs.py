@@ -75,7 +75,7 @@ def kdeplots(df, cols, title, dim, colors, labels, xlabel, ylabel, ticks, shade 
     labels : list of thethe name of each kde                : str
     xlabel : the label of the x-axis                        : str
     ylabel : the label of the y-axis                        : str
-    ticks  : list of the x-ticks                            : range
+    ticks  : the range of the x-ticks                       : range
     shade  : whether or not to shade the area under the kde : Bool
 
     Description:
