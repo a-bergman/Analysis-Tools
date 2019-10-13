@@ -325,3 +325,41 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "
     plt.yticks(size = 14)
     plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16)
     plt.tight_layout()
+
+def residualplots(df, x, y, dim, titles, row, col, xlabel = "Actual", ylabel = "Predicted"):
+    """
+    Parameters:
+    -----------
+    df     : dataframe source of residuals      : dataframe
+    x      : the actual values                  : str
+    y      : list of the predicted values       : str
+    dim    : tuple of each plot's dimensions    : int
+    titles : list of titles for each plot       : str
+    row    : how many rows will be generated    : int
+    col    : how many columns will be generated : int
+    xlabel : label of the x-axis                : str
+    ylabel : label of the y-axis                : str
+
+    Description:
+    ------------
+    This function is designed to be used with a dataframe of the residuals. 
+    
+    It plots the actual y-values on the x-axis and the predicted on the y-axis.
+
+    Returns:
+    --------
+    n number of residual plots arranged by the rows and columns.
+    """
+    count = 0
+    fig   = plt.figure(figsize = dim, facecolor = "white")
+    for c, column in enumerate(columns):
+        count += 1
+        ax = fig.add_subplot(row, col, count)
+        plt.title(f"{titles[c]}", size = 18)
+        sns.residplot(x = x, y = y, data = df)
+        plt.xlabel(f"{xlabel}", size = 16)
+        plt.ylabel(f"{ylabel}", size = 16)
+        plt.xticks(size = 14)
+        plt.yticks(size = 14)
+    plt.tight_layout();
+    plt.show();
