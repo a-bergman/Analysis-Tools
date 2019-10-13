@@ -16,6 +16,7 @@ The functions contained in both files are ones I use often enough that I decided
 - Bar plots
 - Heat maps
 - ROC curves
+- Residual plots
 
 **metrics.py contains functions for:**
 
