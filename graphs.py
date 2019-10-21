@@ -363,3 +363,16 @@ def residualplots(df, x, y, dim, titles, row, col, xlabel = "Actual", ylabel = "
         plt.yticks(size = 14)
     plt.tight_layout();
     plt.show();
+
+
+def lineplots():
+    """
+    Parameters:
+    -----------
+
+    Descriptions:
+    -------------
+
+    Returns:
+    --------
+    """
