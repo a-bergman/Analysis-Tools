@@ -6,20 +6,29 @@ The functions contained in both files are ones I use often enough that I decided
 
 # Contents
 
-**graphics.py contains functions for:**
 
-- Histograms
-- KDE plots
-- Box plots
-- Scatter plots
-- Count plots
-- Bar plots
-- Heat maps
-- ROC curves
-- Residual plots
+**The file `graphics` contains graphs for three types of data:**
 
-**metrics.py contains functions for:**
+- Continuous Data:
+    - Histograms
+    - KDE plots
+    - Box plots
+    - Scatter plots
+    - Heat maps
+    - Residual plots
+
+
+- Categorical Data:
+    - Count plots
+    - Bar plots
+    - ROC curves
+
+**The file `metrics` contains functions for:**
 
 - Adjusted R<sup>2</sup> scores
+
+
 - Formatted confusion matrices
+
+
 - Specificity scores.
