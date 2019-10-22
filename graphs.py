@@ -35,7 +35,7 @@ def histograms(df, columns, titles, labels, ylabel, ticks, dim, row, col):
     titles  : list of titles for each plot               : str  
     labels  : list of x-labels for each plot             : str       
     label   : the y-label for each plot                  : str
-    ticks   : the list of ranges for each plot's x-ticks : range
+    ticks   : the list of ranges for each plot's x-ticks : np.arange
     dim     : tuple of the dimensions of each plot       : int
     row     : how many rows will be generated            : int
     col     : how many columns will be generated         : int
@@ -75,7 +75,7 @@ def kdeplots(df, cols, title, dim, colors, labels, xlabel, ylabel, ticks, shade 
     labels : list of thethe name of each kde                : str
     xlabel : the label of the x-axis                        : str
     ylabel : the label of the y-axis                        : str
-    ticks  : the range of the x-ticks                       : range
+    ticks  : the range of the x-ticks                       : np.arange
     shade  : whether or not to shade the area under the kde : Bool
 
     Description:
@@ -104,10 +104,11 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
     df      : dataframe source of the data         : dataframe
     columns : list of the columns to be plotted    : str
     titles  : list of titles for each plot         : str
-    ticks   : list of ranges for the x-ticks       : range
+    ticks   : list of ranges for the x-ticks       : np.arange
     dim     : tuple of the dimensions of each plot : int
     row     : how many rows will be generated      : int
     col     : how many columns will be generated   : int
+    orient  : orientation of each plot             : str
 
     Description:
     ------------
@@ -130,17 +131,40 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
     plt.tight_layout()
     plt.show();
 
-def violinplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
+def violinplots(df, columns, titles, ticks, dim, row, col, orient = "h"):
     """
     Parameters:
     -----------
+    df      : dataframe source of data             : dataframe
+    columns : list of columns to be plotted        : str
+    titles  : list of titles for each plot         : str
+    ticks   : list of ranges for the x-ticks       : np.range
+    dim     : tuple of the dimensions of each plot : int
+    row     : how many rows will be generated      : int
+    col     : how many columns will be generated   : int
+    orient  : orientation of each plot             : str
 
     Descriptions:
     -------------
+    Plots violin plots for columns containing data in a Pandas dataframe and gives the user greater customization for each plot.
+    An improvement over the standard box plot in that it plots a kernel density plot of the points on the sides of each plot.
 
     Returns:
     --------
+    n number of violin plots arranged by the input rows and columns.
     """
+    count = 0
+    fig = plt.figure(figsize = dim, facecolor = "white")
+    for c, column in enumerate(columns):
+        count += 1
+        ax = fig.add_subplot(row, col, count)
+        plt.title(f"{titles[c]}", size = 18)
+        sns.violinplot(df[column])
+        plt.xlabel(f"{labels[c]}", size = 16)
+        plt.xticks(ticks = ticks[c], size = 14)
+        plt.yticks(size = 14)
+    plt.tight_layout()
+    plt.show();
 
 def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col, mark = "*", color = "black", kws = {"color": "red"}, ci = None):
     """
@@ -151,7 +175,7 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col
     y       : the column against which the columns are plotted : str
     titles  : list of the titles for each plot                 : str
     ylabel  : the title of the y-axis                          : str
-    ticks   : list of ranges of x-ticks for each plot          : ranges
+    ticks   : list of ranges of x-ticks for each plot          : np.arange
     dim     : tuple of the dimensions of each plot             : int
     row     : how many rows will be generated                  : int
     col     : how many columns will be generated               : int
@@ -230,7 +254,7 @@ def barplots(df, x, y, labels, ylabel, titles, dim, row, col):
     labels : list of the x-labels for each plot   : str
     ylabel : y-label for each plot                : str
     titles : list of the titles for each plot     : strs
-    dim    : tuple of the dimensions of each plot : tuple
+    dim    : tuple of the dimensions of each plot : int
     row    : how many rows will be generated      : int
     col    : how many columns will be generated   : int
 
