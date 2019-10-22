@@ -97,7 +97,7 @@ def kdeplots(df, cols, title, dim, colors, labels, xlabel, ylabel, ticks, shade 
     plt.yticks(size = 14)
     plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16);
 
-def boxplots(df, columns, titles, labels, ticks, dim, row, col):
+def boxplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
     """
     Parameters:
     -----------
@@ -123,12 +123,24 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col):
         count += 1
         ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
-        sns.boxplot(df[column])
+        sns.boxplot(df[column], orient = orient)
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.xticks(ticks = ticks[c], size = 14)
         plt.yticks(size = 14)
     plt.tight_layout()
     plt.show();
+
+def violinplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
+    """
+    Parameters:
+    -----------
+
+    Descriptions:
+    -------------
+
+    Returns:
+    --------
+    """
 
 def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col, mark = "*", color = "black", kws = {"color": "red"}, ci = None):
     """
@@ -363,16 +375,3 @@ def residualplots(df, x, y, dim, titles, row, col, xlabel = "Actual", ylabel = "
         plt.yticks(size = 14)
     plt.tight_layout();
     plt.show();
-
-
-def lineplots():
-    """
-    Parameters:
-    -----------
-
-    Descriptions:
-    -------------
-
-    Returns:
-    --------
-    """

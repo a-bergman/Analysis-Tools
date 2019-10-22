@@ -13,6 +13,7 @@ The functions contained in both files are ones I use often enough that I decided
     - Histograms
     - KDE plots
     - Box plots
+    - Violin plots (in progress)
     - Scatter plots
     - Heat maps
     - Residual plots
