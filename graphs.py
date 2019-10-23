@@ -138,6 +138,7 @@ def violinplots(df, columns, titles, ticks, dim, row, col, orient = "h"):
     df      : dataframe source of data             : dataframe
     columns : list of columns to be plotted        : str
     titles  : list of titles for each plot         : str
+    labels  : list of the x-labels for each plot   : str
     ticks   : list of ranges for the x-ticks       : np.range
     dim     : tuple of the dimensions of each plot : int
     row     : how many rows will be generated      : int
