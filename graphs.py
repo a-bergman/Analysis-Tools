@@ -131,7 +131,7 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
     plt.tight_layout()
     plt.show();
 
-def violinplots(df, columns, titles, ticks, dim, row, col, orient = "h"):
+def violinplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
     """
     Parameters:
     -----------
