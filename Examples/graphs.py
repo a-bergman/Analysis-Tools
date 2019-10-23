@@ -363,7 +363,7 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "
     plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16)
     plt.tight_layout()
 
-def residualplots(df, columns, y, dim, titles, row, col, xlabel = "Actual", ylabel = "Predicted"):
+def residualplots(df, columns, x, dim, titles, row, col, xlabel = "Actual", ylabel = "Predicted"):
     """
     Parameters:
     -----------
