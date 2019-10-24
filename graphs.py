@@ -19,7 +19,9 @@ The docstrings for each graph contain the following:
 - description : what each function does
 - returns     : the output of each function
 
-Additionally, the type of input for each parameter is given after a colon at the end of the description
+The parameters section of each docstring is set up as:
+
+parameter : definition : type : possible values (if applicable)
 
 Each function is designed to output n number of graphs where n > 1, but can output a single graph.
 The only function which is not designed for multiple outputs is the KDE function which only outputs a single graph of two columns.
@@ -30,15 +32,15 @@ def histograms(df, columns, titles, labels, ylabel, ticks, dim, row, col):
     """
     Parameters:
     -----------
-    df      : the dataframe source of data               : dataframe         
-    columns : list of columns to be plotted              : str
-    titles  : list of titles for each plot               : str  
-    labels  : list of x-labels for each plot             : str       
-    label   : the y-label for each plot                  : str
-    ticks   : the list of ranges for each plot's x-ticks : np.arange
-    dim     : tuple of the dimensions of each plot       : int
-    row     : how many rows will be generated            : int
-    col     : how many columns will be generated         : int
+    df      : the dataframe source of data               : dataframe :       
+    columns : list of columns to be plotted              : str       :
+    titles  : list of titles for each plot               : str       :
+    labels  : list of x-labels for each plot             : str       :
+    label   : the y-label for each plot                  : str       :
+    ticks   : the list of ranges for each plot's x-ticks : np.arange :
+    dim     : tuple of the dimensions of each plot       : int       :
+    row     : how many rows will be generated            : int       :
+    col     : how many columns will be generated         : int       :
 
     Description:
     ------------
@@ -67,16 +69,16 @@ def kdeplots(df, cols, title, dim, colors, labels, xlabel, ylabel, ticks, shade 
     """
     Parameters:
     -----------
-    df     : the dataframe source of data                   : dataframe
-    cols   : list of the columns                            : str
-    title  : plot title                                     : str
-    dim    : tuple of the dimensions of each plot           : int
-    colors : list of the colors of each kde plot            : str
-    labels : list of thethe name of each kde                : str
-    xlabel : the label of the x-axis                        : str
-    ylabel : the label of the y-axis                        : str
-    ticks  : the range of the x-ticks                       : np.arange
-    shade  : whether or not to shade the area under the kde : Bool
+    df     : the dataframe source of data                   : dataframe :
+    cols   : list of the columns                            : str       :
+    title  : plot title                                     : str       :
+    dim    : tuple of the dimensions of each plot           : int       :
+    colors : list of the colors of each kde plot            : str       :
+    labels : list of thethe name of each kde                : str       :
+    xlabel : the label of the x-axis                        : str       : 
+    ylabel : the label of the y-axis                        : str       :
+    ticks  : the range of the x-ticks                       : np.arange :
+    shade  : whether or not to shade the area under the kde : Bool      :
 
     Description:
     ------------
@@ -101,14 +103,14 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
     """
     Parameters:
     -----------
-    df      : dataframe source of the data         : dataframe
-    columns : list of the columns to be plotted    : str
-    titles  : list of titles for each plot         : str
-    ticks   : list of ranges for the x-ticks       : np.arange
-    dim     : tuple of the dimensions of each plot : int
-    row     : how many rows will be generated      : int
-    col     : how many columns will be generated   : int
-    orient  : orientation of each plot             : str
+    df      : dataframe source of the data         : dataframe :
+    columns : list of the columns to be plotted    : str       :
+    titles  : list of titles for each plot         : str       :
+    ticks   : list of ranges for the x-ticks       : np.arange :
+    dim     : tuple of the dimensions of each plot : int       :
+    row     : how many rows will be generated      : int       :
+    col     : how many columns will be generated   : int       :
+    orient  : orientation of each plot             : str       : "h"|"v"
 
     Description:
     ------------
@@ -135,15 +137,15 @@ def violinplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h")
     """
     Parameters:
     -----------
-    df      : dataframe source of data             : dataframe
-    columns : list of columns to be plotted        : str
-    titles  : list of titles for each plot         : str
-    labels  : list of the x-labels for each plot   : str
-    ticks   : list of ranges for the x-ticks       : np.range
-    dim     : tuple of the dimensions of each plot : int
-    row     : how many rows will be generated      : int
-    col     : how many columns will be generated   : int
-    orient  : orientation of each plot             : str
+    df      : dataframe source of data             : dataframe :
+    columns : list of columns to be plotted        : str       :
+    titles  : list of titles for each plot         : str       :
+    labels  : list of the x-labels for each plot   : str       :
+    ticks   : list of ranges for the x-ticks       : np.range  :
+    dim     : tuple of the dimensions of each plot : int       :
+    row     : how many rows will be generated      : int       :
+    col     : how many columns will be generated   : int       :
+    orient  : orientation of each plot             : str       : "h"|"v"
 
     Descriptions:
     -------------
@@ -160,7 +162,7 @@ def violinplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h")
         count += 1
         ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
-        sns.violinplot(df[column])
+        sns.violinplot(df[column], orient = orient)
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.xticks(ticks = ticks[c], size = 14)
         plt.yticks(size = 14)
@@ -171,19 +173,19 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col
     """
     Parameters:
     -----------
-    df      : dataframe source of data                         : dataframe
-    columns : the list of columns to be plotted                : str
-    y       : the column against which the columns are plotted : str
-    titles  : list of the titles for each plot                 : str
-    ylabel  : the title of the y-axis                          : str
-    ticks   : list of ranges of x-ticks for each plot          : np.arange
-    dim     : tuple of the dimensions of each plot             : int
-    row     : how many rows will be generated                  : int
-    col     : how many columns will be generated               : int
-    mark    : what character the markers will be               : str
-    color   : what color the markers are                       : str
-    kws     : what color the regression line is                : dict
-    ci      : whether or not to plot a confidence interval     : Bool
+    df      : dataframe source of data                         : dataframe :
+    columns : the list of columns to be plotted                : str       :
+    y       : the column against which the columns are plotted : str       :
+    titles  : list of the titles for each plot                 : str       :
+    ylabel  : the title of the y-axis                          : str       :
+    ticks   : list of ranges of x-ticks for each plot          : np.arange :
+    dim     : tuple of the dimensions of each plot             : int       :
+    row     : how many rows will be generated                  : int       :
+    col     : how many columns will be generated               : int       : 
+    mark    : what character the markers will be               : str       :
+    color   : what color the markers are                       : str       :
+    kws     : what color the regression line is                : dict      :
+    ci      : whether or not to plot a confidence interval     : Bool      :
 
     Description:
     ------------
@@ -208,23 +210,25 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col
     plt.tight_layout()
     plt.show();
 
-def countplots(df, columns, titles, labels, ylabel, dim, row, col):
+def countplots(df, columns, titles, labels, ylabel, dim, row, col, ci = False, orient = "h"):
     """
     Parameters:
     -----------
-    df      : dataframe source of data             : dataframe
-    columns : list of the columns to be plotted    : str
-    titles  : list of the titles for each plot     : str
-    labels  : list of the x-labels for each plot   : str
-    ylabel  : list of the ylabel for each plt      : str
-    dim     : tuple of the dimensions of each plot : int
-    row     : how many rows will be generated      : int
-    col     : how many columns will be generated   : int
+    df      : dataframe source of data                    : dataframe :
+    columns : list of the columns to be plotted           : str       :
+    titles  : list of the titles for each plot            : str       :
+    labels  : list of the x-labels for each plot          : str       :
+    ylabel  : list of the ylabel for each plt             : str       :
+    dim     : tuple of the dimensions of each plot        : int       :
+    row     : how many rows will be generated             : int       :
+    col     : how many columns will be generated          : int       :
+    ci      : whether or not to add a confidence interval : Bool      : "sd
+    orient  : orientation of each plot                    : str       : "h"|"v" 
     
     Description:
     -------------   
     Creates a count plot for columns in a Pandas dataframe containing categorical data.  
-    This type of plot explicityly counts the categories in a dataframe column.
+    This type of plot explicitly counts the categories in a dataframe column.
 
     Returns:
     --------
@@ -245,23 +249,26 @@ def countplots(df, columns, titles, labels, ylabel, dim, row, col):
     plt.tight_layout()
     plt.show();
 
-def barplots(df, x, y, labels, ylabel, titles, dim, row, col):
+def barplots(df, columns, y, labels, ylabel, titles, dim, row, col, ci = False, orient = "v"):
     """
     Parameters:
     -----------
-    df     : dataframe source of data             : dataframe
-    x      : list of the x inputs for each plot   : str
-    y      : list of the y input for each plot    : str
-    labels : list of the x-labels for each plot   : str
-    ylabel : y-label for each plot                : str
-    titles : list of the titles for each plot     : strs
-    dim    : tuple of the dimensions of each plot : int
-    row    : how many rows will be generated      : int
-    col    : how many columns will be generated   : int
+    df     : dataframe source of data                  : dataframe :
+    x      : list of the x inputs for each plot        : str       :
+    y      : list of the y input for each plot         : str       :
+    labels : list of the x-labels for each plot        : str       :
+    ylabel : y-label for each plot                     : str       :
+    titles : list of the titles for each plot          : strs      :
+    dim    : tuple of the dimensions of each plot      : int       :
+    row    : how many rows will be generated           : int       :
+    col    : how many columns will be generated        : int       :
+    ci     : whether or not to add confidence interval : Bool      : "sd"
+    orient : orientation of each bar plot              : str       : "h"|"v"
 
     Description:
     ------------
     Plots a bar plot for each column containing categorical data in a Pandas dataframe and allows for greater appearance control.
+    This type of plot takes a categorical variable and returns the mean of a corresponding continuous variable.
 
     Returns:
     n number of barplots arranged by the input rows and columns.
@@ -273,7 +280,7 @@ def barplots(df, x, y, labels, ylabel, titles, dim, row, col):
         ax = fig.add_subplot(row, col, count)
         title = titles[c]
         plt.title(f"{title}", size = 18)
-        sns.barplot(x = x, y = y, data = df)
+        sns.barplot(x = column, y = y, data = df, ci = ci, orient = orient)
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.ylabel(f"{ylabel}", size = 16)
         plt.xticks(size = 14)
@@ -285,14 +292,14 @@ def heatmap(df, columns, dim, title, vmin, vmax, cmap = "RdBu", annot = True):
     """
     Parameters:
     -----------
-    df      : dataframe source of the data                  : dataframe
-    columns : list of the columns to be included            : str
-    dim     : tuple of the dimensions of the graph          : int
-    title   : title of the graph                            : str
-    vmin    : minimum correlation value                     : int
-    vmax    : maximum correlation value                     : int
-    cmap    : the color scheme to be used                   : string
-    annot   : whether or not the heat map will be annotated : Bool
+    df      : dataframe source of the data                  : dataframe :
+    columns : list of the columns to be included            : str       :
+    dim     : tuple of the dimensions of the graph          : int       :
+    title   : title of the graph                            : str       :
+    vmin    : minimum correlation value                     : int       :
+    vmax    : maximum correlation value                     : int       :
+    cmap    : the color scheme to be used                   : str       :
+    annot   : whether or not the heat map will be annotated : Bool      :
     
     Description:
     ------------
@@ -317,14 +324,14 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "
     """
     Parameters:
     -----------
-    model_prob     : the model used for prediction
-    X_test         : the X values
-    y_test         : true y values
-    y_predicted    : the model predictions
-    title          : title of the graph                   : str
-    dim            : tuple of the dimensions of the graph : int
-    roc_color      : color value of the ROC curve         : str
-    baseline_color : color value of the baseline          : str
+    model_prob     : the model used for prediction        :     :
+    X_test         : the X values                         :     :
+    y_test         : true y values                        :     :
+    y_predicted    : the model predictions                :     :
+    title          : title of the graph                   : str :
+    dim            : tuple of the dimensions of the graph : int :
+    roc_color      : color value of the ROC curve         : str :
+    baseline_color : color value of the baseline          : str :
 
     Descriptions:
     -------------
@@ -363,19 +370,19 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "
     plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16)
     plt.tight_layout()
 
-def residualplots(df, columns, y, dim, titles, row, col, xlabel = "Actual", ylabel = "Predicted"):
+def residualplots(df, columns, x, dim, titles, row, col, xlabel = "Actual", ylabel = "Predicted"):
     """
     Parameters:
     -----------
-    df      : dataframe source of residuals      : dataframe
-    columns : list of the predicted columns      : str
-    x       : the actual values                  : str
-    dim     : tuple of each plot's dimensions    : int
-    titles  : list of titles for each plot       : str
-    row     : how many rows will be generated    : int
-    col     : how many columns will be generated : int
-    xlabel  : label of the x-axis                : str
-    ylabel  : label of the y-axis                : str
+    df      : dataframe source of residuals      : dataframe : 
+    columns : list of the predicted columns      : str       :
+    x       : the actual values                  : str       :
+    dim     : tuple of each plot's dimensions    : int       :
+    titles  : list of titles for each plot       : str       :
+    row     : how many rows will be generated    : int       :
+    col     : how many columns will be generated : int       :
+    xlabel  : label of the x-axis                : str       :
+    ylabel  : label of the y-axis                : str       :
 
     Description:
     ------------
