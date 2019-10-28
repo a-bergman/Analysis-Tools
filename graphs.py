@@ -9,8 +9,6 @@ from sklearn.metrics     import roc_auc_score
 
 sns.set(style = "white", palette = "deep")
 
-#####
-
 """
 
 The docstrings for each graph contain the following:
@@ -222,7 +220,7 @@ def countplots(df, columns, titles, labels, ylabel, dim, row, col, ci = False, o
     dim     : tuple of the dimensions of each plot        : int       :
     row     : how many rows will be generated             : int       :
     col     : how many columns will be generated          : int       :
-    ci      : whether or not to add a confidence interval : Bool      : "sd
+    ci      : whether or not to add a confidence interval : Bool/str  : "sd"
     orient  : orientation of each plot                    : str       : "h"|"v" 
     
     Description:
