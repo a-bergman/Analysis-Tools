@@ -319,7 +319,7 @@ def heatmap(df, columns, dim, title, vmin, vmax, cmap = "RdBu", annot = True):
     plt.xticks(size = 14)
     plt.yticks(size = 14);
 
-def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "darkorange", baseline_color = "navyblue"):
+def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "darkorange", baseline_color = "darkblue"):
     """
     Parameters:
     -----------
