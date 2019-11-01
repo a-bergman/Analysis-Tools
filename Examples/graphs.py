@@ -87,7 +87,7 @@ def kdeplots(df, cols, title, dim, colors, labels, xlabel, ylabel, ticks, shade 
     Returns:
     --------
     A single graph with two overlaid density estimates.
-    
+
     """
     plt.figure(figsize = dim, facecolor = "white")
     plt.title(f"{title}", size = 18)
@@ -319,7 +319,7 @@ def barplot(df, x, y, title, label, ylabel, dim, orient = "v", ci = False):
     plt.xlabel(f"{label}", size = 16)
     plt.ylabel(f"{ylabel}", size = 16)
     plt.xticks(size = 14)
-    plt.xticks(size = 16)
+    plt.xticks(size = 14)
     plt.tight_layout();
 
 # Evaluation Graphs
