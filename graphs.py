@@ -212,7 +212,7 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col
 
 # Categorical Graphs
 
-def countplots(df, columns, titles, labels, ylabel, dim, row, col, ci = False, orient = "h"):
+def countplots(df, columns, titles, labels, ylabel, dim, row, col, ci = False, orient = "h", hue = None):
     """
     Parameters:
     -----------
@@ -225,7 +225,8 @@ def countplots(df, columns, titles, labels, ylabel, dim, row, col, ci = False, o
     row     : how many rows will be generated             : int       :
     col     : how many columns will be generated          : int       :
     ci      : whether or not to add a confidence interval : Bool/str  : "sd"
-    orient  : orientation of each plot                    : str       : "h"|"v" 
+    orient  : orientation of each plot                    : str       : "h"|"v"
+    hue     : which column will be used for color-coding  : str       : 
     
     Description:
     -------------   
@@ -243,7 +244,7 @@ def countplots(df, columns, titles, labels, ylabel, dim, row, col, ci = False, o
         ax = fig.add_subplot(row, col, count)
         title = titles[c]
         plt.title(f"{title}", size = 18)
-        sns.countplot(df[column])
+        sns.countplot(df[column] ci = ci, orient = orient, hue = hue)
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.ylabel(f"{ylabel}", size = 16)
         plt.xticks(size = 14)
@@ -251,21 +252,22 @@ def countplots(df, columns, titles, labels, ylabel, dim, row, col, ci = False, o
     plt.tight_layout()
     plt.show();
 
-def barplots(df, columns, y, labels, ylabel, titles, dim, row, col, ci = False, orient = "v"):
+def barplots(df, columns, y, labels, ylabel, titles, dim, row, col, ci = False, orient = "v", hue = None):
     """
     Parameters:
     -----------
-    df     : dataframe source of data                  : dataframe :
-    x      : list of the x inputs for each plot        : str       :
-    y      : list of the y input for each plot         : str       :
-    labels : list of the x-labels for each plot        : str       :
-    ylabel : y-label for each plot                     : str       :
-    titles : list of the titles for each plot          : strs      :
-    dim    : tuple of the dimensions of each plot      : int       :
-    row    : how many rows will be generated           : int       :
-    col    : how many columns will be generated        : int       :
-    ci     : whether or not to add confidence interval : Bool      : "sd"
-    orient : orientation of each bar plot              : str       : "h"|"v"
+    df     : dataframe source of data                   : dataframe :
+    x      : list of the x inputs for each plot         : str       :
+    y      : list of the y input for each plot          : str       :
+    labels : list of the x-labels for each plot         : str       :
+    ylabel : y-label for each plot                      : str       :
+    titles : list of the titles for each plot           : strs      :
+    dim    : tuple of the dimensions of each plot       : int       :
+    row    : how many rows will be generated            : int       :
+    col    : how many columns will be generated         : int       :
+    ci     : whether or not to add confidence interval  : Bool      : "sd"
+    orient : orientation of each bar plot               : str       : "h"|"v"
+    hue    : which column will be used for color-coding : str       :
 
     Description:
     ------------
@@ -282,7 +284,7 @@ def barplots(df, columns, y, labels, ylabel, titles, dim, row, col, ci = False, 
         ax = fig.add_subplot(row, col, count)
         title = titles[c]
         plt.title(f"{title}", size = 18)
-        sns.barplot(x = column, y = y, data = df, ci = ci, orient = orient)
+        sns.barplot(x = column, y = y, data = df, ci = ci, orient = orient, hue = hue)
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.ylabel(f"{ylabel}", size = 16)
         plt.xticks(size = 14)
@@ -290,19 +292,20 @@ def barplots(df, columns, y, labels, ylabel, titles, dim, row, col, ci = False, 
     plt.tight_layout()
     plt.show();
 
-def barplot(df, x, y, title, label, ylabel, dim, orient = "v", ci = False):
+def barplot(df, x, y, title, label, ylabel, dim, orient = "v", ci = False, hue = None):
     """
     Parameters:
     -----------
-    df     : dataframe source of the data              : dataframe :
-    x      : the column to be the x-axis               : str       :
-    y      : the column to be the y-axis               : str       :
-    title  : title of the graph                        : str       :
-    label  : the label of the x-axis                   : str       :
-    ylabel : the label of the y-axis                   : str       :
-    dim    : tuple of the graph dimensions             : int       :
-    orient : orientation of the graph                  : str       : "h"|"v"
-    ci     : whether or not to add confidence interval : Bool      : "sd"
+    df     : dataframe source of the data               : dataframe :
+    x      : the column to be the x-axis                : str       :
+    y      : the column to be the y-axis                : str       :
+    title  : title of the graph                         : str       :
+    label  : the label of the x-axis                    : str       :
+    ylabel : the label of the y-axis                    : str       :
+    dim    : tuple of the graph dimensions              : int       :
+    orient : orientation of the graph                   : str       : "h"|"v"
+    ci     : whether or not to add confidence interval  : Bool      : "sd"
+    hue    : which column will be used for color-coding : str       :  
 
     Description:
     ------------
@@ -314,7 +317,7 @@ def barplot(df, x, y, title, label, ylabel, dim, orient = "v", ci = False):
     A single bar plot with the input dimensions.
     """
     plt.figure(figsize = dim, facecolor = "white")
-    sns.barplot(x = x, y = y, data = df, orient = orient, ci = ci)
+    sns.barplot(x = x, y = y, data = df, orient = orient, ci = ci, hue = hue)
     plt.title(f"{title}", size = 18)
     plt.xlabel(f"{label}", size = 16)
     plt.ylabel(f"{ylabel}", size = 16)
