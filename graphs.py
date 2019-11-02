@@ -212,7 +212,7 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col
 
 # Categorical Graphs
 
-def countplots(df, columns, titles, labels, ylabel, dim, row, col, ci = False, orient = "h", hue = None):
+def countplots(df, columns, titles, labels, ylabel, dim, row, col, orient = "h", hue = None):
     """
     Parameters:
     -----------
@@ -244,7 +244,7 @@ def countplots(df, columns, titles, labels, ylabel, dim, row, col, ci = False, o
         ax = fig.add_subplot(row, col, count)
         title = titles[c]
         plt.title(f"{title}", size = 18)
-        sns.countplot(df[column] ci = ci, orient = orient, hue = hue)
+        sns.countplot(x = column, data = df, orient = orient, hue = hue)
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.ylabel(f"{ylabel}", size = 16)
         plt.xticks(size = 14)
