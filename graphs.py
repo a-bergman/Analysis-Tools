@@ -322,7 +322,7 @@ def barplot(df, x, y, title, label, ylabel, dim, orient = "v", ci = False, hue =
     plt.xlabel(f"{label}", size = 16)
     plt.ylabel(f"{ylabel}", size = 16)
     plt.xticks(size = 14)
-    plt.xticks(size = 16)
+    plt.yxticks(size = 14)
     plt.tight_layout();
 
 # Evaluation Graphs
