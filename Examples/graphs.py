@@ -126,7 +126,7 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
         count += 1
         ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
-        sns.boxplot(x = column, df = df, orient = orient)
+        sns.boxplot(x = column, data = df, orient = orient)
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.xticks(ticks = ticks[c], size = 14)
         plt.yticks(size = 14)
@@ -162,7 +162,7 @@ def violinplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h")
         count += 1
         ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
-        sns.violinplot(x = column, df = df, orient = orient)
+        sns.violinplot(x = column, data = df, orient = orient)
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.xticks(ticks = ticks[c], size = 14)
         plt.yticks(size = 14)
@@ -354,16 +354,19 @@ def barplot(df, x, y, title, label, ylabel, dim, orient = "v", ci = False, hue =
     plt.xlabel(f"{label}", size = 16)
     plt.ylabel(f"{ylabel}", size = 16)
     plt.xticks(size = 14)
-    plt.yxticks(size = 14)
+    plt.yticks(size = 14)
     plt.tight_layout();
 
-def categorical_boxplots(df, x, columns, hue, titles, labels, ticks, dim, row, col, orient = "h"):
+def categorical_boxplots(df, x, columns, titles, labels, ylabels, ticks, dim, row, col, hue = None, orient = "h"):
     """
     Parameters:
     -----------
     df      : dataframe source of the data         : dataframe :
     x       : categorical column to be the x-axis  : str       :
     columns : list of continuous columns           : str       :
+    titles  : list of the titles for each plot     : str       :
+    labels  : list of the xlabels for each plot    : str       :
+    ylabels : list of the ylabels for each plot    : str       :
     hue     : column to be used for color-coding   : str       :
     ticks   : list of ranges for the y-ticks       : np.arange :
     dim     : tuple of the dimensions of each plot : int       :
@@ -385,22 +388,24 @@ def categorical_boxplots(df, x, columns, hue, titles, labels, ticks, dim, row, c
         count += 1
         ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
-        sns.boxplot(x = x, y = column, hue = hue, orient = orient)
+        sns.boxplot(x = x, y = column, data = df, hue = hue, orient = orient)
         plt.xlabel(f"{labels[c]}", size = 16)
+        plt.ylabel(f"{ylabels[c]}", size = 16)
         plt.xticks(size = 14)
         plt.yticks(ticks = ticks[c], size = 14)
     plt.tight_layout()
     plt.show();
 
-def categorical_violinplots(df, x, columns, hue, titles, labels, ticks, dim, row, col, orient = "h", split = False):
+def categorical_violinplots(df, x, columns, titles, labels, ylabels, ticks, dim, row, col, hue = None, orient = "v", split = False):
     """
     Parameters:
     -----------
     df      : dataframe source of data                     : dataframe :
     x       : categorical column to be the x-axis          : str       :
     columns : list of numeric columns                      : str       :
-    hue     : column to be used for color-coding           : str       :
-    labels  : list of the x-labels for each plot           : str       :
+    hue     : column to be used for color-coding           : Bool      :
+    labels  : list of the xlabels for each plot            : str       :
+    ylabels : list of the ylabels for each plot            : str
     ticks   : list of ranges for the x-ticks               : np.range  :
     dim     : tuple of the dimensions of each plot         : int       :
     row     : how many rows will be generated              : int       :
@@ -423,8 +428,9 @@ def categorical_violinplots(df, x, columns, hue, titles, labels, ticks, dim, row
         count += 1
         ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
-        sns.violinplot(x = x, y = column, df = df, orient = orient)
+        sns.violinplot(x = x, y = column, data = df, orient = orient, hue = hue, split = split)
         plt.xlabel(f"{labels[c]}", size = 16)
+        plt.ylabel(f"{ylabels[c]}", size = 16)
         plt.xticks(size = 14)
         plt.yticks(ticks = ticks[c], size = 14)
     plt.tight_layout()
