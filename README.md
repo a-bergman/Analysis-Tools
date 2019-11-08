@@ -7,7 +7,7 @@ The functions contained in both files are ones I use often enough that I decided
 # Contents
 
 
-**The file `graphics` contains graphs for three types of data:**
+**The file `graphics` contains three types of graphs:**
 
 - Continuous Data:
     - Histograms
@@ -16,10 +16,13 @@ The functions contained in both files are ones I use often enough that I decided
     - Violin plots
     - Scatter plots
     - Heat maps
-    - Residual plots
-
 
 - Categorical Data:
-    - Count plots
-    - Bar plots
+    - Box Plots
+    - Count Plots
+    - Categorical Box Plots
+    - Categorical Violin Plots
+
+- Model Evaluation:
+    - Residual Plots
     - ROC curves
