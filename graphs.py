@@ -126,7 +126,7 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
         count += 1
         ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
-        sns.boxplot(df[column], orient = orient)
+        sns.boxplot(x = column, df = df, orient = orient)
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.xticks(ticks = ticks[c], size = 14)
         plt.yticks(size = 14)
@@ -162,7 +162,7 @@ def violinplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h")
         count += 1
         ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
-        sns.violinplot(df[column], orient = orient)
+        sns.violinplot(x = column, data = df, orient = orient)
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.xticks(ticks = ticks[c], size = 14)
         plt.yticks(size = 14)
@@ -209,6 +209,38 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col
         plt.yticks(size = 14)
     plt.tight_layout()
     plt.show();
+
+def heatmap(df, columns, dim, title, vmin, vmax, cmap = "RdBu", annot = True):
+    """
+    Parameters:
+    -----------
+    df      : dataframe source of the data                  : dataframe :
+    columns : list of the columns to be included            : str       :
+    dim     : tuple of the dimensions of the graph          : int       :
+    title   : title of the graph                            : str       :
+    vmin    : minimum correlation value                     : int       :
+    vmax    : maximum correlation value                     : int       :
+    cmap    : the color scheme to be used                   : str       :
+    annot   : whether or not the heat map will be annotated : Bool      :
+    
+    Description:
+    ------------
+    Plots a heatmap for columns containing continuous data in a Pandas dataframe and allows for increased appearance control.
+    The resulting heatmap is not mirrored
+
+    Returns:
+    --------
+    A heat map displaying the correlations between n number of columns.
+    """
+    plt.figure(figsize = dim, facecolor = "white")
+    plt.title(f"{title}", size = 18)
+    corr = df[columns].corr()
+    mask = np.zeros_like(corr)                                                                                
+    mask[np.triu_indices_from(mask)] = True
+    with sns.axes_style("white"):
+        sns.heatmap(corr, cmap = cmap,  mask = mask, vmin = vmin, vmax = vmax, annot = annot)
+    plt.xticks(size = 14)
+    plt.yticks(size = 14);
 
 # Categorical Graphs
 
@@ -325,39 +357,87 @@ def barplot(df, x, y, title, label, ylabel, dim, orient = "v", ci = False, hue =
     plt.yxticks(size = 14)
     plt.tight_layout();
 
-# Evaluation Graphs
-
-def heatmap(df, columns, dim, title, vmin, vmax, cmap = "RdBu", annot = True):
+def categorical_boxplots(df, x, columns, hue, titles, labels, ylabels, ticks, dim, row, col, hue = None, orient = "h"):
     """
     Parameters:
     -----------
-    df      : dataframe source of the data                  : dataframe :
-    columns : list of the columns to be included            : str       :
-    dim     : tuple of the dimensions of the graph          : int       :
-    title   : title of the graph                            : str       :
-    vmin    : minimum correlation value                     : int       :
-    vmax    : maximum correlation value                     : int       :
-    cmap    : the color scheme to be used                   : str       :
-    annot   : whether or not the heat map will be annotated : Bool      :
-    
+    df      : dataframe source of the data         : dataframe :
+    x       : categorical column to be the x-axis  : str       :
+    columns : list of continuous columns           : str       :
+    hue     : column to be used for color-coding   : str       :
+    title   : list the titles for each plot        : str       :
+    labels  : list of the xlabels for each plot    : str       :
+    ylabels : list of the ylabels for each plot    : str       :
+    ticks   : list of ranges for the y-ticks       : np.arange :
+    dim     : tuple of the dimensions of each plot : int       :
+    row     : how many rows will be generated      : int       :
+    col     : how many columns will be generated   : int       :
+    orient  : orientation of each plot             : str       : "h"|"v"
+
     Description:
     ------------
-    Plots a heatmap for columns containing continuous data in a Pandas dataframe and allows for increased appearance control.
-    The resulting heatmap is not mirrored
+    Plots boxplots for columns containing continuous data in a Pandas dataframe and gives the user greater customization for each plot.
 
     Returns:
     --------
-    A heat map displaying the correlations between n number of columns.
+    n number of categorical boxplots arranged by the input rows and columns.
     """
-    plt.figure(figsize = dim, facecolor = "white")
-    plt.title(f"{title}", size = 18)
-    corr = df[columns].corr()
-    mask = np.zeros_like(corr)                                                                                
-    mask[np.triu_indices_from(mask)] = True
-    with sns.axes_style("white"):
-        sns.heatmap(corr, cmap = cmap,  mask = mask, vmin = vmin, vmax = vmax, annot = annot)
-    plt.xticks(size = 14)
-    plt.yticks(size = 14);
+    count = 0
+    fig = plt.figure(figsize = dim, facecolor = "white")
+    for c, column in enumerate(columns):
+        count += 1
+        ax = fig.add_subplot(row, col, count)
+        plt.title(f"{titles[c]}", size = 18)
+        sns.boxplot(x = x, y = column, data = df, hue = hue, orient = orient)
+        plt.xlabel(f"{labels[c]}", size = 16)
+        plt.ylabel(f"{ylabels[c]}", size = 16)
+        plt.xticks(size = 14)
+        plt.yticks(ticks = ticks[c], size = 14)
+    plt.tight_layout()
+    plt.show();
+
+def categorical_violinplots(df, x, columns, hue, titles, labels, ylabels, ticks, dim, row, col, orient = "h", split = False):
+    """
+    Parameters:
+    -----------
+    df      : dataframe source of data                     : dataframe :
+    x       : categorical column to be the x-axis          : str       :
+    columns : list of numeric columns                      : str       :
+    hue     : column to be used for color-coding           : str       :
+    titles  : list of the titles for each plot             : str       :
+    labels  : list of the xlabels for each plot            : str       :
+    ylabels : list of the ylabels for each plot            : str       :
+    ticks   : list of ranges for the x-ticks               : np.range  :
+    dim     : tuple of the dimensions of each plot         : int       :
+    row     : how many rows will be generated              : int       :
+    col     : how many columns will be generated           : int       :
+    orient  : orientation of each plot                     : str       : "h"|"v"
+    split   : whether to not to spit each plot for the hue : Bool      :
+
+    Descriptions:
+    -------------
+    Plots violin plots for columns containing data in a Pandas dataframe and gives the user greater customization for each plot.
+    An improvement over the standard box plot in that it plots a kernel density plot of the points on the sides of each plot.
+
+    Returns:
+    --------
+    n number of violin plots arranged by the input rows and columns.
+    """
+    count = 0
+    fig = plt.figure(figsize = dim, facecolor = "white")
+    for c, column in enumerate(columns):
+        count += 1
+        ax = fig.add_subplot(row, col, count)
+        plt.title(f"{titles[c]}", size = 18)
+        sns.violinplot(x = x, y = column, df = df, hue = hue, orient = orient, split = split)
+        plt.xlabel(f"{labels[c]}", size = 16)
+        plt.ylabel(f"{ylabels[c]}", size = 16)
+        plt.xticks(size = 14)
+        plt.yticks(ticks = ticks[c], size = 14)
+    plt.tight_layout()
+    plt.show();
+
+# Evaluation Graphs
 
 def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "darkorange", baseline_color = "darkblue"):
     """
