@@ -126,7 +126,7 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
         count += 1
         ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
-        sns.boxplot(x = column, df = df, orient = orient)
+        sns.boxplot(x = column, data = df, orient = orient)
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.xticks(ticks = ticks[c], size = 14)
         plt.yticks(size = 14)
@@ -354,7 +354,7 @@ def barplot(df, x, y, title, label, ylabel, dim, orient = "v", ci = False, hue =
     plt.xlabel(f"{label}", size = 16)
     plt.ylabel(f"{ylabel}", size = 16)
     plt.xticks(size = 14)
-    plt.yxticks(size = 14)
+    plt.yticks(size = 14)
     plt.tight_layout();
 
 def categorical_boxplots(df, x, columns, hue, titles, labels, ylabels, ticks, dim, row, col, hue = None, orient = "h"):
