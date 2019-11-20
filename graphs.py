@@ -357,7 +357,7 @@ def barplot(df, x, y, title, label, ylabel, dim, orient = "v", ci = False, hue =
     plt.yticks(size = 14)
     plt.tight_layout();
 
-def categorical_boxplots(df, x, columns, hue, titles, labels, ylabels, ticks, dim, row, col, hue = None, orient = "h"):
+def categorical_boxplots(df, x, columns, titles, labels, ylabels, ticks, dim, row, col, hue = None, orient = "h"):
     """
     Parameters:
     -----------
