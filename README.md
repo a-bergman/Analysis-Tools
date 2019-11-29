@@ -44,3 +44,22 @@ For Model Evaluation:
 |:---------------|:------------:|:----------------:|:---------------------------------------------------|
 | Residual Plots | ✓            |                  | Plots regression residuals on the true values      |
 | ROC Curves     |              | ✓                | Plots an ROC curve with a AUROC score in the title |
+
+-----
+
+# Contributions
+
+Pull requests are welcome, but for any major issues please open an issue first to discuss what needs to be changed.
+
+-----
+
+# Road Map
+
+- Plotly scientific and statistical functions
+- Bokeh Interactive functions
+
+-----
+
+# Project Status
+
+Work is ongoing and I add or modify code as needed. 
