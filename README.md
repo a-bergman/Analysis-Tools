@@ -28,7 +28,7 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 For EDA:
 
 | Plot Type     | Numeric Data | Categorical Data |
-|:---------- ---|:------------:|:----------------:|
+|:--------------|:------------:|:----------------:|
 | Box Plots     | ✓            | ✓               |
 | Count Plots   | ✓            |                  |
 | Heat Maps     | ✓            |                  |
