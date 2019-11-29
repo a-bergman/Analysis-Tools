@@ -27,19 +27,20 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 
 For EDA:
 
-| Plot Type     | Numeric Data | Categorical Data |
-|:--------------|:------------:|:----------------:|
-| Box Plots     | ✓            | ✓               |
-| Count Plots   | ✓            |                  |
-| Heat Maps     | ✓            |                  |
-| Histograms    | ✓            |                  |
-| KDE Plots     | ✓            |                  |
-| Scatter Plots | ✓            |                  |
-| Violin Plots  | ✓            | ✓               |
+| Plot Type     | Numeric Data | Categorical Data | Description                                                       |
+|:--------------|:------------:|:----------------:|:------------------------------------------------------------------|
+| Bar Plots     |              | ✓                | Takes a numeric variable and plots the corresponding measure of central tendency for a categorical column |
+| Box Plots     | ✓            | ✓               | Plots a box & whiskers plot for a numeric variable                 |
+| Count Plots   | ✓            | ✓               | Counts how many times a category appears in a categorical variable |
+| Heat Maps     | ✓            |                  | Creates a heat map of numeric variable correlations               |
+| Histograms    | ✓            |                  | Plots histograms for a continuous variable                        |                      
+| KDE Plots     | ✓            |                  | Plots a kernel density estimate for a numeric variable            |
+| Scatter Plots | ✓            |                  | Plots two numeric variables against each other                    |
+| Violin Plots  | ✓            | ✓               | Plots a density estimate on top of a box plot                     |
 
 For Model Evaluation:
 
-| Plot Type      | Numeric Data | Categorical Data |
-|:---------------|:------------:|:----------------:|
-| Residual Plots | ✓            |                  |
-| ROC Curves     |              | ✓                |
+| Plot Type      | Numeric Data | Categorical Data | Description                                        |
+|:---------------|:------------:|:----------------:|:---------------------------------------------------|
+| Residual Plots | ✓            |                  | Plots regression residuals on the true values      |
+| ROC Curves     |              | ✓                | Plots an ROC curve with a AUROC score in the title |
