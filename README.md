@@ -1,28 +1,45 @@
-# Description & Motivation
+# Easy Graphing
 
-This repository contains two .py files: one containing evaluation metrics and another containing plotting functions. 
+A basic wrapper for Seaborn that has functions to create graphs and control their appearance.
 
-The functions contained in both files are ones I use often enough that I decided it would be easier for me to have them saved as .py files for easy importing into Jupyter notebooks.
+-----
+
+# Motivation
+
+When performing EDA in a Jupyter notebook, I found myself making the same types of graphs over and over.  I wondered how I could make it easier for myself to plot these graphs and how I could make the functions more dynamic.
+
+-----
+
+# Dependencies
+
+For these functions to run properly, you should have the following installed:
+
+- Seaborn
+- Matplotlib.pyplot
+- Numpy
+- Scikit-learn
+
+-----
 
 # Contents
 
+There are two sets of graphs included in the .py file: graphs for EDA and graphs for model evaluation.
 
-**The file `graphics` contains three types of graphs:**
+For EDA:
 
-- Continuous Data:
-    - Histograms
-    - KDE plots
-    - Box plots
-    - Violin plots
-    - Scatter plots
-    - Heat maps
+| Plot Type     | Numeric Data | Categorical Data |
+|:---------- ---|:------------:|:----------------:|
+| Box Plots     | ✓            | ✓               |
+| Count Plots   | ✓            |                  |
+| Heat Maps     | ✓            |                  |
+| Histograms    | ✓            |                  |
+| KDE Plots     | ✓            |                  |
+| Scatter Plots | ✓            |                  |
+| Violin Plots  | ✓            | ✓               |
 
-- Categorical Data:
-    - Box Plots
-    - Count Plots
-    - Categorical Box Plots
-    - Categorical Violin Plots
+For Model Evaluation:
 
-- Model Evaluation:
-    - Residual Plots
-    - ROC curves
+| Plot Type      | Numeric Data | Categorical Data |
+|:---------------|:------------:|:----------------:|
+| Residual Plots | ✓            |                  |
+| ROC Curves     |              | ✓                |
