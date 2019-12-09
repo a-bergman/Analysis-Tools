@@ -91,7 +91,7 @@ def histogram_2d(x, y, df, title, xlabel, ylabel, xticks, yticks, ytitle = 0.9, 
     --------
     Creates a single two-dimensional histogram with the input dimensions.
     """
-    fig = go.Figure(go.Histogram2d(x = df[x],vy = df[y],vcolorscale = colorscale))
+    fig = go.Figure(go.Histogram2d(x = df[x],y = df[y],colorscale = colorscale))
     fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"),
                       xaxis_title = xlabel, yaxis_title = ylabel, width = width, height = height)
     fig.update_xaxes(tickvals = xticks, title_font = dict(size = 18),tickfont = dict(size = 14))
