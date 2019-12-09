@@ -4,12 +4,17 @@ import pandas            as pd
 import seaborn           as sns
 import numpy             as np
 import matplotlib.pyplot as plt
+import plotly.io         as pio
 import plotly.graph_objs as go
 from sklearn.metrics     import roc_auc_score
 
 # Setting the basic appearance for the graphs
 
+# For Seaborn
 sns.set(style = "white", palette = "deep")
+
+# For Plotly
+pio.templates.default = "simple_white"
 
 """
 
