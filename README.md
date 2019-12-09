@@ -18,6 +18,7 @@ For these functions to run properly, you should have the following installed:
 - Matplotlib.pyplot
 - Numpy
 - Scikit-learn
+- Plotly
 
 -----
 
@@ -33,10 +34,11 @@ For EDA:
 | Box Plots     | ✓            | ✓               | Plots a box & whiskers plot for a numeric variable                 |
 | Count Plots   | ✓            | ✓               | Counts how many times a category appears in a categorical variable |
 | Heat Maps     | ✓            |                  | Creates a heat map of numeric variable correlations               |
-| Histograms    | ✓            |                  | Plots histograms for a continuous variable                        |                      
+| Histograms    | ✓            |                  | Plots histograms for a continuous variable                        |  
+| 2D Histograms | ✓            |                  | Plots two continuous variables (best for large datasets)          |                   
 | KDE Plots     | ✓            |                  | Plots a kernel density estimate for a numeric variable            |
 | Scatter Plots | ✓            |                  | Plots two numeric variables against each other                    |
-| Violin Plots  | ✓            | ✓               | Plots a density estimate on top of a box plot                     |
+| Violin Plots  | ✓            | ✓               | Plots a density estimate on top of a box plot                      |
 
 For Model Evaluation:
 
