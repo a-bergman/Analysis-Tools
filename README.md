@@ -26,7 +26,7 @@ For these functions to run properly, you should have the following installed:
 
 There are two sets of graphs included in the .py file: graphs for EDA and graphs for model evaluation.
 
-For EDA:
+**For EDA**:
 
 | Plot Type     | Numeric Data | Categorical Data | Description                                                       |
 |:--------------|:------------:|:----------------:|:------------------------------------------------------------------|
@@ -40,7 +40,7 @@ For EDA:
 | Scatter Plots | ✓            |                  | Plots two numeric variables against each other                    |
 | Violin Plots  | ✓            | ✓               | Plots a density estimate on top of a box plot                      |
 
-For Model Evaluation:
+**For Model Evaluation**:
 
 | Plot Type      | Numeric Data | Categorical Data | Description                                        |
 |:---------------|:------------:|:----------------:|:---------------------------------------------------|
@@ -57,11 +57,12 @@ Pull requests are welcome, but for any major issues please open an issue first t
 
 # Road Map
 
-- Plotly scientific and statistical functions
+- Plotly scientific & statistical functions
+    - Caveat: Plotly graphs _cannot_ be displayed in GitHub so development of such functions is not a priority.
 - Bokeh Interactive functions
 
 -----
 
 # Project Status
 
-Work is ongoing and I add or modify code as needed. 
+Work is ongoing: I add or modify code as needed. 
