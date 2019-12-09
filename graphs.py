@@ -82,6 +82,14 @@ def histogram_2d(x, y, df, title, xlabel, ylabel, xticks, yticks, ytitle = 0.9, 
     width      : width of the plot                             : int       : :
     height     : height of the plot                            : int       : :
     colorscale : color scale to map overlapping of data points : str       : :
+
+    Description:
+    ------------
+    Plots two continuous columns against each other and shows overlapping points with a color scale and gives the user greater customization over the plot.
+
+    Returns:
+    --------
+    Creates a single two-dimensional histogram with the input dimensions.
     """
     fig = go.Figure(go.Histogram2d(x = df[x],vy = df[y],vcolorscale = colorscale))
     fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"),
