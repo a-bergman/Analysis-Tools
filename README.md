@@ -58,11 +58,13 @@ Pull requests are welcome, but for any major issues please open an issue first t
 # Road Map
 
 - Plotly scientific & statistical functions
-    - Caveat: Plotly graphs _cannot_ be displayed in GitHub so development of such functions is not a priority.
+    - Caveat: Plotly graphs _cannot_ be displayed in GitHub, but they can be viewed in [nbviewer](https://nbviewer.jupyter.org/).
 - Bokeh Interactive functions
 
 -----
 
 # Project Status
 
-Work is ongoing: I add or modify code as needed. 
+Work is ongoing: I add or modify code as needed.
+
+I am working on adding more plotly functions which are housed in a new file called `plotly_graphs.py`.  While they are not ideal for use with GitHub, they are ideal for situations where you would be saving the images for use elsewhere.
