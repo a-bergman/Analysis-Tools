@@ -4,17 +4,12 @@ import pandas            as pd
 import seaborn           as sns
 import numpy             as np
 import matplotlib.pyplot as plt
-import plotly.io         as pio
-import plotly.graph_objs as go
 from sklearn.metrics     import roc_auc_score
 
 # Setting the basic appearance for the graphs
 
 # For Seaborn
 sns.set(style = "white", palette = "deep")
-
-# For Plotly
-pio.templates.default = "simple_white"
 
 """
 
@@ -70,30 +65,6 @@ def histograms(df, columns, titles, labels, ylabel, ticks, dim, row, col):
         plt.yticks(size = 14)
     plt.tight_layout()
     plt.show();
-
-def histogram_2d(x, y, df, title, xlabel, ylabel, xticks, yticks, ytitle = 0.9, width = 1000, height = 550, colorscale = "RdBu"):
-    """
-    Parameters:
-    -----------
-    x          : the column to be plotted on the x-axis        : str       : :
-    y          : the column to be plotted on the y-axis        : str       : :
-    df         : dataframe source of data                      : dataframe : :
-    title      : title for the graph                           : str       : :
-    xlabel     : label for the x-axis                          : str       : :
-    ylabel     : label for the y-axis                          : str       : :
-    xticks     : tick range for the x-axis                     : np.arange : :
-    yticks     : tick range for the y-axis                     : np.arange : :
-    ytitle     : how high above the plot to place the title    : float     : :
-    width      : width of the plot                             : int       : :
-    height     : height of the plot                            : int       : :
-    colorscale : color scale to map overlapping of data points : str       : :
-    """
-    fig = go.Figure(go.Histogram2d(x = df[x],y = df[y], colorscale = colorscale))
-    fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"),
-                      xaxis_title = xlabel, yaxis_title = ylabel, width = width, height = height)
-    fig.update_xaxes(tickvals = xticks, title_font = dict(size = 18),tickfont = dict(size = 14))
-    fig.update_yaxes(tickvals = yticks, title_font = dict(size = 18),tickfont = dict(size = 14))
-    fig.show()
 
 def kdeplots(df, cols, title, dim, colors, labels, xlabel, ylabel, ticks, shade = True):
     """
