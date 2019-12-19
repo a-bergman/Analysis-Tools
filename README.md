@@ -22,7 +22,7 @@ For these functions to run properly, you should have the following installed:
 
 -----
 
-# Contents
+# `graphs` Contents
 
 There are two sets of graphs included in the .py file: graphs for EDA and graphs for model evaluation.
 
@@ -46,6 +46,21 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 |:---------------|:------------:|:----------------:|:---------------------------------------------------|
 | Residual Plots | ✓            |                  | Plots regression residuals on the true values      |
 | ROC Curves     |              | ✓                | Plots an ROC curve with a AUROC score in the title |
+
+# `plotly_graphs` Contents
+
+**For EDA**:
+
+| Plot Type     | Numeric Data | Categorical Data | Description                                                       |
+|:---------------|:------------:|:----------------:|:-----------------------------------------------------------------|
+| 2D Histograms | ✓            |                  | Plots two continuous variables (best for large datasets)          |
+
+**Utilities**:
+
+| Plot Type | Numeric Data | Categorical Data | Description |
+|:----------|:------------:|:----------------:|:---------------------------------------------------|
+| Table     | ✓           | ✓                | Creates a table for whatever data is inputted; best for distribution      |
+
 
 -----
 
