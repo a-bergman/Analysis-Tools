@@ -50,7 +50,7 @@ def histogram_2d(x, y, df, title, xlabel, ylabel, xticks, yticks, ytitle = 0.9, 
     --------
     Creates a single two-dimensional histogram with the input dimensions.
     """
-    fig = go.Figure(go.Histogram2d(x = df[x],y = df[y],colorscale = colorscale))
+    fig = go.Figure(go.Histogram2d(x = df[x], y = df[y], colorscale = colorscale))
     fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"),
                       xaxis_title = xlabel, yaxis_title = ylabel, width = width, height = height)
     fig.update_xaxes(tickvals = xticks, title_font = dict(size = 18),tickfont = dict(size = 14))
@@ -62,3 +62,28 @@ def histogram_2d(x, y, df, title, xlabel, ylabel, xticks, yticks, ytitle = 0.9, 
 # Evaluation Graphs
 
 # Utility Functions
+
+def table(h_values, c_values, width = 300, height = 500):
+    """
+    Parameters:
+    -----------
+    h_values : the headers for the table     : list : :
+    c_values : the cell values for the table : list : :
+    width    : the width of the table        : int  : :
+    height   : the height of the table       : int  : :
+
+    Description:
+    ------------
+    Creates a Plotly table with more control over the chart's appearance.  This function returns a table that is easier to distribute outside of an IDE.
+
+    Returns:
+    -------- 
+    Creates a single table with input values and dimensions
+    """
+    fig = go.Figure(data = [go.Table(header = dict(values = h_values, fill = dict(color = ['rgb(31, 119, 180)', 'rgb(31, 119, 180)']),
+                                                   line_color = "black", font = dict(color = "white", size = 16)),
+                                     cells  = dict(values = c_values, fill = dict(color = 'rgb(235,235,235)','rgb(235,235,235)'),
+                                                   line_color = "black", font = dict(color = "black", size = 12)))])
+    # If anyone can figure out why there is so much space under the graph & fix it, I would be really thankful
+    fig.update_layout(width = width, height = height, margin = go.layout.Margin(l = 25, r = 25, b = 25, t = 25, pad = 0))
+    fig.show()
