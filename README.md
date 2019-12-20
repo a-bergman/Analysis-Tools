@@ -83,3 +83,12 @@ Pull requests are welcome, but for any major issues please open an issue first t
 Work is ongoing: I add or modify code as needed.
 
 I am working on adding more plotly functions which are housed in a new file called `plotly_graphs.py`.  While they are not ideal for use with GitHub, they are ideal for situations where you would be saving the images for use elsewhere.
+
+# Latest Updates
+
+12/20/2019:
+
+- Made `hue` default for `categorical_boxplots`
+- Fix `df = df` for `categorical_violinplots`
+- Updated appearance of docstrings
+- Made `ticks` a parameter for `barplot`
