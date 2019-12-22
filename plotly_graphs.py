@@ -63,27 +63,31 @@ def histogram_2d(x, y, df, title, xlabel, ylabel, xticks, yticks, ytitle = 0.9, 
 
 # Utility Functions
 
-def table(h_values, c_values, width = 300, height = 500):
+def table(h_values, c_values, width = 300, height = 500, h_fill = ["rgb(31, 119, 180)"], c_fill = ["rgb(235,235,235)"]):
     """
     Parameters:
     -----------
-    h_values : the headers for the table     : list : :
-    c_values : the cell values for the table : list : :
-    width    : the width of the table        : int  : :
-    height   : the height of the table       : int  : :
+    h_values : the headers for the table               : list : :
+    c_values : the cell values for the table           : list : :
+    width    : the width of the table                  : int  : :
+    height   : the height of the table                 : int  : :
+    h_fill   : list of the heading shade in rgb scheme : str  : :
+    c_fill   : list of the cell shade in rgb scheme    : str  : :
 
     Description:
     ------------
     Creates a Plotly table with more control over the chart's appearance.  This function returns a table that is easier to distribute outside of an IDE.
+    This function can handle lists of data *or* data from a Pandas dataframe: for h_vales enter df.columns with an index & for the c_values enter a list
+    of dataframe slices.
 
     Returns:
     -------- 
     Creates a single table with input values and dimensions
     """
-    fig = go.Figure(data = [go.Table(header = dict(values = h_values, fill = dict(color = ['rgb(31, 119, 180)', 'rgb(31, 119, 180)']),
+    fig = go.Figure(data = [go.Table(header = dict(values = h_values, fill = dict(color = h_fill]),
                                                    line_color = "black", font = dict(color = "white", size = 16)),
-                                     cells  = dict(values = c_values, fill = dict(color = 'rgb(235,235,235)','rgb(235,235,235)'),
+                                     cells  = dict(values = c_values, fill = dict(color = c_fill),
                                                    line_color = "black", font = dict(color = "black", size = 12)))])
     # If anyone can figure out why there is so much space under the graph & fix it, I would be really thankful
-    fig.update_layout(width = width, height = height, margin = go.layout.Margin(l = 25, r = 25, b = 25, t = 25, pad = 0))
+    fig.update_layout(width = width, height = height, margin = go.layout.Margin(l = 25, r = 25, b = 1, t = 25, pad = 0))
     fig.show()
