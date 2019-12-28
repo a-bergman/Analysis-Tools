@@ -59,6 +59,41 @@ def histogram_2d(x, y, df, title, xlabel, ylabel, xticks, yticks, ytitle = 0.9, 
 
 # Categorical Data
 
+def bar_chart(df, col, widths, width, height, title, xlabel, ticks, text_pos = "auto", color = "rgb(31,119,180)", ytitle = 0.9, ylabel = "Count"):
+    """
+    Parameters:
+    -----------
+    df       : dataframe source of data                     : dataframe :                             :
+    col      : the column of categorical data to be plotted : str       :                             :
+    widths   : list of the widths for each bar              : int       :                             :
+    width    : width of the bar chart                       : int       :                             :
+    height   : height of the bar chart                      : int       :                             :
+    title    : title of the bar chart                       : str       :                             :
+    xlabel   : label for the x axis                         : str       :                             :
+    ticks    : ticks for the y axis                         : np.arange :                             :
+    text_pos : position of the bar label                    : str       : "inside"|"outside"|"none"   :
+    color    : rgb value for the color of the bars          : str       :                             :
+    ytitle   : height of the title above the plot           : int       :                             :
+    ylabel   : label for the y axis                         : str       :                             :
+
+    Description:
+    ------------
+    Plots a single bar chart based on the categorical values & frequencies and shows the frequency on each bar; equivalent to Seaborn's `countplot`.
+
+    Returns:
+    Creates a single bar chart based off of one columns with the input height & width.
+    """
+    fig = go.Figure(data = [go.Bar(x = df[col].unique(), y = df[col].value_counts(),
+                               text = df[col].value_counts(), textposition = text_pos,
+                               width = widths, marker_color = color)])
+    fig.update_layout(width = width, height = height,
+                      title = dict(text = "Hypertension", y = ytitle, x = 0.5, 
+                                   xanchor = "center", yanchor = "top"),
+                      font = dict(size = 18), xaxis_title = xlabel, yaxis_title = ylabel)
+    fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14))
+    fig.update_yaxes(tickvals = ticks, title_font = dict(size = 16), tickfont = dict(size = 14))
+    fig.show()
+    
 # Evaluation Graphs
 
 # Utility Functions
@@ -84,7 +119,7 @@ def table(h_values, c_values, width = 300, height = 500, h_fill = ["rgb(31, 119,
     -------- 
     Creates a single table with input values and dimensions
     """
-    fig = go.Figure(data = [go.Table(header = dict(values = h_values, fill = dict(color = h_fill]),
+    fig = go.Figure(data = [go.Table(header = dict(values = h_values, fill = dict(color = h_fill),
                                                    line_color = "black", font = dict(color = "white", size = 16)),
                                      cells  = dict(values = c_values, fill = dict(color = c_fill),
                                                    line_color = "black", font = dict(color = "black", size = 12)))])

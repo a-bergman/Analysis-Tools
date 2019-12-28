@@ -104,14 +104,14 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
     """
     Parameters:
     -----------
-    df      : dataframe source of the data         : dataframe :         :
-    columns : list of the columns to be plotted    : str       :         :
-    titles  : list of titles for each plot         : str       :         :
-    ticks   : list of ranges for the x-ticks       : np.arange :         :
-    dim     : tuple of the dimensions of each plot : int       :         :
-    row     : how many rows will be generated      : int       :         :
-    col     : how many columns will be generated   : int       :         :
-    orient  : orientation of each plot             : str       : "h"|"v" :
+    df      : dataframe source of the data         : dataframe :     :
+    columns : list of the columns to be plotted    : str       :     :
+    titles  : list of titles for each plot         : str       :     :
+    ticks   : list of ranges for the x-ticks       : np.arange :     :
+    dim     : tuple of the dimensions of each plot : int       :     :
+    row     : how many rows will be generated      : int       :     :
+    col     : how many columns will be generated   : int       :     :
+    orient  : orientation of each plot             : str       : "v" :
 
     Description:
     ------------
@@ -138,15 +138,15 @@ def violinplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h")
     """
     Parameters:
     -----------
-    df      : dataframe source of data             : dataframe :         :
-    columns : list of columns to be plotted        : str       :         :
-    titles  : list of titles for each plot         : str       :         :
-    labels  : list of the x-labels for each plot   : str       :         :
-    ticks   : list of ranges for the x-ticks       : np.range  :         :
-    dim     : tuple of the dimensions of each plot : int       :         :
-    row     : how many rows will be generated      : int       :         :
-    col     : how many columns will be generated   : int       :         :
-    orient  : orientation of each plot             : str       : "h"|"v" :
+    df      : dataframe source of data             : dataframe :     :
+    columns : list of columns to be plotted        : str       :     :
+    titles  : list of titles for each plot         : str       :     :
+    labels  : list of the x-labels for each plot   : str       :     :
+    ticks   : list of ranges for the x-ticks       : np.range  :     :
+    dim     : tuple of the dimensions of each plot : int       :     :
+    row     : how many rows will be generated      : int       :     :
+    col     : how many columns will be generated   : int       :     :
+    orient  : orientation of each plot             : str       : "v" :
 
     Descriptions:
     -------------
@@ -249,17 +249,17 @@ def countplots(df, columns, titles, labels, ylabel, dim, row, col, orient = "h",
     """
     Parameters:
     -----------
-    df      : dataframe source of data                    : dataframe :         :
-    columns : list of the columns to be plotted           : str       :         :
-    titles  : list of the titles for each plot            : str       :         :
-    labels  : list of the x-labels for each plot          : str       :         :
-    ylabel  : list of the ylabel for each plt             : str       :         :
-    dim     : tuple of the dimensions of each plot        : int       :         :
-    row     : how many rows will be generated             : int       :         :
-    col     : how many columns will be generated          : int       :         :
-    ci      : whether or not to add a confidence interval : Bool/str  : "sd"    :
-    orient  : orientation of each plot                    : str       : "h"|"v" :
-    hue     : which column will be used for color-coding  : str       :         :
+    df      : dataframe source of data                    : dataframe :      :
+    columns : list of the columns to be plotted           : str       :      :
+    titles  : list of the titles for each plot            : str       :      :
+    labels  : list of the x-labels for each plot          : str       :      :
+    ylabel  : list of the ylabel for each plt             : str       :      :
+    dim     : tuple of the dimensions of each plot        : int       :      :
+    row     : how many rows will be generated             : int       :      :
+    col     : how many columns will be generated          : int       :      :
+    ci      : whether or not to add a confidence interval : Bool/str  : "sd" :
+    orient  : orientation of each plot                    : str       : "v"  :
+    hue     : which column will be used for color-coding  : str       :      :
     
     Description:
     -------------   
@@ -289,18 +289,18 @@ def barplots(df, columns, y, labels, ylabel, titles, dim, row, col, ci = False, 
     """
     Parameters:
     -----------
-    df     : dataframe source of data                   : dataframe :         :
-    x      : list of the x inputs for each plot         : str       :         :
-    y      : list of the y input for each plot          : str       :         :
-    labels : list of the x-labels for each plot         : str       :         :
-    ylabel : y-label for each plot                      : str       :         :
-    titles : list of the titles for each plot           : strs      :         :
-    dim    : tuple of the dimensions of each plot       : int       :         :
-    row    : how many rows will be generated            : int       :         :
-    col    : how many columns will be generated         : int       :         :
-    ci     : whether or not to add confidence interval  : Bool      : "sd"    :
-    orient : orientation of each bar plot               : str       : "h"|"v" :
-    hue    : which column will be used for color-coding : str       :         :
+    df     : dataframe source of data                   : dataframe :      :
+    x      : list of the x inputs for each plot         : str       :      :
+    y      : list of the y input for each plot          : str       :      :
+    labels : list of the x-labels for each plot         : str       :      :
+    ylabel : y-label for each plot                      : str       :      :
+    titles : list of the titles for each plot           : strs      :      :
+    dim    : tuple of the dimensions of each plot       : int       :      :
+    row    : how many rows will be generated            : int       :      :
+    col    : how many columns will be generated         : int       :      :
+    ci     : whether or not to add confidence interval  : Bool      : "sd" :
+    orient : orientation of each bar plot               : str       : "v"  :
+    hue    : which column will be used for color-coding : str       :      :
 
     Description:
     ------------
@@ -329,17 +329,17 @@ def barplot(df, x, y, title, label, ylabel, ticks, dim, orient = "v", ci = False
     """
     Parameters:
     -----------
-    df     : dataframe source of the data               : dataframe :         :
-    x      : the column to be the x-axis                : str       :         :
-    y      : the column to be the y-axis                : str       :         :
-    title  : title of the graph                         : str       :         :
-    label  : the label of the x-axis                    : str       :         :
-    ylabel : the label of the y-axis                    : str       :         :
-    yticks : range for the y-ticks                      : np.arange :         : 
-    dim    : tuple of the graph dimensions              : int       :         :
-    orient : orientation of the graph                   : str       : "h"|"v" :
-    ci     : whether or not to add confidence interval  : Bool      : "sd"    :
-    hue    : which column will be used for color-coding : str       :         :
+    df     : dataframe source of the data               : dataframe :      :
+    x      : the column to be the x-axis                : str       :      :
+    y      : the column to be the y-axis                : str       :      :
+    title  : title of the graph                         : str       :      :
+    label  : the label of the x-axis                    : str       :      :
+    ylabel : the label of the y-axis                    : str       :      :
+    yticks : range for the y-ticks                      : np.arange :      : 
+    dim    : tuple of the graph dimensions              : int       :      :
+    orient : orientation of the graph                   : str       : "v"  :
+    ci     : whether or not to add confidence interval  : Bool      : "sd" :
+    hue    : which column will be used for color-coding : str       :      :
 
     Description:
     ------------
@@ -364,18 +364,18 @@ def categorical_boxplots(df, x, columns, titles, labels, ylabels, ticks, dim, ro
     """
     Parameters:
     -----------
-    df      : dataframe source of the data         : dataframe :         :
-    x       : categorical column to be the x-axis  : str       :         :
-    columns : list of continuous columns           : str       :         :
-    title   : list the titles for each plot        : str       :         :
-    labels  : list of the xlabels for each plot    : str       :         :
-    ylabels : list of the ylabels for each plot    : str       :         :
-    ticks   : list of ranges for the y-ticks       : np.arange :         :
-    dim     : tuple of the dimensions of each plot : int       :         :
-    row     : how many rows will be generated      : int       :         :
-    col     : how many columns will be generated   : int       :         :
-    hue     : column to be used for color-coding   : str       :         :
-    orient  : orientation of each plot             : str       : "h"|"v" :
+    df      : dataframe source of the data         : dataframe :     :
+    x       : categorical column to be the x-axis  : str       :     :
+    columns : list of continuous columns           : str       :     :
+    title   : list the titles for each plot        : str       :     :
+    labels  : list of the xlabels for each plot    : str       :     :
+    ylabels : list of the ylabels for each plot    : str       :     :
+    ticks   : list of ranges for the y-ticks       : np.arange :     :
+    dim     : tuple of the dimensions of each plot : int       :     :
+    row     : how many rows will be generated      : int       :     :
+    col     : how many columns will be generated   : int       :     :
+    hue     : column to be used for color-coding   : str       :     :
+    orient  : orientation of each plot             : str       : "v" :
 
     Description:
     ------------
@@ -403,19 +403,19 @@ def categorical_violinplots(df, x, columns, titles, labels, ylabels, ticks, dim,
     """
     Parameters:
     -----------
-    df      : dataframe source of data                     : dataframe :
-    x       : categorical column to be the x-axis          : str       :
-    columns : list of numeric columns                      : str       :
-    titles  : list of the titles for each plot             : str       :
-    labels  : list of the xlabels for each plot            : str       :
-    ylabels : list of the ylabels for each plot            : str       :
-    ticks   : list of ranges for the x-ticks               : np.range  :
-    dim     : tuple of the dimensions of each plot         : int       :
-    row     : how many rows will be generated              : int       :
-    col     : how many columns will be generated           : int       :
-    hue     : column to be used for color-coding           : str       :
-    orient  : orientation of each plot                     : str       : "h"|"v"
-    split   : whether to not to spit each plot for the hue : Bool      :
+    df      : dataframe source of data                     : dataframe :     :
+    x       : categorical column to be the x-axis          : str       :     :
+    columns : list of numeric columns                      : str       :     :
+    titles  : list of the titles for each plot             : str       :     :
+    labels  : list of the xlabels for each plot            : str       :     :
+    ylabels : list of the ylabels for each plot            : str       :     :
+    ticks   : list of ranges for the x-ticks               : np.range  :     :
+    dim     : tuple of the dimensions of each plot         : int       :     :
+    row     : how many rows will be generated              : int       :     :
+    col     : how many columns will be generated           : int       :     :
+    hue     : column to be used for color-coding           : str       :     :
+    orient  : orientation of each plot                     : str       : "v" : 
+    split   : whether to not to spit each plot for the hue : Bool      :     :
 
     Descriptions:
     -------------
