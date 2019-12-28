@@ -360,7 +360,7 @@ def barplot(df, x, y, title, label, ylabel, ticks, dim, orient = "v", ci = False
     plt.yticks(ticks = ticks, size = 14)
     plt.tight_layout();
 
-def categorical_boxplots(df, x, columns, titles, labels, ylabels, ticks, dim, row, col, hue = None, orient = "h"):
+def categorical_boxplots(df, x, columns, titles, labels, ylabels, ticks, dim, row, col, hue = None, orient = "v"):
     """
     Parameters:
     -----------
@@ -375,7 +375,7 @@ def categorical_boxplots(df, x, columns, titles, labels, ylabels, ticks, dim, ro
     row     : how many rows will be generated      : int       :     :
     col     : how many columns will be generated   : int       :     :
     hue     : column to be used for color-coding   : str       :     :
-    orient  : orientation of each plot             : str       : "v" :
+    orient  : orientation of each plot             : str       : "h" :
 
     Description:
     ------------
@@ -399,7 +399,7 @@ def categorical_boxplots(df, x, columns, titles, labels, ylabels, ticks, dim, ro
     plt.tight_layout()
     plt.show();
 
-def categorical_violinplots(df, x, columns, titles, labels, ylabels, ticks, dim, row, col, hue = None, orient = "h", split = False):
+def categorical_violinplots(df, x, columns, titles, labels, ylabels, ticks, dim, row, col, hue = None, orient = "v", split = False):
     """
     Parameters:
     -----------
@@ -414,7 +414,7 @@ def categorical_violinplots(df, x, columns, titles, labels, ylabels, ticks, dim,
     row     : how many rows will be generated              : int       :     :
     col     : how many columns will be generated           : int       :     :
     hue     : column to be used for color-coding           : str       :     :
-    orient  : orientation of each plot                     : str       : "v" : 
+    orient  : orientation of each plot                     : str       : "h" : 
     split   : whether to not to spit each plot for the hue : Bool      :     :
 
     Descriptions:
