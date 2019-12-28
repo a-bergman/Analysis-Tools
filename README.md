@@ -53,7 +53,8 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 
 | Plot Type     | Numeric Data | Categorical Data | Description                                                       |
 |:---------------|:------------:|:----------------:|:-----------------------------------------------------------------|
-| 2D Histograms | ✓            |                  | Plots two continuous variables (best for large datasets)          |
+| 2D Histogram  | ✓            |                  | Plots two continuous variables (best for large datasets)          |
+| Bar Chart     |              | ✓                | Plots the frequency of a categorical variable                    |
 
 **Utilities**:
 
@@ -88,16 +89,13 @@ I am working on adding more plotly functions which are housed in a new file call
 
 **`graphs.py`**
 
-12/20/2019:
+12/28/2019:
 
-- Made `hue` default for `categorical_boxplots`
-- Fix `df = df` for `categorical_violinplots`
-- Updated appearance of docstrings
-- Made `ticks` a parameter for `barplot`
+- Updated the docstrings & other possible values for default parameters
 
 **`plotly_graphs.py`**
 
-12/22/2019:
+12/28/2019:
 
-- Added note about Pandas dataframe support for `table`
-- Added `h_fill` and `c_fill` as default parameters
+- Added `bar_chart` function
+- Removed an extra end bracket from `table`
