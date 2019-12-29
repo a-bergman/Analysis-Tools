@@ -1,7 +1,10 @@
 # Imports
 
 import plotly.io         as pio
+import plotly.express    as pex
 import plotly.graph_objs as go
+import numpy             as np
+import pandas            as pd
 
 # Setting basic graph appearance
 pio.templates.default = "simple_white"
@@ -55,6 +58,44 @@ def histogram_2d(x, y, df, title, xlabel, ylabel, xticks, yticks, ytitle = 0.9, 
                       xaxis_title = xlabel, yaxis_title = ylabel, width = width, height = height)
     fig.update_xaxes(tickvals = xticks, title_font = dict(size = 18),tickfont = dict(size = 14))
     fig.update_yaxes(tickvals = yticks, title_font = dict(size = 18),tickfont = dict(size = 14))
+    fig.show()
+
+def scatter_plot(df, x, y, width, height, title, xlabel, ylabel, xticks, yticks,  trend = "ols", trend_color = "rgb(0,0,0)", render = "auto", ytitle = 0.95, color = "rgb(31,119,180)"):
+    """
+    Parameters:
+    -----------
+    df          : dataframe source of data                                     : dataframe :               :
+    x           : data to be plotted on the xaxis                              : str       :               :
+    y           : data to be plotted on the yaxis                              : str       :               :
+    width       : width of the graph                                           : int       :               :
+    height      : height of the graph                                          : int       :               :
+    title       : title of the graph                                           : str       :               :
+    xlabel      : title for the xaxis                                          : str       :               :
+    ylabel      : title for the yaxis                                          : str       :               :
+    xticks      : ticks for the xaxis                                          : np.arange :               :
+    yticks      : ticks for the yaxis                                          : np.arange :               :
+    trend       : method for drawing the line of best fit                      : str       : "lowess"      :
+    trend_color : rgb color value for the line of best fit                     : str       :               :
+    render      : method for drawing the marks; `auto` chooses the best method : str       : "svg"|"webgl" :
+    ytitle      : how high above the graph to set the title                    : int       :               :
+    color       : rgb color value for the markers                              : str       :               :
+
+    Description:
+    ------------
+    Plots two continuous variables against each other and includes a line of best fit to help illustrate correlation.  
+    It uses `trend = "ols"` for linear data and `trend = "lowess"` for non-linear data.
+
+    Returns:
+    --------
+    Creates a scatter plot with a line of best fit with the input dimensions.
+
+    """
+    fig = pex.scatter(df, x = x, y = y, trendline = trend, trendline_color_override = trend_color, width = width, height = height, render_mode = render)
+    fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"), 
+                      xaxis_title = xlabel, yaxis_title = ylabel, font = dict(size = 18))
+    fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = xticks)
+    fig.update_yaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = yticks)
+    fig.update_traces(marker = dict(color = color))
     fig.show()
 
 # Categorical Data
