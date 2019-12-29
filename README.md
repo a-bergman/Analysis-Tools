@@ -53,8 +53,9 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 
 | Plot Type     | Numeric Data | Categorical Data | Description                                                       |
 |:---------------|:------------:|:----------------:|:-----------------------------------------------------------------|
-| 2D Histogram  | ✓            |                  | Plots two continuous variables (best for large datasets)          |
+| 2D Histogram  | ✓            |                  | Plots two numeric variables (best for large datasets)          |
 | Bar Chart     |              | ✓                | Plots the frequency of a categorical variable                    |
+| Scatter Plot  | ✓            |                  | Plots two numeric variables against each other
 
 **Utilities**:
 
@@ -96,7 +97,6 @@ I am working on adding more plotly functions which are housed in a new file call
 
 **`plotly_graphs.py`**
 
-12/28/2019:
+12/29/2019:
 
-- Added `bar_chart` function
-- Removed an extra end bracket from `table`
+- Added `scatter_plot`
