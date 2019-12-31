@@ -34,7 +34,7 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 | Box Plots     | ✓            | ✓               | Plots a box & whiskers plot for a numeric variable                 |
 | Count Plots   | ✓            | ✓               | Counts how many times a category appears in a categorical variable |
 | Heat Maps     | ✓            |                  | Creates a heat map of numeric variable correlations               |
-| Histograms    | ✓            |                  | Plots histograms for a continuous variable                        |  
+| Histograms    | ✓            |                  | Plots histograms for a numeric variable                           |  
 | 2D Histograms | ✓            |                  | Plots two continuous variables (best for large datasets)          |                   
 | KDE Plots     | ✓            |                  | Plots a kernel density estimate for a numeric variable            |
 | Scatter Plots | ✓            |                  | Plots two numeric variables against each other                    |
@@ -51,11 +51,13 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 
 **For EDA**:
 
-| Plot Type     | Numeric Data | Categorical Data | Description                                                       |
-|:---------------|:------------:|:----------------:|:-----------------------------------------------------------------|
-| 2D Histogram  | ✓            |                  | Plots two numeric variables (best for large datasets)          |
-| Bar Chart     |              | ✓                | Plots the frequency of a categorical variable                    |
-| Scatter Plot  | ✓            |                  | Plots two numeric variables against each other
+| Plot Type        | Numeric Data | Categorical Data | Description                                                       |
+|:-----------------|:------------:|:----------------:|:-----------------------------------------------------------------|
+| 2D Histogram     | ✓            |                  | Plots two numeric variables (best for large datasets)          |
+| Bar Chart        |              | ✓                | Plots the frequency of a categorical variable                    |
+| Histogram        | ✓            |                  | Plots a histogram for a numeric variable
+| Double Histogram | ✓            |                  | Plots 2 stacked or overlain histograms                           |
+| Scatter Plot     | ✓            |                  | Plots two numeric variables against each other                   |
 
 **Utilities**:
 
@@ -75,7 +77,7 @@ Pull requests are welcome, but for any major issues please open an issue first t
 # Road Map
 
 - Plotly scientific & statistical functions
-    - Caveat: Plotly graphs _cannot_ be displayed in GitHub, but they can be viewed in [nbviewer](https://nbviewer.jupyter.org/).
+    - Caveat: Plotly graphs _cannot_ be displayed in GitHub, but they can be viewed in [nbviewer](https://nbviewer.jupyter.org/github/a-bergman/Easy-Graphing/blob/master/Examples/Example%20Charts.ipynb).
 - Bokeh Interactive functions
 
 -----
@@ -97,6 +99,8 @@ I am working on adding more plotly functions which are housed in a new file call
 
 **`plotly_graphs.py`**
 
-12/29/2019:
+12/31/2019:
 
-- Added `scatter_plot`
+- Added `histogram` and `double_histogram`
+- Added info about default colors
+- Fixed `text = "Hypertension"` in `bar_plot` 
