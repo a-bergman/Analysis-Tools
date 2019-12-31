@@ -76,6 +76,45 @@ def histogram(df, x, width, height, bins, title, xlabel, ticks, hue = None, colo
     fig.update_yaxes(title_font = dict(size = 16), tickfont = dict(size = 14))
     fig.show()
 
+def double_histogram(data, names, texts, bins, title, width, height, xlabel, ticks, colors = ["rgb(31,119,180)", "rgb(180,93,31)"], mode = "overlay", ytitle = 0.9, ylabel = "Count", opacity = 0.65):
+    """
+    Parameters:
+    ----------
+    data    : list of series to be plotted                      : Series    :         :
+    names   : list of the names of each histogram in the legend : str       :         :
+    texts   : list of the names for hoverovers in the graph     : str       :         :
+    title   : title of the graph                                : str       :         :
+    width   : width of the graph                                : int       :         :
+    height  : height of the graph                               : int       :         :
+    xlabel  : label for the x axis                              : str       :         :
+    ticks   : ticks for the x axis                              : np.arange :         :
+    colors  : list of the color values for the two graphs       : str       :         :
+    mode    : how the two graphs will be displayed              : str       : "stack" :
+    ytitle  : how high above the graph to place the title       : float     :         :
+    ylabel  : label for the x axis                              : str       :         :
+    opacity : how opaque to make the two graphs                 : float     :         :
+
+    Description:
+    ------------
+    Takes two dataframe columns & overlays or stacks the histograms on top of each other.
+
+    Returns:
+    --------
+    A stacked or overlain histogram of two columns with input dimensions and bins.
+    """
+    layout = go.Layout(colorway = colors)
+    fig = go.Figure(layout = layout)
+    fig.add_trace(go.Histogram(x = data[0], name = names[0], text = texts[0], nbinsx = bins[0]))
+    fig.add_trace(go.Histogram(x = data[1], name = names[1], text = texts[1], nbinsx = bins[1]))
+    fig.update_layout(barmode = mode, xaxis_title = xlabel, yaxis_title = ylabel, width = width, 
+                      height = height, font = dict(size = 18), legend_orientation = "v", 
+                      title = dict(text = title, y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"),
+                      legend = dict(font = dict(size = 14), bordercolor = "black", borderwidth = 1))
+    fig.update_traces(opacity = opacity)
+    fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = ticks)
+    fig.update_yaxes(title_font = dict(size = 16), tickfont = dict(size = 14))
+    fig.show()
+
 def histogram_2d(x, y, df, title, xlabel, ylabel, xticks, yticks, ytitle = 0.9, width = 1000, height = 550, colorscale = "RdBu"):
     """
     Parameters:
