@@ -9,6 +9,21 @@ import pandas            as pd
 # Setting basic graph appearance
 pio.templates.default = "simple_white"
 
+# Color schema
+
+"""
+Default scolor is "rgb(31,119,180)"
+
+It's compliment is "rgb(180,93,31)"
+It's split compliments are "rgb(180,168,31)" and "rgb(180,31,43)"
+It's triadic colors are "rgb(118,180,31)" and "rgb(180,31,118)"
+It's tetradic colors are "rgb(180,93,31)", "rgb(93,31,180)", and "rgb(118,180,31)"
+
+[This](https://www.sessions.edu/color-calculator/) was used to determine the rgb values.
+"""
+
+# Docstring layout
+
 """
 
 The docstrings for each graph contain the following:
@@ -27,6 +42,39 @@ The only function which is not designed for multiple outputs is the KDE function
 """
 
 # Numeric Data
+
+def histogram(df, x, width, height, bins, title, xlabel, ticks, hue = None, color = ["rgb(31,119,180)"], ytitle = 0.95, ylabel = "Count"):
+    """
+    Parameters:
+    -----------
+    df     : dataframe source of data       : dataframe :      :
+    x      : dataframe column to be graphed : str       :      :
+    width  : width of the graph             : int       :      :
+    height : height of the graph            : int       :      :
+    bins   : number of bins to be generated : int       :      :
+    title  : title of the graph             : str       :      :
+    xlabel : label for the x axis           : str       :      :
+    ticks  : ticks for the x axis           : np.arange :      :
+    hue    : column to split the data on    : str       : None : 
+    color  : list of the histogram color    : str       :      :
+    ytitle : height of title above graph    : float     :      :
+    ylabel : label for the y axis           : str       :      :
+
+    Description:
+    ------------
+    Plots a histogram of a single dataframe column.  If `hue` is included, a second or more colors *must* be included.
+    See the default colors listed above for inspiration.
+
+    Returns:
+    -------
+    A single histogram with the input dimensions and number of bins
+    """
+    fig = pex.histogram(df, x = x, color = hue, width = width, height = height, color_discrete_sequence = color, nbins = bins, hover_data = df.columns)
+    fig.update_layout(title = dict(text    = title, y = ytitle, x = 0.5, yanchor = "top", xanchor = "center"),
+                      xaxis_title = xlabel, yaxis_title = ylabel, font = dict(size = 18))
+    fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = ticks)
+    fig.update_yaxes(title_font = dict(size = 16), tickfont = dict(size = 14))
+    fig.show()
 
 def histogram_2d(x, y, df, title, xlabel, ylabel, xticks, yticks, ytitle = 0.9, width = 1000, height = 550, colorscale = "RdBu"):
     """
@@ -77,7 +125,7 @@ def scatter_plot(df, x, y, width, height, title, xlabel, ylabel, xticks, yticks,
     trend       : method for drawing the line of best fit                      : str       : "lowess"      :
     trend_color : rgb color value for the line of best fit                     : str       :               :
     render      : method for drawing the marks; `auto` chooses the best method : str       : "svg"|"webgl" :
-    ytitle      : how high above the graph to set the title                    : int       :               :
+    ytitle      : how high above the graph to set the title                    : float     :               :
     color       : rgb color value for the markers                              : str       :               :
 
     Description:
@@ -114,7 +162,7 @@ def bar_chart(df, col, widths, width, height, title, xlabel, ticks, text_pos = "
     ticks    : ticks for the y axis                         : np.arange :                             :
     text_pos : position of the bar label                    : str       : "inside"|"outside"|"none"   :
     color    : rgb value for the color of the bars          : str       :                             :
-    ytitle   : height of the title above the plot           : int       :                             :
+    ytitle   : height of the title above the plot           : float     :                             :
     ylabel   : label for the y axis                         : str       :                             :
 
     Description:
