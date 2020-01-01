@@ -51,19 +51,21 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 
 **For EDA**:
 
-| Plot Type        | Numeric Data | Categorical Data | Description                                                       |
+| Plot Type        | Numeric Data | Categorical Data | Description                                                      |
 |:-----------------|:------------:|:----------------:|:-----------------------------------------------------------------|
-| 2D Histogram     | ✓            |                  | Plots two numeric variables (best for large datasets)          |
+| 2D Histogram     | ✓            |                  | Plots two numeric variables (best for large datasets)            |
 | Bar Chart        |              | ✓                | Plots the frequency of a categorical variable                    |
-| Histogram        | ✓            |                  | Plots a histogram for a numeric variable
+| Box plot         | ✓            |                  | Plots a box & whiskers plot for a numeric variable               |
 | Double Histogram | ✓            |                  | Plots 2 stacked or overlain histograms                           |
+| Histogram        | ✓            |                  | Plots a histogram for a numeric variable                         |
 | Scatter Plot     | ✓            |                  | Plots two numeric variables against each other                   |
+| Violin Plot      | ✓            |                  | Plots a violin plot for a numeric variable                       |
 
 **Utilities**:
 
 | Plot Type | Numeric Data | Categorical Data | Description |
-|:----------|:------------:|:----------------:|:---------------------------------------------------|
-| Table     | ✓           | ✓                | Creates a table for whatever data is inputted; best for distribution      |
+|:----------|:------------:|:----------------:|:---------------------------------------------------------------------|
+| Table     | ✓           | ✓                | Creates a table for whatever data is inputted; best for distribution |
 
 
 -----
