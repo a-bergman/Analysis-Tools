@@ -99,8 +99,6 @@ I am working on adding more plotly functions which are housed in a new file call
 
 **`plotly_graphs.py`**
 
-12/31/2019:
+1/1/2020:
 
-- Added `histogram` and `double_histogram`
-- Added info about default colors
-- Fixed `text = "Hypertension"` in `bar_plot` 
+- Added `bar_plot` and `violin_plot`
