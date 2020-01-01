@@ -147,6 +147,75 @@ def histogram_2d(x, y, df, title, xlabel, ylabel, xticks, yticks, ytitle = 0.9, 
     fig.update_yaxes(tickvals = yticks, title_font = dict(size = 18),tickfont = dict(size = 14))
     fig.show()
 
+def box_plot(df, y, width, height, title, ylabel, ticks, x = None, color = ["rgb(31,119,180)"], notch = False, orient = "v", ytitle = 0.95):
+    """
+    Parameters:
+    ----------
+    df     : dataframe source of data                      : dataframe :     :
+    y      : data to be plotted                            : str       :     :
+    width  : width of the graph                            : int       :     :
+    height : height of the graph                           : int       :     :
+    title  : title of the graph                            : str       :     :
+    ylabel : label for the y axis                          : str       :     :
+    ticks  : ticks for the y axis                          : np.arange :     :
+    x      : categorical column to divide the data by      : NoneType  : str :
+    color  : list of RGB color(s) for the box(es)          : str       :     :
+    notch  : whether or not to include a notch at the mean : Bool      :     :
+    orient : orientation for the graph                     : str       : "h" :
+    ytitle : height of the title above the graph           : float     :     :
+
+    Description:
+    ------------
+    Plots a vertical box plot of a single numeric source of data.
+    The `x` parameter will create a box-plot for each class.
+    If you wish to make a horizontal one, `x` and `y` *must* be swapped along with the orientation.
+
+    Returns:
+    --------
+    A single vertical histogram with the input dimensions
+    
+    """
+    fig = pex.box(df, y = y, x = x, width = width, height = height, color_discrete_sequence = color, notched = notch, orientation = orient)
+    fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, yanchor = "top", xanchor = "center"),
+                   yaxis_title = ylabel, font = dict(size = 18))
+    fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14))
+    fig.update_yaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = ticks)
+    fig.show()
+
+def violin_plot(df, y, width, height, title, ylabel, ticks, x = None, color = ["rgb(31,119,180)"], orient = "v", box = True, ytitle = 0.95):
+    """
+    Parameters:
+    -----------
+    df     : dataframe source of data                   : dataframe :     :
+    y      : data to be plotted                         : str       :     :
+    width  : width of the graph                         : int       :     :
+    height : height of the graph                        : int       :     :
+    title  : title of the graph                         : str       :     :
+    ylabel : title for the y axis                       : str       :     :
+    ticks  : ticks for the y axis                       : np.arange :     :
+    x      : categorical variable to divide the data by : NoneType  : str :
+    color  : RGB color of the graph                     : str       :     :
+    orient : orientation of the graph                   : str       : "h" :
+    box    : whether or not to include a boxplot        : Bool      :     :
+    ytitle : height of the title above the graph        : float     :     :
+
+    Description:
+    ------------
+    Plots a vertical violin plot of a single numeric source of data.
+    The `x` parameter will create a violin-plot for each class.
+    If you wish to make a horizontal one, `x` and `y` *must* be swapped along with the orientation.
+
+    Returns:
+    --------
+    A single vertical histogram with the input dimensions
+    """
+    fig = pex.violin(df, y = y, width = width, height = height, x = x, color_discrete_sequence = color, orientation = orient, box = True)
+    fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, yanchor = "top", xanchor = "center"),
+                   yaxis_title = ylabel, font = dict(size = 18))
+    fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = None)
+    fig.update_yaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = ticks)
+    fig.show()
+
 def scatter_plot(df, x, y, width, height, title, xlabel, ylabel, xticks, yticks,  trend = "ols", trend_color = "rgb(0,0,0)", render = "auto", ytitle = 0.95, color = "rgb(31,119,180)"):
     """
     Parameters:
