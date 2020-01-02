@@ -57,6 +57,7 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 | Bar Chart        |              | ✓                | Plots the frequency of a categorical variable                    |
 | Box plot         | ✓            |                  | Plots a box & whiskers plot for a numeric variable               |
 | Double Histogram | ✓            |                  | Plots 2 stacked or overlain histograms                           |
+| Heatmap          | ✓            |                  | Plots a heatmap for numeric data                                 |
 | Histogram        | ✓            |                  | Plots a histogram for a numeric variable                         |
 | Scatter Plot     | ✓            |                  | Plots two numeric variables against each other                   |
 | Violin Plot      | ✓            |                  | Plots a violin plot for a numeric variable                       |
@@ -101,6 +102,6 @@ I am working on adding more plotly functions which are housed in a new file call
 
 **`plotly_graphs.py`**
 
-1/1/2020:
+1/2/2020:
 
-- Added `bar_plot` and `violin_plot`
+- Added `heatmap`
