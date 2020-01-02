@@ -254,6 +254,38 @@ def scatter_plot(df, x, y, width, height, title, xlabel, ylabel, xticks, yticks,
     fig.update_traces(marker = dict(color = color))
     fig.show()
 
+def heatmap(df, cols, labels, width, height, title, zmax = 1, zmin = -1, scale = "RdBu", ytitle = 0.9):
+    """
+    Parameters:
+    -----------
+    df     : dataframe source of data                : dataframe :    :
+    cols   : list of numeric columns to be plotted   : str       :    :
+    labels : list of the labels for the x and y axes : str       :    :
+    width  : width of the graph                      : int       :    :
+    height : height of the graph                     : int       :    :
+    title  : title for the graph                     : str       :    :
+    zmax   : maximum value for the color scale       : int       :    :
+    zmin   : minimum value for the color scale       : int       :    :
+    scale  : color scale for the correlations        : str       :    :
+    ytitle : height of the title above the graph     : float     :    :
+
+    Descriptions:
+    -------------
+    Plots a heat map for a number of numeric columns: it colors the squares based on the strength of their correlation & includes the
+    correlation in the hover over; a color bar is included for reference.
+
+    Returns:
+    --------
+    A single heat map for a given number of numeric columns with the input dimensions
+    """
+    fig = go.Figure(data = go.Heatmap(z = df[cols].corr(), x = labels, y = labels, zmax = zmax, 
+                                      zmin = zmin, colorscale = scale, colorbar = dict(outlinewidth = 1)))
+    fig.update_layout(width = width, height = height, font = dict(size = 18),
+                      title = dict(text = title, y = ytitle, x = 0.5, yanchor = "top", xanchor = "center"))
+    fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14))
+    fig.update_yaxes(title_font = dict(size = 16), tickfont = dict(size = 14))
+    fig.show()
+
 # Categorical Data
 
 def bar_chart(df, col, widths, width, height, title, xlabel, ticks, text_pos = "auto", color = "rgb(31,119,180)", ytitle = 0.9, ylabel = "Count"):
