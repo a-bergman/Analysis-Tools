@@ -99,23 +99,24 @@ def kdeplots(df, cols, title, dim, colors, labels, xlabel, ylabel, ticks, shade 
     plt.xticks(ticks, size = 14)
     plt.yticks(size = 14)
     plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16);
-
-def boxplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
+def boxplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue = None, xlabel = None):
     """
     Parameters:
     -----------
-    df      : dataframe source of the data         : dataframe :     :
-    columns : list of the columns to be plotted    : str       :     :
-    titles  : list of titles for each plot         : str       :     :
-    ticks   : list of ranges for the x-ticks       : np.arange :     :
-    dim     : tuple of the dimensions of each plot : int       :     :
-    row     : how many rows will be generated      : int       :     :
-    col     : how many columns will be generated   : int       :     :
-    orient  : orientation of each plot             : str       : "v" :
-
+    df      : dataframe source of the data            : dataframe :     :
+    columns : list of the columns to be plotted       : str       :     :
+    x       : categorical column to subdivide data by : NoneType  :     :
+    titles  : list of titles for each plot            : str       :     :
+    ticks   : list of ranges for the x-ticks          : np.arange :     :
+    dim     : tuple of the dimensions of each plot    : int       :     :
+    row     : how many rows will be generated         : int       :     :
+    col     : how many columns will be generated      : int       :     :
+    hue     : categorical variable to divide data by  : NoneType  :     :
+    xlabel  : label for the x-axis                    : NoneType  :     :
+    
     Description:
     ------------
-    Plots boxplots for columns containing continuous data in a Pandas dataframe and gives the user greater customization for each plot.
+    Plots a vertical boxplots for columns containing continuous data in a Pandas dataframe and gives the user greater customization for each plot.
 
     Returns:
     --------
@@ -127,26 +128,30 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
         count += 1
         ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
-        sns.boxplot(x = column, data = df, orient = orient)
-        plt.xlabel(f"{labels[c]}", size = 16)
-        plt.xticks(ticks = ticks[c], size = 14)
-        plt.yticks(size = 14)
+        sns.boxplot(y = column, x = x, data = df, orient = "v", hue = hue)
+        plt.xlabel(xlabel = xlabel, size = 16)
+        plt.ylabel(f"{labels[c]}", size = 16)
+        plt.xticks(size = 14)
+        plt.yticks(ticks[c], size = 14)
     plt.tight_layout()
     plt.show();
 
-def violinplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h"):
+def violinplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue = None, split = False, xlabel = None):
     """
     Parameters:
-    -----------
-    df      : dataframe source of data             : dataframe :     :
-    columns : list of columns to be plotted        : str       :     :
-    titles  : list of titles for each plot         : str       :     :
-    labels  : list of the x-labels for each plot   : str       :     :
-    ticks   : list of ranges for the x-ticks       : np.range  :     :
-    dim     : tuple of the dimensions of each plot : int       :     :
-    row     : how many rows will be generated      : int       :     :
-    col     : how many columns will be generated   : int       :     :
-    orient  : orientation of each plot             : str       : "v" :
+    ----------- 
+    df      : dataframe source of data                   : dataframe    :     :
+    columns : list of columns to be plotted              : str          :     :
+    x       : categorical variable to divide data by     : NoneType     :     :
+    titles  : list of titles for each plot               : str          :     :
+    labels  : list of the y-labels for each plot         : str          :     :
+    ticks   : list of ranges for the x-ticks             : np.range     :     :
+    dim     : tuple of the dimensions of each plot       : int          :     :
+    row     : how many rows will be generated            : int          :     :
+    col     : how many columns will be generated         : int          :     :
+    hue     : categorical variable to divide the data by : NoneType     :     :
+    split   : whether or not to split the hue onto each side : Bool     :     :
+    xlabel  : label for the x axis                           : NoneType :     :
 
     Descriptions:
     -------------
@@ -163,12 +168,14 @@ def violinplots(df, columns, titles, labels, ticks, dim, row, col, orient = "h")
         count += 1
         ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
-        sns.violinplot(x = column, data = df, orient = orient)
-        plt.xlabel(f"{labels[c]}", size = 16)
-        plt.xticks(ticks = ticks[c], size = 14)
-        plt.yticks(size = 14)
+        sns.violinplot(y = column, x = x, data = df, hue = hue, split = split, orient = "v")
+        plt.xlabel(xlabel = xlabel, size = 16)
+        plt.ylabel(f"{labels[c]}", size = 16)
+        plt.xticks(size = 14)
+        plt.yticks(ticks = ticks[c], size = 14)
     plt.tight_layout()
     plt.show();
+
 
 def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col, mark = "*", color = "black", kws = {"color": "red"}, ci = None):
     """
@@ -359,86 +366,6 @@ def barplot(df, x, y, title, label, ylabel, ticks, dim, orient = "v", ci = False
     plt.xticks(size = 14)
     plt.yticks(ticks = ticks, size = 14)
     plt.tight_layout();
-
-def categorical_boxplots(df, x, columns, titles, labels, ylabels, ticks, dim, row, col, hue = None, orient = "v"):
-    """
-    Parameters:
-    -----------
-    df      : dataframe source of the data         : dataframe :     :
-    x       : categorical column to be the x-axis  : str       :     :
-    columns : list of continuous columns           : str       :     :
-    title   : list the titles for each plot        : str       :     :
-    labels  : list of the xlabels for each plot    : str       :     :
-    ylabels : list of the ylabels for each plot    : str       :     :
-    ticks   : list of ranges for the y-ticks       : np.arange :     :
-    dim     : tuple of the dimensions of each plot : int       :     :
-    row     : how many rows will be generated      : int       :     :
-    col     : how many columns will be generated   : int       :     :
-    hue     : column to be used for color-coding   : str       :     :
-    orient  : orientation of each plot             : str       : "h" :
-
-    Description:
-    ------------
-    Plots boxplots for columns containing continuous data in a Pandas dataframe and gives the user greater customization for each plot.
-
-    Returns:
-    --------
-    n number of categorical boxplots arranged by the input rows and columns.
-    """
-    count = 0
-    fig = plt.figure(figsize = dim, facecolor = "white")
-    for c, column in enumerate(columns):
-        count += 1
-        ax = fig.add_subplot(row, col, count)
-        plt.title(f"{titles[c]}", size = 18)
-        sns.boxplot(x = x, y = column, data = df, hue = hue, orient = orient)
-        plt.xlabel(f"{labels[c]}", size = 16)
-        plt.ylabel(f"{ylabels[c]}", size = 16)
-        plt.xticks(size = 14)
-        plt.yticks(ticks = ticks[c], size = 14)
-    plt.tight_layout()
-    plt.show();
-
-def categorical_violinplots(df, x, columns, titles, labels, ylabels, ticks, dim, row, col, hue = None, orient = "v", split = False):
-    """
-    Parameters:
-    -----------
-    df      : dataframe source of data                     : dataframe :     :
-    x       : categorical column to be the x-axis          : str       :     :
-    columns : list of numeric columns                      : str       :     :
-    titles  : list of the titles for each plot             : str       :     :
-    labels  : list of the xlabels for each plot            : str       :     :
-    ylabels : list of the ylabels for each plot            : str       :     :
-    ticks   : list of ranges for the x-ticks               : np.range  :     :
-    dim     : tuple of the dimensions of each plot         : int       :     :
-    row     : how many rows will be generated              : int       :     :
-    col     : how many columns will be generated           : int       :     :
-    hue     : column to be used for color-coding           : str       :     :
-    orient  : orientation of each plot                     : str       : "h" : 
-    split   : whether to not to spit each plot for the hue : Bool      :     :
-
-    Descriptions:
-    -------------
-    Plots violin plots for columns containing data in a Pandas dataframe and gives the user greater customization for each plot.
-    An improvement over the standard box plot in that it plots a kernel density plot of the points on the sides of each plot.
-
-    Returns:
-    --------
-    n number of violin plots arranged by the input rows and columns.
-    """
-    count = 0
-    fig = plt.figure(figsize = dim, facecolor = "white")
-    for c, column in enumerate(columns):
-        count += 1
-        ax = fig.add_subplot(row, col, count)
-        plt.title(f"{titles[c]}", size = 18)
-        sns.violinplot(x = x, y = column, data = df, hue = hue, orient = orient, split = split)
-        plt.xlabel(f"{labels[c]}", size = 16)
-        plt.ylabel(f"{ylabels[c]}", size = 16)
-        plt.xticks(size = 14)
-        plt.yticks(ticks = ticks[c], size = 14)
-    plt.tight_layout()
-    plt.show();
 
 # Evaluation Graphs
 
