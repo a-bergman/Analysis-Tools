@@ -100,7 +100,7 @@ def kdeplots(df, cols, title, dim, colors, labels, xlabel, ylabel, ticks, shade 
     plt.yticks(size = 14)
     plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16);
 
-def boxplots(df, columns, x, titles, labels, ticks, dim, row, col, x = None, orient = "v"):
+def boxplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue = None, xlabel = None):
     """
     Parameters:
     -----------
@@ -112,8 +112,9 @@ def boxplots(df, columns, x, titles, labels, ticks, dim, row, col, x = None, ori
     dim     : tuple of the dimensions of each plot    : int       :     :
     row     : how many rows will be generated         : int       :     :
     col     : how many columns will be generated      : int       :     :
-    orient  : orientation of each plot                : str       : "v" :
-
+    hue     : categorical variable to divide data by  : NoneType  :     :
+    xlabel  : label for the x-axis                    : NoneType  :     :
+    
     Description:
     ------------
     Plots a vertical boxplots for columns containing continuous data in a Pandas dataframe and gives the user greater customization for each plot.
@@ -128,27 +129,30 @@ def boxplots(df, columns, x, titles, labels, ticks, dim, row, col, x = None, ori
         count += 1
         ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
-        sns.boxplot(y = column, x = x, data = df, orient = orient)
-        plt.xlabel(f"{labels[c]}", size = 16)
-        plt.xticks(ticks = ticks[c], size = 14)
-        plt.yticks(size = 14)
+        sns.boxplot(y = column, x = x, data = df, orient = "v", hue = hue)
+        plt.xlabel(xlabel = xlabel, size = 16)
+        plt.ylabel(f"{labels[c]}", size = 16)
+        plt.xticks(size = 14)
+        plt.yticks(ticks[c], size = 14)
     plt.tight_layout()
     plt.show();
 
-def violinplots(df, columns, titles, labels, ticks, dim, row, col, x = None, orient = "v"):
+def violinplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue = None, split = False, xlabel = None):
     """
     Parameters:
-    -----------
-    df      : dataframe source of data               : dataframe :     :
-    columns : list of columns to be plotted          : str       :     :
-    x       : categorical variable to divide data by : NoneType  :     :
-    titles  : list of titles for each plot           : str       :     :
-    labels  : list of the x-labels for each plot     : str       :     :
-    ticks   : list of ranges for the x-ticks         : np.range  :     :
-    dim     : tuple of the dimensions of each plot   : int       :     :
-    row     : how many rows will be generated        : int       :     :
-    col     : how many columns will be generated     : int       :     :
-    orient  : orientation of each plot               : str       : "v" :
+    ----------- 
+    df      : dataframe source of data                   : dataframe    :     :
+    columns : list of columns to be plotted              : str          :     :
+    x       : categorical variable to divide data by     : NoneType     :     :
+    titles  : list of titles for each plot               : str          :     :
+    labels  : list of the y-labels for each plot         : str          :     :
+    ticks   : list of ranges for the x-ticks             : np.range     :     :
+    dim     : tuple of the dimensions of each plot       : int          :     :
+    row     : how many rows will be generated            : int          :     :
+    col     : how many columns will be generated         : int          :     :
+    hue     : categorical variable to divide the data by : NoneType     :     :
+    split   : whether or not to split the hue onto each side : Bool     :     :
+    xlabel  : label for the x axis                           : NoneType :     :
 
     Descriptions:
     -------------
@@ -165,10 +169,11 @@ def violinplots(df, columns, titles, labels, ticks, dim, row, col, x = None, ori
         count += 1
         ax = fig.add_subplot(row, col, count)
         plt.title(f"{titles[c]}", size = 18)
-        sns.violinplot(x = column, data = df, orient = orient)
-        plt.xlabel(f"{labels[c]}", size = 16)
-        plt.xticks(ticks = ticks[c], size = 14)
-        plt.yticks(size = 14)
+        sns.violinplot(y = column, x = x, data = df, hue = hue, split = split, orient = "v")
+        plt.xlabel(xlabel = xlabel, size = 16)
+        plt.ylabel(f"{labels[c]}", size = 16)
+        plt.xticks(size = 14)
+        plt.yticks(ticks = ticks[c], size = 14)
     plt.tight_layout()
     plt.show();
 
