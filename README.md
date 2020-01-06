@@ -95,10 +95,9 @@ I am working on adding more plotly functions which are housed in a new file call
 
 **`graphs.py`**
 
-12/28/2019:
+1/6/2019:
 
-- Updated the docstrings & other possible values for default parameters
-- Changed the default orient to `"v"` for `categorical_violinplots` and `categorical_boxplots`
+- Merged `categorical_violinplots` and `categorical_boxplots` with `violinplots` and `boxplots` respectively
 
 **`plotly_graphs.py`**
 
