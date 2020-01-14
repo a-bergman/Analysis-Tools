@@ -99,6 +99,7 @@ def kdeplots(df, cols, title, dim, colors, labels, xlabel, ylabel, ticks, shade 
     plt.xticks(ticks, size = 14)
     plt.yticks(size = 14)
     plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16);
+    
 def boxplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue = None, xlabel = None):
     """
     Parameters:

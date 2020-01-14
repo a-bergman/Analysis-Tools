@@ -11,8 +11,14 @@ pio.templates.default = "simple_white"
 
 # Color schema
 
+c_default             = ["rgb(31,119,180)"]
+c_complimentary       = ["rgb(31,119,180)", "rgb(180,93,31)"]
+c_split_complimentary = ["rgb(31,119,180)", "rgb(180,168,31)", "rgb(180,31,43)"]
+c_triadic             = ["rgb(31,119,180)", "rgb(118,180,31)", "rgb(180,31,118)"]
+c_tetradic            = ["rgb(31,119,180)", "rgb(180,93,31)", "rgb(93,31,180)", "rgb(118,180,31]"]
+
 """
-Default scolor is "rgb(31,119,180)"
+Default scolor is "rgb(3,119,180)"
 
 It's compliment is "rgb(180,93,31)"
 It's split compliments are "rgb(180,168,31)" and "rgb(180,31,43)"
@@ -40,6 +46,23 @@ Each function is designed to output n number of graphs where n > 1, but can outp
 The only function which is not designed for multiple outputs is the KDE function which only outputs a single graph of two columns.
 
 """
+
+def color_scheme(c_type, scheme = "default"):
+    if scheme == "default":
+        if c_type == "default":
+            print(f"The default color is: {c_default}.")
+        elif c_type == "complimentary":
+            print(f"The complimentary colors are: {c_complimentary[0]} & {c_complimentary[1]}.")
+        elif c_type == "split_complimentary":
+            print("The split complimentary colors are: {c_split_complimentary[0]}, {c_split_complimentary[1]}, & {c_split_complimentary[2]}.")
+        elif c_type == "triadic":
+            print(f"The triadic colors are: {c_triadic[0]}, {c_triadic[1]}, {c_triadic[2]}.")
+        elif c_type == "tetradic":
+            print(f"The tetradic colors are: {c_tetradic[0]}, {c_tetradic[1]}, {c_tetradic[2]}, & {c_tetradic[3]}")
+        else:
+            print("Please enter one of the following: default, complimentary, split_complimentary, triadic, or tetradic.")
+    else:
+        print("Please check your scheme input!")
 
 # Numeric Data
 
@@ -140,7 +163,7 @@ def histogram_2d(x, y, df, title, xlabel, ylabel, xticks, yticks, ytitle = 0.9, 
     --------
     Creates a single two-dimensional histogram with the input dimensions.
     """
-    fig = go.Figure(go.Histogram2d(x = df[x], y = df[y], colorscale = colorscale))
+    fig = go.Figure(go.Histogram2d(x = df[x], y = df[y], colorscale = colorscale, colorbar = dict(outlinewidth = 1)))
     fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"),
                       xaxis_title = xlabel, yaxis_title = ylabel, width = width, height = height)
     fig.update_xaxes(tickvals = xticks, title_font = dict(size = 18),tickfont = dict(size = 14))
