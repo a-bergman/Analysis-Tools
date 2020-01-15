@@ -45,7 +45,8 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 | Plot Type      | Numeric Data | Categorical Data | Description                                        |
 |:---------------|:------------:|:----------------:|:---------------------------------------------------|
 | Residual Plots | ✓            |                  | Plots regression residuals on the true values      |
-| ROC Curves     |              | ✓                | Plots an ROC curve with a AUROC score in the title |
+| ROC Curve      |              | ✓                | Plots an ROC curve with a AUROC score in the title |
+| PR Curve       |              | ✓                | Plots a PR curve with the average precision in the title |
 
 # `plotly_graphs` Contents
 
@@ -95,9 +96,9 @@ I am working on adding more plotly functions which are housed in a new file call
 
 **`graphs.py`**
 
-1/6/2019:
+1/15/2019:
 
-- Merged `categorical_violinplots` and `categorical_boxplots` with `violinplots` and `boxplots` respectively
+- Added `prc_curve`
 
 **`plotly_graphs.py`**
 
