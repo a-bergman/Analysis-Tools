@@ -81,7 +81,8 @@ Pull requests are welcome, but for any major issues please open an issue first t
 # Road Map
 
 - Plotly scientific & statistical functions
-    - Caveat: Plotly graphs _cannot_ be displayed in GitHub, but they can be viewed in [nbviewer](https://nbviewer.jupyter.org/github/a-bergman/Easy-Graphing/blob/master/Examples/Example%20Charts.ipynb).
+    - Caveat: Plotly graphs _cannot_ be displayed in GitHub, but they can be viewed either in [nbviewer](https://nbviewer.jupyter.org/github/a-bergman/Easy-Graphing/blob/master/Examples/Example%20Charts.ipynb) or if Jupyter notebooks are downloaded and distributed as .html files.
+
 - Bokeh Interactive functions
 
 -----
@@ -90,7 +91,9 @@ Pull requests are welcome, but for any major issues please open an issue first t
 
 Work is ongoing: I add or modify code as needed.
 
-I am working on adding more plotly functions which are housed in a new file called `plotly_graphs.py`.  While they are not ideal for use with GitHub, they are ideal for situations where you would be saving the images for use elsewhere.
+I am working on adding more plotly functions which are housed in a new file called `plotly_graphs.py`.
+
+I am also building out a module of supplemental classification, regression metrics, and an improved confusion matrix.  When that is uploaded to this repository, I will move the `roc_curve`, `prc_curve`, and `residualplots` to that module.  At some point further down the line, those evaluation functions will be translated into Plotly code as well.
 
 # Latest Updates
 
