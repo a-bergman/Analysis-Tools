@@ -4,13 +4,13 @@ A basic wrapper for Seaborn that has functions to create graphs and control thei
 
 -----
 
-# Motivation
+## Motivation
 
 When performing EDA in a Jupyter notebook, I found myself making the same types of graphs over and over.  I wondered how I could make it easier for myself to plot these graphs and how I could make the functions more dynamic.
 
 -----
 
-# Dependencies
+## Dependencies
 
 For these functions to run properly, you should have the following installed:
 
@@ -22,7 +22,7 @@ For these functions to run properly, you should have the following installed:
 
 -----
 
-# `graphs` Contents
+### `graphs` Contents
 
 There are two sets of graphs included in the .py file: graphs for EDA and graphs for model evaluation.
 
@@ -42,7 +42,7 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 
 -----
 
-# `plotly_graphs` Contents
+### `plotly_graphs` Contents
 
 **For EDA**:
 
@@ -65,7 +65,7 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 
 -----
 
-# `model_evaluation` Contents
+### `model_evaluation` Contents
 
 **Graphs**
 
@@ -101,13 +101,13 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 
 -----
 
-# Contributions
+## Contributions
 
 Pull requests are welcome, but for any major issues please open an issue first to discuss what needs to be changed.
 
 -----
 
-# Road Map
+## Road Map
 
 - Plotly scientific & statistical functions
     - Caveat: Plotly graphs _cannot_ be displayed in GitHub, but they can be viewed either in [nbviewer](https://nbviewer.jupyter.org/github/a-bergman/Easy-Graphing/blob/master/Examples/Example%20Charts.ipynb) or if Jupyter notebooks are downloaded and distributed as .html files.
@@ -116,13 +116,13 @@ Pull requests are welcome, but for any major issues please open an issue first t
 
 -----
 
-# Project Status
+## Project Status
 
 Work is ongoing: I add or modify code as needed.
 
 I finished building out a module of supplemental classification, regression metrics, and an improved confusion matrix.  I moved the `roc_curve`, `prc_curve`, and `residualplots` to that module.  At some point further down the line, those evaluation functions will be translated into Plotly code as well.
 
-# Latest Updates
+## Latest Updates
 
 **`graphs.py`**
 
