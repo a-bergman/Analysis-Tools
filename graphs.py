@@ -9,7 +9,6 @@ from sklearn.metrics     import precision_recall_curve
 
 # Setting the basic appearance for the graphs
 
-# For Seaborn
 sns.set(style = "white", palette = "deep")
 
 """
@@ -142,18 +141,18 @@ def violinplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue
     """
     Parameters:
     ----------- 
-    df      : dataframe source of data                   : dataframe    :     :
-    columns : list of columns to be plotted              : str          :     :
-    x       : categorical variable to divide data by     : NoneType     :     :
-    titles  : list of titles for each plot               : str          :     :
-    labels  : list of the y-labels for each plot         : str          :     :
-    ticks   : list of ranges for the x-ticks             : np.range     :     :
-    dim     : tuple of the dimensions of each plot       : int          :     :
-    row     : how many rows will be generated            : int          :     :
-    col     : how many columns will be generated         : int          :     :
-    hue     : categorical variable to divide the data by : NoneType     :     :
-    split   : whether or not to split the hue onto each side : Bool     :     :
-    xlabel  : label for the x axis                           : NoneType :     :
+    df      : dataframe source of data                       : dataframe :     :
+    columns : list of columns to be plotted                  : str       :     :
+    x       : categorical variable to divide data by         : NoneType  :     :
+    titles  : list of titles for each plot                   : str       :     :
+    labels  : list of the y-labels for each plot             : str       :     :
+    ticks   : list of ranges for the x-ticks                 : np.range  :     :
+    dim     : tuple of the dimensions of each plot           : int       :     :
+    row     : how many rows will be generated                : int       :     :
+    col     : how many columns will be generated             : int       :     :
+    hue     : categorical variable to divide the data by     : NoneType  :     :
+    split   : whether or not to split the hue onto each side : Bool      :     :
+    xlabel  : label for the x axis                           : NoneType  :     :
 
     Descriptions:
     -------------
@@ -368,118 +367,3 @@ def barplot(df, x, y, title, label, ylabel, ticks, dim, orient = "v", ci = False
     plt.xticks(size = 14)
     plt.yticks(ticks = ticks, size = 14)
     plt.tight_layout();
-
-# Evaluation Graphs
-
-def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "darkorange", baseline_color = "darkblue"):
-    """
-    Parameters:
-    -----------
-    model_prob     : the model used for prediction        :               : :
-    X_test         : the X values                         : np.ndarray    : :
-    y_test         : true y values                        : np.ndarray    : :
-    y_predicted    : the model predictions                : np.ndarray    : :
-    title          : title of the graph                   : str           : :
-    dim            : tuple of the dimensions of the graph : int           : :
-    roc_color      : color value of the ROC curve         : str           : :
-    baseline_color : color value of the baseline          : str           : :
-
-    Descriptions:
-    -------------
-    Plots a Receiver Operating Characteristic for a model and includes the AUROC score in the title.
-
-    Returns:
-    --------
-    Creates a ROC graph for a given model's predictions and allows for appearance control.
-
-    Credit:
-    -------
-    This code was modified from code written by Matt Brems during our lesson on classification metrics.
-    """
-    model_prob = [i[0] for i in model_prob.predict_proba(X_test)]
-    model_pred_df = pd.DataFrame({"true_values": y_test, "pred_probs": model_prob})
-    thresholds = np.linspace(0, 1, 500) 
-    def true_positive_rate(df, true_col, pred_prob_col, threshold):
-        true_positive = df[(df[true_col] == 1) & (df[pred_prob_col] >= threshold)].shape[0]
-        false_negative = df[(df[true_col] == 1) & (df[pred_prob_col] < threshold)].shape[0]
-        return true_positive / (true_positive + false_negative)
-    def false_positive_rate(df, true_col, pred_prob_col, threshold):
-        true_negative = df[(df[true_col] == 0) & (df[pred_prob_col] <= threshold)].shape[0]
-        false_positive = df[(df[true_col] == 0) & (df[pred_prob_col] > threshold)].shape[0]
-        return 1 - (true_negative / (true_negative + false_positive))
-    tpr_values = [true_positive_rate(model_pred_df, "true_values", "pred_probs", prob) for prob in thresholds]
-    fpr_values = [false_positive_rate(model_pred_df, "true_values", "pred_probs", prob) for prob in thresholds]
-    plt.figure(figsize = dim, facecolor = "white")
-    plt.plot(fpr_values, tpr_values, color = roc_color, label = "ROC Curve")
-    plt.plot(np.linspace(0, 1, 500), np.linspace(0, 1, 500), color = baseline_color, label = "Baseline")
-    rocauc_score = round(roc_auc_score(y_test, y_predicted), 5)
-    plt.title(f"{title} With A Score of {rocauc_score}", fontsize = 18)
-    plt.ylabel("Sensitivity", size = 16)
-    plt.xlabel("1 - Specificity", size = 16)
-    plt.xticks(size = 14)
-    plt.yticks(size = 14)
-    plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16)
-    plt.tight_layout()
-
-def prc_curve(model_proba, y_true, y_predicted, dim, model_name, ns_line = "--", ns_color = "navy", prc_color = "darkorange"):
-    """
-    model_proba : probabilities generated by the model : list : np.ndarray : :
-    y_true      : true y values                               : np.ndarray : :
-    y_predicted : predicted y values                          : np.ndarray : :
-    dim         : tuple of the graph's dimensions             : int        : :
-    model_name  : name for the model used to make predictions : str        : :
-    ns_line     : line style for the no skill predictor       : str        : :
-    ns_color    : color for the no skill line predictor       : str        : :
-    prc_color   : color for the prc curve line                : str        : : 
-    """
-    no_skill = len(y_true[y_true == 1]) / len(y_true)
-    ap = average_precision_score(y_true, y_predicted)
-    precision, recall, threshold = precision_recall_curve(y_true = y_true, probas_pred = np.array(model_proba[:,1]), pos_label = 1)
-    plt.figure(figsize = (dim), facecolor = "white")
-    plt.step([0,1], [no_skill, no_skill], label = "No Skill", linestyle = ns_line, color = ns_color)
-    plt.step(recall, precision, label = "KNN", color = prc_color)
-    plt.title(f"PRC For {model_name.capitalize()} With An AP Of {round(ap,2)}", size = 18)
-    plt.xlabel("Recall", size = 16)
-    plt.xticks(size = 14)
-    plt.ylabel("Precision", size = 16)
-    plt.yticks(size = 14)
-    plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16)
-    plt.tight_layout();
-
-def residualplots(df, columns, x, dim, titles, row, col, xlabel = "Actual", ylabel = "Predicted"):
-    """
-    Parameters:
-    -----------
-    df      : dataframe source of residuals      : dataframe :  :
-    columns : list of the predicted columns      : str       : :
-    x       : the actual values                  : str       : :
-    dim     : tuple of each plot's dimensions    : int       : :
-    titles  : list of titles for each plot       : str       : :
-    row     : how many rows will be generated    : int       : :
-    col     : how many columns will be generated : int       : :
-    xlabel  : label of the x-axis                : str       : :
-    ylabel  : label of the y-axis                : str       : :
-
-    Description:
-    ------------
-    This function is designed to be used with a dataframe of the residuals. 
-    
-    It plots the actual y-values on the x-axis and the predicted on the y-axis.
-
-    Returns:
-    --------
-    n number of residual plots arranged by the rows and columns.
-    """
-    count = 0
-    fig   = plt.figure(figsize = dim, facecolor = "white")
-    for c, column in enumerate(columns):
-        count += 1
-        ax = fig.add_subplot(row, col, count)
-        plt.title(f"{titles[c]}", size = 18)
-        sns.residplot(x = x, y = column, data = df)
-        plt.xlabel(f"{xlabel}", size = 16)
-        plt.ylabel(f"{ylabel}", size = 16)
-        plt.xticks(size = 14)
-        plt.yticks(size = 14)
-    plt.tight_layout();
-    plt.show();
