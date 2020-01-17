@@ -40,13 +40,7 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 | Scatter Plots | ✓            |                  | Plots two numeric variables against each other                    |
 | Violin Plots  | ✓            | ✓               | Plots a density estimate on top of a box plot                      |
 
-**For Model Evaluation**:
-
-| Plot Type      | Numeric Data | Categorical Data | Description                                        |
-|:---------------|:------------:|:----------------:|:---------------------------------------------------|
-| Residual Plots | ✓            |                  | Plots regression residuals on the true values      |
-| ROC Curve      |              | ✓                | Plots an ROC curve with a AUROC score in the title |
-| PR Curve       |              | ✓                | Plots a PR curve with the average precision in the title |
+-----
 
 # `plotly_graphs` Contents
 
@@ -67,8 +61,43 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 
 | Plot Type | Numeric Data | Categorical Data | Description |
 |:----------|:------------:|:----------------:|:---------------------------------------------------------------------|
-| Table     | ✓           | ✓                | Creates a table for whatever data is inputted; best for distribution |
+| Table     | ✓           | ✓                | Creates a table for whatever data is inputted; best for distribution  |
 
+-----
+
+# `model_evaluation` Contents
+
+**Graphs**
+
+| Plot Type                | Numeric Data | Categorical Data | Description                                                           |
+|:-------------------------|:------------:|:----------------:|:----------------------------------------------------------------------|
+| Precision-Recall Curve   |              | ✓                | Plots a precision-recall curve from a model's predicted probabilities |
+| ROC Curve                |              | ✓                | Plots a ROC curve from a model's predicted probabilities              |
+| Residual Plots           | ✓            |                  | Plots the residuals from a single or multiple model's probabilities   |
+
+
+**Metrics**
+
+| Metric                    | Classification | Regression | Description                                                      |
+|:--------------------------|:--------------:|:----------:|:-----------------------------------------------------------------|
+| Adjusted R<sup>2</sup>    |                | ✓          | The R<sup>2</sup> score adjusted for the number of features in X |
+| Negative Predictive Value | ✓              |            | Percentage of correctly predicted negatives out of all negatives |
+| Specificity               | ✓              |            | Percentage of correctly predicted negative predictions           |
+
+**Summaries**
+
+| Summary                    | Description                                                                                          |
+|:---------------------------|:-----------------------------------------------------------------------------------------------------|
+| Classification Summary     | Calculates the recall, specificity, Matthews correlation coefficient, and AUROC score in a dataframe |
+| Confusion Matrix Dataframe | Converts scikit-learn's `confusion_matrix` into a dataframe                                          |
+| Regression Summary         | Calculates the RMSE, MAE, R<sup>2</sup>, & Adjusted<sup>2</sip> in a dataframe                       |
+| Scaled Regression Summary  | Calculates the RMSE, MAE, & R<sup>2</sup> for scaled data in a dataframe                             |
+
+**Statistics**
+
+| Statistic        | Data Type      | Description                                                                                                  |
+|:-----------------|:--------------:|:-------------------------------------------------------------------------------------------------------------|
+| Point Biserial r | Binary-Numeric | Creates a dataframe containing the point biserial r coefficients and p-values for binary & numeric variables |
 
 -----
 
@@ -91,20 +120,24 @@ Pull requests are welcome, but for any major issues please open an issue first t
 
 Work is ongoing: I add or modify code as needed.
 
-I am working on adding more plotly functions which are housed in a new file called `plotly_graphs.py`.
-
-I am also building out a module of supplemental classification, regression metrics, and an improved confusion matrix.  When that is uploaded to this repository, I will move the `roc_curve`, `prc_curve`, and `residualplots` to that module.  At some point further down the line, those evaluation functions will be translated into Plotly code as well.
+I finished building out a module of supplemental classification, regression metrics, and an improved confusion matrix.  I moved the `roc_curve`, `prc_curve`, and `residualplots` to that module.  At some point further down the line, those evaluation functions will be translated into Plotly code as well.
 
 # Latest Updates
 
 **`graphs.py`**
 
-1/15/2019:
+1/17/2019:
 
-- Added `prc_curve`
+- Moved `prc_curve`, `roc_curve`, and `residualplots` to `model_evaluation.ipynb`
 
 **`plotly_graphs.py`**
 
 1/2/2020:
 
 - Added `heatmap`
+
+**`model_evaluation.py`**
+
+1/17/2019:
+
+- Added file
