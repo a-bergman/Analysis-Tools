@@ -98,7 +98,7 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 | Statistic          | Data Type               | Description                                                                                                  |
 |:-------------------|:-----------------------:|:-------------------------------------------------------------------------------------------------------------|
 | Point Biserial r   | Binary-Numeric          | Creates a dataframe containing the point biserial r coefficients and p-values for binary & numeric variables |
-| $/chi$<sup>2</sup> | Categorical-Categorical | Creates a dataframe containing the $/chi$<sup>2</sup> statistic, p-values, and degrees of freedom for two categorical variables |
+| χ<sup>2</sup>      | Categorical-Categorical | Creates a dataframe containing the χ<sup>2</sup> statistic, p-values, and degrees of freedom for two categorical variables |
 
 -----
 
