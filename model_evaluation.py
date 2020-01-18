@@ -225,13 +225,53 @@ def pointbiserialr_dataframe(df, x, y):
     Generates a list of point-biserial r coefficients and accompanying p-values for a **binary** variable and numeric variables.
     This correlation test assumes that the binary variable is _naturally_ binary _not_ artificially binary, i.e pass/fail.
 
+    Null Hypothesis:
+    ----------------
+    There variables are independant.
+
     Returns:
-    A dataframe with two columns: the float point-biserial r coefficient and the corresponding p-value rounded to 5 places.
+    A dataframe with two columns: the float point-biserial r coefficient (a float from -1 to 1) and the corresponding p-value rounded to 5 places.
     """
     pbr_coef = [round(pointbiserialr(x = df[x], y = df[i])[0],5) for i in y]
     pbr_pval = [round(pointbiserialr(x = df[x], y = df[i])[1],5) for i in y]
-    pbr_dataframe = pd.DataFrame([pbr_coef, pbr_pval], index = ["Corr. Coef.", "P-Value"]).T
+    pbr_dataframe = pd.DataFrame([pbr_coef, pbr_pval], 
+                                 index = ["Corr. Coef.", "P-Value"]).T
     return pbr_dataframe
+
+def chi_squared_dataframe(df, x, y):
+    """
+    Parameters:
+    -----------
+    df : dataframe source of data : DataFrame             : :
+    x  : name of categorical variable to be correlated to : :
+    y  : list of categorical variables to correlated to x : :
+
+    Description:
+    ------------
+    Generates a list of chi squared statistics, corresponding p-values, and degrees of freedom for pairs of categorical variables.
+
+    Null Hypothesis:
+    ----------------
+    The variables are independant.
+    
+    Returns:
+    --------
+    A dataframe with three columns, the chi squared statistic (a float from 0 to +∞), the accompanying p-value, and the degrees of freedom.  They are all rounded
+    to 5 decimal places.
+    """
+    chi2_coefs = []
+    chi2_pvals = []
+    chi2_dofs  = []
+    for col in y:
+        ct = pd.crosstab(df[x], df[col])
+        chi2 = chi2_contingency(ct)
+        chi2_coefs.append(round(chi2[0],5))
+        chi2_pvals.append(round(chi2[1],5))
+        chi2_dofs.append(round(chi2[2],5))
+    chi2_df = pd.DataFrame([chi2_coefs, chi2_pvals, chi2_dofs], 
+                           index = ["Coefficient", "P Value", "DOF"], 
+                           columns = [col.capitalize() for col in columns]).T
+    return chi2_df
 
 # Evaluation Graphs
 
