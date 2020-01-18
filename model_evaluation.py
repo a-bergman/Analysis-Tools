@@ -98,7 +98,7 @@ def negative_predictive_value(y_true, y_predicted):
     """
     Parameters:
     -----------
-    y           : the true value  s       : np.ndarray : :
+    y_true      : the true value  s       : np.ndarray : :
     y_predicted : the model's predictions : np.ndarray : :
 
     Description:
@@ -342,10 +342,11 @@ def prc_curve(model_proba, y_true, y_predicted, dim, model_name, ns_line = "--",
 
     Description:
     ------------
+    Plots a precision-recall curve for a model and includes the average precision score in the title.
 
     Returns:
     --------
-    
+    Creates a  graph for a given model's predictions and allows for appearance control.
     """
     no_skill = len(y_true[y_true == 1]) / len(y_true)
     ap = average_precision_score(y_true, y_predicted)
