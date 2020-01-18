@@ -1,14 +1,11 @@
 # Imports 
-
 import pandas            as pd
 import seaborn           as sns
 import numpy             as np
 import matplotlib.pyplot as plt
-from sklearn.metrics     import roc_auc_score, average_precision_score
-from sklearn.metrics     import precision_recall_curve
+
 
 # Setting the basic appearance for the graphs
-
 sns.set(style = "white", palette = "deep")
 
 """
@@ -27,6 +24,7 @@ Each function is designed to output n number of graphs where n > 1, but can outp
 The only function which is not designed for multiple outputs is the KDE function which only outputs a single graph of two columns.
 
 """
+
 # Numeric Graphs
 
 def histograms(df, columns, titles, labels, ylabel, ticks, dim, row, col):
