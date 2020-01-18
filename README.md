@@ -90,14 +90,15 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 |:---------------------------|:-----------------------------------------------------------------------------------------------------|
 | Classification Summary     | Calculates the recall, specificity, Matthews correlation coefficient, and AUROC score in a dataframe |
 | Confusion Matrix Dataframe | Converts scikit-learn's `confusion_matrix` into a dataframe                                          |
-| Regression Summary         | Calculates the RMSE, MAE, R<sup>2</sup>, & Adjusted<sup>2</sip> in a dataframe                       |
+| Regression Summary         | Calculates the RMSE, MAE, R<sup>2</sup>, & Adjusted<sup>2</sup> in a dataframe                       |
 | Scaled Regression Summary  | Calculates the RMSE, MAE, & R<sup>2</sup> for scaled data in a dataframe                             |
 
 **Statistics**
 
-| Statistic        | Data Type      | Description                                                                                                  |
-|:-----------------|:--------------:|:-------------------------------------------------------------------------------------------------------------|
-| Point Biserial r | Binary-Numeric | Creates a dataframe containing the point biserial r coefficients and p-values for binary & numeric variables |
+| Statistic          | Data Type               | Description                                                                                                  |
+|:-------------------|:-----------------------:|:-------------------------------------------------------------------------------------------------------------|
+| Point Biserial r   | Binary-Numeric          | Creates a dataframe containing the point biserial r coefficients and p-values for binary & numeric variables |
+| $\chi$<sup>2</sup> | Categorical-Categorical | Creates a dataframe containing the $\chi$<sup>2</sup> statistic, p-values, and degrees of freedom for two categorical variables |
 
 -----
 
@@ -138,6 +139,6 @@ I finished building out a module of supplemental classification, regression metr
 
 **`model_evaluation.py`**
 
-1/17/2019:
+1/18/2019:
 
-- Added file
+- Added `chi_squared_dataframe` and added null hypothesis to the docstrings
