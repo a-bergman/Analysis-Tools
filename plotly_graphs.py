@@ -1,5 +1,4 @@
 # Imports
-
 import plotly.io         as pio
 import plotly.express    as pex
 import plotly.graph_objs as go
@@ -10,7 +9,6 @@ import pandas            as pd
 pio.templates.default = "simple_white"
 
 # Color schema
-
 c_default             = ["rgb(31,119,180)"]
 c_complimentary       = ["rgb(31,119,180)", "rgb(180,93,31)"]
 c_split_complimentary = ["rgb(31,119,180)", "rgb(180,168,31)", "rgb(180,31,43)"]
@@ -70,18 +68,18 @@ def histogram(df, x, width, height, bins, title, xlabel, ticks, hue = None, colo
     """
     Parameters:
     -----------
-    df     : dataframe source of data       : dataframe :      :
-    x      : dataframe column to be graphed : str       :      :
-    width  : width of the graph             : int       :      :
-    height : height of the graph            : int       :      :
-    bins   : number of bins to be generated : int       :      :
-    title  : title of the graph             : str       :      :
-    xlabel : label for the x axis           : str       :      :
-    ticks  : ticks for the x axis           : np.arange :      :
-    hue    : column to split the data on    : str       : None : 
-    color  : list of the histogram color    : str       :      :
-    ytitle : height of title above graph    : float     :      :
-    ylabel : label for the y axis           : str       :      :
+    df     : dataframe source of data       : dataframe :     :
+    x      : dataframe column to be graphed : str       :     :
+    width  : width of the graph             : int       :     :
+    height : height of the graph            : int       :     :
+    bins   : number of bins to be generated : int       :     :
+    title  : title of the graph             : str       :     :
+    xlabel : label for the x axis           : str       :     :
+    ticks  : ticks for the x axis           : np.arange :     :
+    hue    : column to split the data on    : None      : str : 
+    color  : list of the histogram color    : str       :     :
+    ytitle : height of title above graph    : float     :     :
+    ylabel : label for the y axis           : str       :     :
 
     Description:
     ------------
