@@ -202,7 +202,7 @@ def classification_summary(y_true, y_predicted):
     a dataframe.  Accuracy is not included because it is not really that informative.
     """
     sen = recall_score(y, y_predicted)
-    spe = specificity(y, y_predited)
+    spe = specificity(y, y_predicted)
     mcc = matthews_corrcoef(y, y_predicted)
     auc = roc_auc_score(y, y_predicted)
     binary_classification_summary = pd.DataFrame([acc, sen, spe, mcc, auc], 
@@ -212,13 +212,14 @@ def classification_summary(y_true, y_predicted):
 
 # Statistics
 
-def pointbiserialr_dataframe(df, x, y):
+def pointbiserialr_dataframe(df, x, y, columns):
     """
     Parameters:
     -----------
-    df : the dataframe source of data      : DataFrame : :
-    x  : column with binary data           : str       : :
-    y  : list of columns with numeric data : str       : :
+    df      : the dataframe source of data                 : DataFrame : :
+    x       : column with binary data                      : str       : :
+    y       : list of columns with numeric data            : str       : :
+    columns : list of columns to be named in the dataframe : str       : :
 
     Description:
     ------------
@@ -230,15 +231,47 @@ def pointbiserialr_dataframe(df, x, y):
     There variables are independant.
 
     Returns:
-    A dataframe with two columns: the float point-biserial r coefficient (a float from -1 to 1) and the corresponding p-value rounded to 5 places.
+    --------
+    A dataframe with two columns: the float point-biserial r coefficient (a float from -1 to 1) and the corresponding p-value; both are rounded to 
+    5 decimal places.
     """
     pbr_coef = [round(pointbiserialr(x = df[x], y = df[i])[0],5) for i in y]
     pbr_pval = [round(pointbiserialr(x = df[x], y = df[i])[1],5) for i in y]
     pbr_dataframe = pd.DataFrame([pbr_coef, pbr_pval], 
-                                 index = ["Corr. Coef.", "P-Value"]).T
+                                 index = ["Corr. Coef.", "P-Value"],
+                                 columns = columns).T
     return pbr_dataframe
 
-def chi_squared_dataframe(df, x, y):
+def pearsonr_dataframe(df, x, y, columns):
+    """
+    Parameters:
+    -----------
+    df      : dataframe source of data                     : DataFrame : :
+    x       : column to find correlations against          : str       : :
+    y       : list of columns to be correlated against x   : str       : :
+    columns : list of columns to be named in the dataframe : str       : :
+
+    Description:
+    ------------
+    Generates a list of Pearson's r correlation coefficients and accompanying p-values for two numeric variables.
+
+    Null Hypothesis:
+    ----------------
+    There is no correlation between two numeric variables
+
+    Returns:
+    --------
+    A dataframe with two columns: the float Pearson's r coefficient (a float from -1 to 1) and the corresponding p-value; both are rounded to 
+    5 decimal placs.
+    """
+    r_coef = [round(pearsonr(x = df[x], y = df[i])[0],5) for i in y]
+    r_pval = [round(pearsonr(x = df[x], y = df[i])[1],5) for i in y]
+    p_r_df = pd.DataFrame([r_coef, r_pval],
+                          index = ["Corr. Coef.", "P-Value"],
+                          columns = columns).T
+    return pr_df
+
+def chisquared_dataframe(df, x, y, columns):
     """
     Parameters:
     -----------
@@ -270,7 +303,7 @@ def chi_squared_dataframe(df, x, y):
         chi2_dofs.append(round(chi2[2],5))
     chi2_df = pd.DataFrame([chi2_coefs, chi2_pvals, chi2_dofs], 
                            index = ["Coefficient", "P Value", "DOF"], 
-                           columns = [col.capitalize() for col in columns]).T
+                           columns = columns).T
     return chi2_df
 
 # Evaluation Graphs
