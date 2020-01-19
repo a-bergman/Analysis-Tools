@@ -275,9 +275,10 @@ def chisquared_dataframe(df, x, y, columns):
     """
     Parameters:
     -----------
-    df : dataframe source of data : DataFrame             : :
-    x  : name of categorical variable to be correlated to : :
-    y  : list of categorical variables to correlated to x : :
+    df      : dataframe source of data : DataFrame             : DataFrame : :
+    x       : name of categorical variable to be correlated to : str       : :
+    y       : list of categorical variables to correlated to x : str       : :
+    columns : list of columns to be named in the dataframe     : str       : :
 
     Description:
     ------------
