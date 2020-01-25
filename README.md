@@ -93,7 +93,7 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 | **Regression Summary**         | Calculates the RMSE, MAE, R<sup>2</sup>, & Adjusted<sup>2</sup> in a dataframe                       |
 | **Scaled Regression Summary**  | Calculates the RMSE, MAE, & R<sup>2</sup> for scaled data in a dataframe                             |
 
-**Statistics**
+### `stat_functions` Contents
 
 | Statistic              | Data Type               | Description                                                                                                     |
 |:-----------------------|:-----------------------:|:----------------------------------------------------------------------------------------------------------------|
@@ -141,6 +141,12 @@ I finished building out a module of supplemental classification, regression metr
 
 **`model_evaluation.py`**
 
-1/19/2019:
+1/25/2019:
 
-- Added `pearsonr_dataframe` and updated all statistical functions to include `columns` as an argument
+- Removed statistical functions
+
+**`stat_functions.py`**
+
+1/25/2019:
+
+- Created & added file
