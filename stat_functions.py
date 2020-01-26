@@ -56,7 +56,7 @@ def pearsonr_dataframe(df, x, y, columns):
     r_pval = [round(pearsonr(x = df[x], y = df[i])[1],5) for i in y]
     pval_sig = ["True" if i < 0.05 else "False" for i in r_pval]
     pr_df = pd.DataFrame([r_coef, r_pval, pval_sig],
-                         index = ["Corr. Coef.", "P-Value", "Significant"],
+                         index = ["Coefficient", "P-Value", "Significant"],
                          columns = columns).T
     return pr_df
 
@@ -89,7 +89,7 @@ def pointbiserialr_dataframe(df, x, y, columns):
     pbr_pval = [round(pointbiserialr(x = df[x], y = df[i])[1],5) for i in y]
     pval_sig = ["True" if i < 0.05 else "False" for i in pbr_pval]
     pbr_dataframe = pd.DataFrame([pbr_coef, pbr_pval, pval_sig], 
-                                 index = ["Corr. Coef.", "P-Value", "Significant"],
+                                 index = ["Coefficient.", "P-Value", "Significant"],
                                  columns = columns).T
     return pbr_dataframe
 
@@ -128,6 +128,6 @@ def chisquared_dataframe(df, x, y, columns):
         chi2_dofs.append(round(chi2[2],5))
     pval_sig = ["True" if i < 0.05 else "False" for i in chi2_pvals]
     chi2_df = pd.DataFrame([chi2_coefs, chi2_pvals, pval_sig, chi2_dofs], 
-                           index = ["Coefficient", "P Value", "Significant", "DOF"], 
+                           index = ["Statistic", "P Value", "Significant", "DOF"], 
                            columns = columns).T
     return chi2_df
