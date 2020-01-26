@@ -113,7 +113,7 @@ Pull requests are welcome, but for any major issues please open an issue first t
 ## Road Map
 
 - Plotly scientific & statistical functions
-    - Caveat: Plotly graphs _cannot_ be displayed in GitHub, but they can be viewed either in [nbviewer](https://nbviewer.jupyter.org/github/a-bergman/Easy-Graphing/blob/master/Examples/Example%20Charts.ipynb) or if Jupyter notebooks are downloaded and distributed as .html files.
+    - Caveat: Plotly graphs _cannot_ be displayed in GitHub, but they can be viewed either in [nbviewer](https://nbviewer.jupyter.org/github/a-bergman/Analysis-Tools/blob/master/Example%20Charts.ipynb) or if Jupyter notebooks are downloaded and distributed as .html files.
 
 - Bokeh Interactive functions
 
@@ -149,4 +149,4 @@ I finished building out a module of supplemental classification, regression metr
 
 1/25/2019:
 
-- Created & added file
+- Added p-value interpretation to all dataframes & changed dataframe headers
