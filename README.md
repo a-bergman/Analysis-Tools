@@ -147,6 +147,6 @@ I finished building out a module of supplemental classification, regression metr
 
 **`stat_functions.py`**
 
-1/25/2019:
+1/27/2019:
 
-- Added p-value interpretation to all dataframes & changed dataframe headers
+- Added `p = 0.05` as a default parameter to all functions & updated docstrings to reflect the `Significant` column in each dataframe.
