@@ -30,7 +30,7 @@ either to add a metric that does not exist or to improve something does already 
   
 # Numeric - Numeric Data
 
-def pearsonr_dataframe(df, x, y, columns):
+def pearsonr_dataframe(df, x, y, columns, p = 0.05):
     """
     Parameters:
     -----------
@@ -38,6 +38,7 @@ def pearsonr_dataframe(df, x, y, columns):
     x       : column to find correlations against          : str       : :
     y       : list of columns to be correlated against x   : str       : :
     columns : list of columns to be named in the dataframe : str       : :
+    p       : p-value threshold for significance           : int       : :
 
     Description:
     ------------
@@ -49,12 +50,12 @@ def pearsonr_dataframe(df, x, y, columns):
 
     Returns:
     --------
-    A dataframe with two columns: the float Pearson's r coefficient (a float from -1 to 1) and the corresponding p-value; both are rounded to 
-    5 decimal placs.
+    A dataframe with three columns: the float Pearson's r coefficient (a float from -1 to 1), the corresponding p-value, and the significance of the
+    p-value.  The coefficient and p-value are both rounded to 5 decimal placs.
     """
     r_coef = [round(pearsonr(x = df[x], y = df[i])[0],5) for i in y]
     r_pval = [round(pearsonr(x = df[x], y = df[i])[1],5) for i in y]
-    pval_sig = ["True" if i < 0.05 else "False" for i in r_pval]
+    pval_sig = ["True" if i < p else "False" for i in r_pval]
     pr_df = pd.DataFrame([r_coef, r_pval, pval_sig],
                          index = ["Coefficient", "P-Value", "Significant"],
                          columns = columns).T
@@ -62,7 +63,7 @@ def pearsonr_dataframe(df, x, y, columns):
 
 # Numeric - Binary Data
 
-def pointbiserialr_dataframe(df, x, y, columns):
+def pointbiserialr_dataframe(df, x, y, columns, p = 0.05):
     """
     Parameters:
     -----------
@@ -70,6 +71,7 @@ def pointbiserialr_dataframe(df, x, y, columns):
     x       : column with binary data                      : str       : :
     y       : list of columns with numeric data            : str       : :
     columns : list of columns to be named in the dataframe : str       : :
+    p       : p-value threshold for signifiance            : int       : :
 
     Description:
     ------------
@@ -82,12 +84,12 @@ def pointbiserialr_dataframe(df, x, y, columns):
 
     Returns:
     --------
-    A dataframe with two columns: the float point-biserial r coefficient (a float from -1 to 1) and the corresponding p-value; both are rounded to 
-    5 decimal places.
+    A dataframe with three columns: the float point-biserial r coefficient (a float from -1 to 1), the corresponding p-value, and the significance
+    of the p-value.  Both the coefficient and p-value are rounded to 5 decimal places.
     """
     pbr_coef = [round(pointbiserialr(x = df[x], y = df[i])[0],5) for i in y]
     pbr_pval = [round(pointbiserialr(x = df[x], y = df[i])[1],5) for i in y]
-    pval_sig = ["True" if i < 0.05 else "False" for i in pbr_pval]
+    pval_sig = ["True" if i < p else "False" for i in pbr_pval]
     pbr_dataframe = pd.DataFrame([pbr_coef, pbr_pval, pval_sig], 
                                  index = ["Coefficient.", "P-Value", "Significant"],
                                  columns = columns).T
@@ -95,7 +97,7 @@ def pointbiserialr_dataframe(df, x, y, columns):
 
 # Categorical - Categorical Data
 
-def chisquared_dataframe(df, x, y, columns):
+def chisquared_dataframe(df, x, y, columns, p = 0.05):
     """
     Parameters:
     -----------
@@ -103,6 +105,7 @@ def chisquared_dataframe(df, x, y, columns):
     x       : name of categorical variable to be correlated to : str       : :
     y       : list of categorical variables to correlated to x : str       : :
     columns : list of columns to be named in the dataframe     : str       : :
+    p       : p-value threshold for significance               : int       : :
 
     Description:
     ------------
@@ -114,8 +117,8 @@ def chisquared_dataframe(df, x, y, columns):
     
     Returns:
     --------
-    A dataframe with three columns, the chi squared statistic (a float from 0 to +∞), the accompanying p-value, and the degrees of freedom.  They are all rounded
-    to 5 decimal places.
+    A dataframe with four columns, the chi squared statistic (a float from 0 to +∞), the accompanying p-value, signifiance of the p-value,
+    and the degrees of freedom. The statistic and p-value are rounded to 5 decimal places.
     """
     chi2_coefs = []
     chi2_pvals = []
@@ -126,7 +129,7 @@ def chisquared_dataframe(df, x, y, columns):
         chi2_coefs.append(round(chi2[0],5))
         chi2_pvals.append(round(chi2[1],5))
         chi2_dofs.append(round(chi2[2],5))
-    pval_sig = ["True" if i < 0.05 else "False" for i in chi2_pvals]
+    pval_sig = ["True" if i < p else "False" for i in chi2_pvals]
     chi2_df = pd.DataFrame([chi2_coefs, chi2_pvals, pval_sig, chi2_dofs], 
                            index = ["Statistic", "P Value", "Significant", "DOF"], 
                            columns = columns).T
