@@ -90,7 +90,7 @@ def specificity(y_true, y_predicted):
     --------
     The specificity score: a floating point number between 0 and 1
     """
-    tn,fp,tp,fn = confusion_matrix(y, y_pred).ravel()
+    tn,fp,tp,fn = confusion_matrix(y_true, y_pred).ravel()
     return tn / (tn + fp)
 
 def negative_predictive_value(y_true, y_predicted):
@@ -108,7 +108,7 @@ def negative_predictive_value(y_true, y_predicted):
     --------
     The specificity score: a floating point number between 0 and 1
     """
-    tn,fp,tp,fn = confusion_matrix(y, y_pred).ravel()
+    tn,fp,tp,fn = confusion_matrix(y_true, y_pred).ravel()
     return tn / (tn + fn)
 
 # Regression summaries
