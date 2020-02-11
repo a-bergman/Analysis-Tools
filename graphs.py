@@ -25,6 +25,11 @@ The only function which is not designed for multiple outputs is the KDE function
 
 """
 
+# TO DO: I'm planning to eventually come up
+#        with a function that would graph
+#        the explained variance ration from
+#        sklearn's PCA algorithm
+
 # Numeric Graphs
 
 def histograms(df, columns, titles, labels, ylabel, ticks, dim, row, col):
