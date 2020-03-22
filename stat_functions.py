@@ -56,9 +56,7 @@ def pearsonr_dataframe(df, x, y, columns, p = 0.05):
     r_coef = [round(pearsonr(x = df[x], y = df[i])[0],5) for i in y]
     r_pval = [round(pearsonr(x = df[x], y = df[i])[1],5) for i in y]
     pval_sig = ["True" if i < p else "False" for i in r_pval]
-    pr_df = pd.DataFrame([r_coef, r_pval, pval_sig],
-                         index = ["Coefficient", "P-Value", "Significant"],
-                         columns = columns).T
+    pr_df = pd.DataFrame([r_coef, r_pval, pval_sig], index = ["Coefficient", "P-Value", "Significant"], columns = columns).T
     return pr_df
 
 # Numeric - Binary Data
@@ -90,9 +88,7 @@ def pointbiserialr_dataframe(df, x, y, columns, p = 0.05):
     pbr_coef = [round(pointbiserialr(x = df[x], y = df[i])[0],5) for i in y]
     pbr_pval = [round(pointbiserialr(x = df[x], y = df[i])[1],5) for i in y]
     pval_sig = ["True" if i < p else "False" for i in pbr_pval]
-    pbr_dataframe = pd.DataFrame([pbr_coef, pbr_pval, pval_sig], 
-                                 index = ["Coefficient.", "P-Value", "Significant"],
-                                 columns = columns).T
+    pbr_dataframe = pd.DataFrame([pbr_coef, pbr_pval, pval_sig], index = ["Coefficient.", "P-Value", "Significant"], columns = columns).T
     return pbr_dataframe
 
 # Categorical - Categorical Data
@@ -130,7 +126,5 @@ def chisquared_dataframe(df, x, y, columns, p = 0.05):
         chi2_pvals.append(round(chi2[1],5))
         chi2_dofs.append(round(chi2[2],5))
     pval_sig = ["True" if i < p else "False" for i in chi2_pvals]
-    chi2_df = pd.DataFrame([chi2_coefs, chi2_pvals, pval_sig, chi2_dofs], 
-                           index = ["Statistic", "P Value", "Significant", "DOF"], 
-                           columns = columns).T
+    chi2_df = pd.DataFrame([chi2_coefs, chi2_pvals, pval_sig, chi2_dofs], index = ["Statistic", "P Value", "Significant", "DOF"], columns = columns).T
     return chi2_df

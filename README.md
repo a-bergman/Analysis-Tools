@@ -141,9 +141,9 @@ I finished building out a module of supplemental classification, regression metr
 
 **`model_evaluation.py`**
 
-1/25/2019:
+2/9/2019:
 
-- Removed statistical functions
+- Changed `y` to `y_true` to fix an error with `specificity` and `negative_predictive_power`
 
 **`stat_functions.py`**
 

@@ -6,9 +6,6 @@ This file contains two types of functions:
 
 The functions that provide metrics not currently found in `sklearn.metrics come before the summaries.
 """
-# TO DO: I'm planning on adding a graph
-#        that would visualize the tree
-#        from a tree-based algorithm
  
 #  Standard Imports
 
