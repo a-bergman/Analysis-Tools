@@ -5,11 +5,14 @@ This module contains functions that render statistics and corresponding p-values
 """
 
 #  Standard Imports
-import pandas        as pd
+import pandas    as pd
+import numpy     as np
 
 # Stastical Imports
-from scipy.stats import pearsonr, pointbiserialr
-from scipy.stats import chi2_contingency
+from scipy.stats                          import pearsonr, pointbiserialr
+from scipy.stats                          import chi2_contingency
+from mlxtend.evaluate                     import mcnemar_table
+from statsmodels.stats.contingency_tables import mcnemar
 
 """
 
@@ -30,7 +33,7 @@ either to add a metric that does not exist or to improve something does already 
   
 # Numeric - Numeric Data
 
-def pearsonr_dataframe(df, x, y, columns, p = 0.05):
+def pearsonr_dataframe(df, x, y, columns, alpha = 0.05):
     """
     Parameters:
     -----------
@@ -55,13 +58,13 @@ def pearsonr_dataframe(df, x, y, columns, p = 0.05):
     """
     r_coef = [round(pearsonr(x = df[x], y = df[i])[0],5) for i in y]
     r_pval = [round(pearsonr(x = df[x], y = df[i])[1],5) for i in y]
-    pval_sig = ["True" if i < p else "False" for i in r_pval]
+    pval_sig = ["True" if i < alpha else "False" for i in r_pval]
     pr_df = pd.DataFrame([r_coef, r_pval, pval_sig], index = ["Coefficient", "P-Value", "Significant"], columns = columns).T
     return pr_df
 
 # Numeric - Binary Data
 
-def pointbiserialr_dataframe(df, x, y, columns, p = 0.05):
+def pointbiserialr_dataframe(df, x, y, columns, alpha = 0.05):
     """
     Parameters:
     -----------
@@ -87,13 +90,13 @@ def pointbiserialr_dataframe(df, x, y, columns, p = 0.05):
     """
     pbr_coef = [round(pointbiserialr(x = df[x], y = df[i])[0],5) for i in y]
     pbr_pval = [round(pointbiserialr(x = df[x], y = df[i])[1],5) for i in y]
-    pval_sig = ["True" if i < p else "False" for i in pbr_pval]
+    pval_sig = ["True" if i < alpha else "False" for i in pbr_pval]
     pbr_dataframe = pd.DataFrame([pbr_coef, pbr_pval, pval_sig], index = ["Coefficient.", "P-Value", "Significant"], columns = columns).T
     return pbr_dataframe
 
 # Categorical - Categorical Data
 
-def chisquared_dataframe(df, x, y, columns, p = 0.05):
+def chisquared_dataframe(df, x, y, columns, alpha = 0.05):
     """
     Parameters:
     -----------
@@ -125,6 +128,61 @@ def chisquared_dataframe(df, x, y, columns, p = 0.05):
         chi2_coefs.append(round(chi2[0],5))
         chi2_pvals.append(round(chi2[1],5))
         chi2_dofs.append(round(chi2[2],5))
-    pval_sig = ["True" if i < p else "False" for i in chi2_pvals]
+    pval_sig = ["True" if i < alpha else "False" for i in chi2_pvals]
     chi2_df = pd.DataFrame([chi2_coefs, chi2_pvals, pval_sig, chi2_dofs], index = ["Statistic", "P Value", "Significant", "DOF"], columns = columns).T
     return chi2_df
+
+def mcnemars_dataframe(y_true, preds_1, preds_2, index, columns):
+    """
+    Parameters:
+    -----------
+    y_true  : the actual values                                      : Series :
+    preds_1 : the first classification model to be compared          : Series :
+    preds_2 : the second classification mdoel to be compared         : Series :
+    index   : list of index labels for the dataframe                 : str    :
+    columns : list of column labels for the dataframe                : str    :
+
+    Description:
+    ------------
+    Generates a contingency for a McNemar's test.
+
+    Returns:
+    --------
+    A dataframe containing the correct and incorrect predictions for 2 models which allows for the calculation of McNemar's chi-squared statistic.
+    """
+    tb = mcnemar_table(y_target = y_true, y_model1 = preds_1, y_model2 = preds_2)
+    mcnemars_dataframe = pd.DataFrame(tb, index = index, columns = columns)
+    return mcnemars_dataframe
+
+def mcnemars_test(a, b, alpha = 0.05, exact = False):
+    """
+    Parameters:
+    -----------
+    a     : the first classification model                                    : Series : :
+    b     : the second classification model                                   : Series : :
+    alpha : the value used to judge significance                              : float  : :
+    exact : whether or not to use a binomial distribution to find the p-value : Bool   : :
+
+    Description:
+    ------------
+    Generates McNemar's chi-squared statistic, the associated p-value, and an interpretation of the p-value for two classification model
+
+    Null Hypothesis:
+    ----------------
+    The two classifiers are identical, i.e. the disagreement is the same.
+
+    Returns:
+    --------
+    A dataframe containing McNemar's chi-squared statistic, the associated p-value, and the p-values interpretation.
+
+    """
+    if len(a) > 25 and len(b) > 25:
+        ct = pd.crosstab(a,b)
+        result = mcnemar(ct, exact = exact)
+        stat = round(result.statistic,3)
+        pval = round(result.pvalue,5)
+        pval_sig = "True" if pval < alpha else "False"
+        mcnemar_df = pd.DataFrame([stat, pval, pval_sig], index = ["Statistic", "P-Value", "Interpretation"], columns = ["Values"]).T 
+        return mcnemar_df
+    else:
+        print("If the number of values is <25, please set `Exact = True`.")
