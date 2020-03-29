@@ -18,6 +18,7 @@ For these functions to run properly, you should have the following installed:
 - Matplotlib.pyplot
 - Numpy
 - Scikit-learn
+- Statsmodels
 - Plotly
 
 -----
@@ -95,11 +96,13 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 
 ### `stat_functions` Contents
 
-| Statistic              | Data Type               | Description                                                                                                     |
-|:-----------------------|:-----------------------:|:----------------------------------------------------------------------------------------------------------------|
-| **χ<sup>2</sup>**      | Categorical-Categorical | Creates a dataframe with the χ<sup>2</sup> stats., p-values, & degrees of freedom for two categorical variables |
-| **Pearson's r**        | Numeric-Numeric         | Creates a dataframe with the Pearson's r coefs. and p-values for two numeric variables                          |
-| **Point Biserial r**   | Binary-Numeric          | Creates a dataframe with the point biserial r coefs. and p-values for binary & numeric variables                |
+| Statistic               | Data Type               | Description                                                                                                     |
+|:------------------------|:-----------------------:|:----------------------------------------------------------------------------------------------------------------|
+| **χ<sup>2</sup>**       | Categorical-Categorical | Creates a dataframe with the χ<sup>2</sup> stats., p-values, & degrees of freedom for two categorical variables |
+| **McNemar's Test**      | Categorical-Categorical | Creates a dataframe with McNemar's test statistic, p-value, & interpretation of the p-value for two classifiers |
+| **McNemar's Dataframe** | Categorical-Categorical | Creates a dataframe of the McNemar's contingency table                                                          |
+| **Pearson's r**         | Numeric-Numeric         | Creates a dataframe with the Pearson's r coefs. and p-values for two numeric variables                          |
+| **Point Biserial r**    | Binary-Numeric          | Creates a dataframe with the point biserial r coefs. and p-values for binary & numeric variables                |
 
 
 -----
@@ -112,9 +115,6 @@ Pull requests are welcome, but for any major issues please open an issue first t
 
 ## Road Map
 
-- Plotly scientific & statistical functions
-    - Caveat: Plotly graphs _cannot_ be displayed in GitHub, but they can be viewed either in [nbviewer](https://nbviewer.jupyter.org/github/a-bergman/Analysis-Tools/blob/master/Example%20Charts.ipynb) or if Jupyter notebooks are downloaded and distributed as .html files.
-
 - Bokeh Interactive functions
 
 -----
@@ -123,7 +123,7 @@ Pull requests are welcome, but for any major issues please open an issue first t
 
 Work is ongoing: I add or modify code as needed.
 
-I finished building out a module of supplemental classification, regression metrics, and an improved confusion matrix.  I moved the `roc_curve`, `prc_curve`, and `residualplots` to that module.  At some point further down the line, those evaluation functions will be translated into Plotly code as well.
+I am focusing on statistical functions at the moment, but I am open to adding more visualization functions as well.
 
 ## Latest Updates
 
@@ -141,12 +141,13 @@ I finished building out a module of supplemental classification, regression metr
 
 **`model_evaluation.py`**
 
-2/9/2019:
+2/9/2020:
 
 - Changed `y` to `y_true` to fix an error with `specificity` and `negative_predictive_power`
 
 **`stat_functions.py`**
 
-1/27/2019:
+3/29/2020:
 
-- Added `p = 0.05` as a default parameter to all functions & updated docstrings to reflect the `Significant` column in each dataframe.
+- Changed the `p` parameter to `alpha`; the default value of `alpha = 0.05` stays the same
+- Added `mcnemars_dataframe` and `mcnemars_test` to aid in judging two classification models
