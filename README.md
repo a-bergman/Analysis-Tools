@@ -19,7 +19,8 @@ For these functions to run properly, you should have the following installed:
 - Numpy
 - Scikit-learn
 - Statsmodels
-- Plotly
+- [Plotly](https://plotly.com/python/)
+- [Mlxtend](http://rasbt.github.io/mlxtend/)
 
 -----
 
