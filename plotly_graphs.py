@@ -1,9 +1,10 @@
 # Imports
-import plotly.io         as pio
-import plotly.express    as pex
-import plotly.graph_objs as go
-import numpy             as np
-import pandas            as pd
+import numpy                 as np
+import pandas                as pd
+import plotly.io             as pio
+import plotly.express        as pex
+import plotly.figure_factory as ff
+import plotly.graph_objs     as go
 
 # Setting basic graph appearance
 pio.templates.default = "simple_white"
@@ -44,6 +45,8 @@ Each function is designed to output n number of graphs where n > 1, but can outp
 The only function which is not designed for multiple outputs is the KDE function which only outputs a single graph of two columns.
 
 """
+
+# TO DO: Update the `table` function
 
 def color_scheme(c_type, scheme = "default"):
     if scheme == "default":
@@ -90,10 +93,13 @@ def histogram(df, x, width, height, bins, title, xlabel, ticks, hue = None, colo
     -------
     A single histogram with the input dimensions and number of bins
     """
+    # Defining the basic figure
     fig = pex.histogram(df, x = x, color = hue, width = width, height = height, color_discrete_sequence = color, nbins = bins, hover_data = df.columns)
-    fig.update_layout(title = dict(text    = title, y = ytitle, x = 0.5, yanchor = "top", xanchor = "center"),
-                      xaxis_title = xlabel, yaxis_title = ylabel, font = dict(size = 18))
+    # Adding the title & labels
+    fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, yanchor = "top", xanchor = "center"), xaxis_title = xlabel, yaxis_title = ylabel, font = dict(size = 18))
+    # Formating the x-axis
     fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = ticks)
+    # Formating the y-axis
     fig.update_yaxes(title_font = dict(size = 16), tickfont = dict(size = 14))
     fig.show()
 
@@ -123,16 +129,22 @@ def double_histogram(data, names, texts, bins, title, width, height, xlabel, tic
     --------
     A stacked or overlain histogram of two columns with input dimensions and bins.
     """
+    # Setting & applying the color scheme
     layout = go.Layout(colorway = colors)
     fig = go.Figure(layout = layout)
+    # Adding the first histogram & setting basic the appearance
     fig.add_trace(go.Histogram(x = data[0], name = names[0], text = texts[0], nbinsx = bins[0]))
+    # Adding the second histogram & setting basic the appearance
     fig.add_trace(go.Histogram(x = data[1], name = names[1], text = texts[1], nbinsx = bins[1]))
+    # Setting labels & the title
     fig.update_layout(barmode = mode, xaxis_title = xlabel, yaxis_title = ylabel, width = width, 
                       height = height, font = dict(size = 18), legend_orientation = "v", 
                       title = dict(text = title, y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"),
                       legend = dict(font = dict(size = 14), bordercolor = "black", borderwidth = 1))
     fig.update_traces(opacity = opacity)
+    # Formatting the x-axis
     fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = ticks)
+    # Formatting the y-axis
     fig.update_yaxes(title_font = dict(size = 16), tickfont = dict(size = 14))
     fig.show()
 
@@ -161,10 +173,13 @@ def histogram_2d(x, y, df, title, xlabel, ylabel, xticks, yticks, ytitle = 0.9, 
     --------
     Creates a single two-dimensional histogram with the input dimensions.
     """
+    # Setting the basic figure appearance
     fig = go.Figure(go.Histogram2d(x = df[x], y = df[y], colorscale = colorscale, colorbar = dict(outlinewidth = 1)))
-    fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"),
-                      xaxis_title = xlabel, yaxis_title = ylabel, width = width, height = height)
+    # Adding the title & labels
+    fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"), xaxis_title = xlabel, yaxis_title = ylabel, width = width, height = height)
+    # Formatting the x-axis
     fig.update_xaxes(tickvals = xticks, title_font = dict(size = 18),tickfont = dict(size = 14))
+    # Formatting the y-axis
     fig.update_yaxes(tickvals = yticks, title_font = dict(size = 18),tickfont = dict(size = 14))
     fig.show()
 
@@ -196,10 +211,13 @@ def box_plot(df, y, width, height, title, ylabel, ticks, x = None, color = ["rgb
     A single vertical histogram with the input dimensions
     
     """
+    # Setting the basic figure
     fig = pex.box(df, y = y, x = x, width = width, height = height, color_discrete_sequence = color, notched = notch, orientation = orient)
-    fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, yanchor = "top", xanchor = "center"),
-                   yaxis_title = ylabel, font = dict(size = 18))
+    # Adding the title & labels
+    fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, yanchor = "top", xanchor = "center"), yaxis_title = ylabel, font = dict(size = 18))
+    # Formatting the x-axis
     fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14))
+    # Formatting the y-axis
     fig.update_yaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = ticks)
     fig.show()
 
@@ -230,10 +248,13 @@ def violin_plot(df, y, width, height, title, ylabel, ticks, x = None, color = ["
     --------
     A single vertical histogram with the input dimensions
     """
+    # Setting the basic figure
     fig = pex.violin(df, y = y, width = width, height = height, x = x, color_discrete_sequence = color, orientation = orient, box = True)
-    fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, yanchor = "top", xanchor = "center"),
-                   yaxis_title = ylabel, font = dict(size = 18))
+    # Adding the title & labels
+    fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, yanchor = "top", xanchor = "center"), yaxis_title = ylabel, font = dict(size = 18))
+    # Formatting the x-axis
     fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = None)
+    # Formatting the y-axis
     fig.update_yaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = ticks)
     fig.show()
 
@@ -267,11 +288,15 @@ def scatter_plot(df, x, y, width, height, title, xlabel, ylabel, xticks, yticks,
     Creates a scatter plot with a line of best fit with the input dimensions.
 
     """
+    # Setting the basic figure
     fig = pex.scatter(df, x = x, y = y, trendline = trend, trendline_color_override = trend_color, width = width, height = height, render_mode = render)
-    fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"), 
-                      xaxis_title = xlabel, yaxis_title = ylabel, font = dict(size = 18))
+    # Adding the title & labes
+    fig.update_layout(title = dict(text = title, y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"), xaxis_title = xlabel, yaxis_title = ylabel, font = dict(size = 18))
+    # Formatting the x-axis
     fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = xticks)
+    # Formatting the y-axis
     fig.update_yaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = yticks)
+    # Adding the line of best fit
     fig.update_traces(marker = dict(color = color))
     fig.show()
 
@@ -299,11 +324,13 @@ def heatmap(df, cols, labels, width, height, title, zmax = 1, zmin = -1, scale =
     --------
     A single heat map for a given number of numeric columns with the input dimensions
     """
-    fig = go.Figure(data = go.Heatmap(z = df[cols].corr(), x = labels, y = labels, zmax = zmax, 
-                                      zmin = zmin, colorscale = scale, colorbar = dict(outlinewidth = 1)))
-    fig.update_layout(width = width, height = height, font = dict(size = 18),
-                      title = dict(text = title, y = ytitle, x = 0.5, yanchor = "top", xanchor = "center"))
+    # Setting the basic figure
+    fig = go.Figure(data = go.Heatmap(z = df[cols].corr(), x = labels, y = labels, zmax = zmax, zmin = zmin, colorscale = scale, colorbar = dict(outlinewidth = 1)))
+    # Adding the title & labels
+    fig.update_layout(width = width, height = height, font = dict(size = 18), title = dict(text = title, y = ytitle, x = 0.5, yanchor = "top", xanchor = "center"))
+    # Formatting the x-axis
     fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14))
+    # Formatting the y-axis
     fig.update_yaxes(title_font = dict(size = 16), tickfont = dict(size = 14))
     fig.show()
 
@@ -333,14 +360,15 @@ def bar_chart(df, col, widths, width, height, title, xlabel, ticks, text_pos = "
     Returns:
     Creates a single bar chart based off of one columns with the input height & width.
     """
-    fig = go.Figure(data = [go.Bar(x = df[col].unique(), y = df[col].value_counts(),
-                               text = df[col].value_counts(), textposition = text_pos,
-                               width = widths, marker_color = color)])
+    # Setting the figure
+    fig = go.Figure(data = [go.Bar(x = df[col].unique(), y = df[col].value_counts(),text = df[col].value_counts(), textposition = text_pos,width = widths, marker_color = color)])
+    # Adding the title & labels
     fig.update_layout(width = width, height = height,
-                      title = dict(text = "Hypertension", y = ytitle, x = 0.5, 
-                                   xanchor = "center", yanchor = "top"),
+                      title = dict(text = "Hypertension", y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"), 
                       font = dict(size = 18), xaxis_title = xlabel, yaxis_title = ylabel)
+    # Formatting the x-axis
     fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14))
+    # Formatting the y-axis
     fig.update_yaxes(tickvals = ticks, title_font = dict(size = 16), tickfont = dict(size = 14))
     fig.show()
     
@@ -369,10 +397,10 @@ def table(h_values, c_values, width = 300, height = 500, h_fill = ["rgb(31, 119,
     -------- 
     Creates a single table with input values and dimensions
     """
-    fig = go.Figure(data = [go.Table(header = dict(values = h_values, fill = dict(color = h_fill),
-                                                   line_color = "black", font = dict(color = "white", size = 16)),
-                                     cells  = dict(values = c_values, fill = dict(color = c_fill),
-                                                   line_color = "black", font = dict(color = "black", size = 12)))])
-    # If anyone can figure out why there is so much space under the graph & fix it, I would be really thankful
+    # Setting the table including the header and cells
+    fig = go.Figure(data = [go.Table(header = dict(values = h_values, fill = dict(color = h_fill),line_color = "black", font = dict(color = "white", size = 16)),
+                                     cells  = dict(values = c_values, fill = dict(color = c_fill),line_color = "black", font = dict(color = "black", size = 12)))])
+    # I'm planning on replacing this function with one from plotly.figure_factory
+    # Setting the dimensions
     fig.update_layout(width = width, height = height, margin = go.layout.Margin(l = 25, r = 25, b = 1, t = 25, pad = 0))
     fig.show()

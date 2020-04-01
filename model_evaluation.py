@@ -10,9 +10,9 @@ The functions that provide metrics not currently found in `sklearn.metrics come 
 #  Standard Imports
 
 import pandas            as pd
+import matplotlib.pyplot as plt
 import numpy             as np
 import seaborn           as sns
-import matplotlib.pyplot as plt
 
 # Statistical & Math Imports
 
@@ -66,10 +66,13 @@ def adj_r2(X, y_true, y_predicted):
     --------
     The coefficient of correlation: a float between 0 and 1.
     """
+    # Calculating the r^2 score
     r2 = r2_score(y_true, y_predicted)
+    # Scaling the r^2 based on the number of columns
     numerator = (1 - r2) * (len(y) - 1)
     denominator = (len(y_true) - len(X.columns)) - 1
     quotient = numerator / denominator
+    # Saving the final score
     r2_adj = 1 - quotient
     return r2_adj
 
@@ -90,7 +93,9 @@ def specificity(y_true, y_predicted):
     --------
     The specificity score: a floating point number between 0 and 1
     """
+    # Generating a flatten array out of the confusion matrix and defining our four types
     tn,fp,tp,fn = confusion_matrix(y_true, y_pred).ravel()
+    # Returning the specificity score
     return tn / (tn + fp)
 
 def negative_predictive_value(y_true, y_predicted):
@@ -108,7 +113,9 @@ def negative_predictive_value(y_true, y_predicted):
     --------
     The specificity score: a floating point number between 0 and 1
     """
+    # Generating a flatten array out of the confusion matrix and defining our four types
     tn,fp,tp,fn = confusion_matrix(y_true, y_pred).ravel()
+    # Returning the specificity score
     return tn / (tn + fn)
 
 # Regression summaries
@@ -129,10 +136,12 @@ def regression_summary(X, y_true, y_predicted):
     --------
     A dataframe containing the RMSE, MAE, R^2, & Adjusted R^2 for a regression model
     """
+    # Calculating the four metrics
     rmse = sqrt(mean_squared_error(y, y_predicted))
     mae  = mean_absolute_error(y, y_predicted)
     r2   = r2_score(y, y_predicted)
     adjr2 = r2_adj(X, y, y_predicted)
+    # Generating a df out of the four values
     regression_summary = pd.DataFrame([rmse, mae, r2], index = ["RMSE", "MAE", "R2"], columns = ["Score"])
     return regression_summary
 
@@ -152,9 +161,11 @@ def scaled_regression_summary(y_true, y_predicted):
     --------
     A dataframe containing the RMSE, MAE, & R^2 for a regression model whose X variables have been scaled
     """
+    # Calculating our three metrics
     rmse = sqrt(mean_squared_error(y, y_predicted))
     mae  = mean_absolute_error(y, y_predicted)
     r2   = r2_score(y, y_predicted)
+    # Generating a df out of the three values
     regression_summary = pd.DataFrame([rmse, mae, r2], index = ["RMSE", "MAE", "R2"], columns = ["Score"])
     return regression_summary
 
@@ -184,7 +195,9 @@ def confusion_matrix_dataframe(y_true, y_predicted, columns, index):
     --------
     A Pandas dataframe of the sklearn's confusion_matrix.
     """
+    # Generating the confusion matrix
     cm = confusion_matrix(y_true, y_predicted)
+    # Converting it into a df
     matrix = pd.DataFrame(cm, columns = columns, index = index)
     return matrix
 
@@ -200,13 +213,13 @@ def classification_summary(y_true, y_predicted):
     Evaluates the classifier on four metrics (recall/sensitivity, specificity, the Matthews correlation coefficient, & the AUC score) and returns the scores in
     a dataframe.  Accuracy is not included because it is not really that informative.
     """
+    # Calculating our four metrics
     sen = recall_score(y, y_predicted)
     spe = specificity(y, y_predicted)
     mcc = matthews_corrcoef(y, y_predicted)
     auc = roc_auc_score(y, y_predicted)
-    binary_classification_summary = pd.DataFrame([acc, sen, spe, mcc, auc], 
-                                                 index = ["Sensitivity", "Specificity", "MCC", "AUROC"], 
-                                                 columns = ["Scores"])
+    # Generating a df out of the four values
+    binary_classification_summary = pd.DataFrame([acc, sen, spe, mcc, auc], index = ["Sensitivity", "Specificity", "MCC", "AUROC"], columns = ["Scores"])
     return binary_classification_summary
 
 # Evaluation Graphs
@@ -238,19 +251,26 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "
     -------
     This code was modified from code written by Matt Brems during our lesson on classification metrics.
     """
+    # Predicting model probabilities
     model_prob = [i[0] for i in model_prob.predict_proba(X_test)]
+    # Generating a df our of the probabilities
     model_pred_df = pd.DataFrame({"true_values": y_test, "pred_probs": model_prob})
+    # Setting our thresholds for the graph
     thresholds = np.linspace(0, 1, 500) 
+    # Calculating the true positive rate
     def true_positive_rate(df, true_col, pred_prob_col, threshold):
         true_positive = df[(df[true_col] == 1) & (df[pred_prob_col] >= threshold)].shape[0]
         false_negative = df[(df[true_col] == 1) & (df[pred_prob_col] < threshold)].shape[0]
         return true_positive / (true_positive + false_negative)
+    # Calculating the false positive rate
     def false_positive_rate(df, true_col, pred_prob_col, threshold):
         true_negative = df[(df[true_col] == 0) & (df[pred_prob_col] <= threshold)].shape[0]
         false_positive = df[(df[true_col] == 0) & (df[pred_prob_col] > threshold)].shape[0]
         return 1 - (true_negative / (true_negative + false_positive))
+    # Defining lists of the rates
     tpr_values = [true_positive_rate(model_pred_df, "true_values", "pred_probs", prob) for prob in thresholds]
     fpr_values = [false_positive_rate(model_pred_df, "true_values", "pred_probs", prob) for prob in thresholds]
+    # Graph settings
     plt.figure(figsize = dim, facecolor = "white")
     plt.plot(fpr_values, tpr_values, color = roc_color, label = "ROC Curve")
     plt.plot(np.linspace(0, 1, 500), np.linspace(0, 1, 500), color = baseline_color, label = "Baseline")
@@ -264,6 +284,7 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "
     plt.tight_layout()
 
 def prc_curve(model_proba, y_true, y_predicted, dim, model_name, ns_line = "--", ns_color = "navy", prc_color = "darkorange"):
+    # This can be modified to plot more than one model
     """
     Parameters:
     -----------
@@ -284,10 +305,15 @@ def prc_curve(model_proba, y_true, y_predicted, dim, model_name, ns_line = "--",
     --------
     Creates a  graph for a given model's predictions and allows for appearance control.
     """
+    # Calculating a no skill/random guess
     no_skill = len(y_true[y_true == 1]) / len(y_true)
+    # Calculating the average precision (equivalent of the AUROC score)
     ap = average_precision_score(y_true, y_predicted)
+    # Getting the values from the sklearn function
     precision, recall, threshold = precision_recall_curve(y_true = y_true, probas_pred = np.array(model_proba[:,1]), pos_label = 1)
+    # Graph settings
     plt.figure(figsize = (dim), facecolor = "white")
+    # Making step-plots for both predictors
     plt.step([0,1], [no_skill, no_skill], label = "No Skill", linestyle = ns_line, color = ns_color)
     plt.step(recall, precision, label = "KNN", color = prc_color)
     plt.title(f"PRC For {model_name.capitalize()} With An AP Of {round(ap,2)}", size = 18)
@@ -324,11 +350,17 @@ def residualplots(df, columns, x, dim, titles, row, col, xlabel = "Actual", ylab
     --------
     n number of residual plots arranged by the rows and columns.
     """
+    # Setting the position within the sub-plo grid
     count = 0
+    # Figure settings for each sub-plot
     fig   = plt.figure(figsize = dim, facecolor = "white")
+    # Looping through the list of columns
     for c, column in enumerate(columns):
+        # Increasing the position within the grid
         count += 1
+        # Defining the grid
         ax = fig.add_subplot(row, col, count)
+        # Graph settings
         plt.title(f"{titles[c]}", size = 18)
         sns.residplot(x = x, y = column, data = df)
         plt.xlabel(f"{xlabel}", size = 16)
