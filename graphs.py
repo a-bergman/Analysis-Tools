@@ -1,9 +1,8 @@
-# Imports 
+# Imports
+import matplotlib.pyplot as plt
+import numpy             as np
 import pandas            as pd
 import seaborn           as sns
-import numpy             as np
-import matplotlib.pyplot as plt
-
 
 # Setting the basic appearance for the graphs
 sns.set(style = "white", palette = "deep")
@@ -56,14 +55,23 @@ def histograms(df, columns, titles, labels, ylabel, ticks, dim, row, col):
     --------
     Creates n number of histograms arranged by the input rows and columns.
     """
+    # Setting the default position in the subplot grid
     count = 0
+    # Setting the size & backgroundcolor for each subplot
     fig = plt.figure(figsize = dim, facecolor = "white")
+    # Looping through each column
     for c, column in enumerate(columns):
+        # Setting the location for the next graph
         count += 1
+        # Setting up the subplot grid
         ax = fig.add_subplot(row, col, count)
+        # Naming the graph
         plt.title(f"Distribution Of {titles[c]}", size = 18)
+        # Generating the histogram plot
         sns.distplot(df[column], color = "black", kde = False)
+        # Plotting a line at the mean value of the histogram
         plt.axvline(df[column].mean(), color = "red")
+        # Formatting the labels & axes
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.ylabel(f"{ylabel}", size = 16)
         plt.xticks(ticks = ticks[c], size = 14)
@@ -95,10 +103,13 @@ def kdeplots(df, cols, title, dim, colors, labels, xlabel, ylabel, ticks, shade 
     A single graph with two overlaid density estimates.
     
     """
+    # Setting figure size, background color, & title
     plt.figure(figsize = dim, facecolor = "white")
     plt.title(f"{title}", size = 18)
+    # Graphing the two KDE plots
     sns.kdeplot(df[cols[0]], shade = shade, color = colors[0], label = labels[0])
     sns.kdeplot(df[cols[1]], shade = shade, color = colors[1], label = labels[1])
+    # Formatting the labels, legend, & ticks
     plt.xlabel(f"{xlabel}", size = 16)
     plt.ylabel(f"{ylabel}", size = 16)
     plt.xticks(ticks, size = 14)
@@ -128,13 +139,21 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue = 
     --------
     n number of boxplots arranged by the input rows and columns.
     """
+    # Setting the default position in the subplot grid
     count = 0
+    # Setting the size & backgroundcolor for each subplot
     fig = plt.figure(figsize = dim, facecolor = "white")
+    # Looping through each column
     for c, column in enumerate(columns):
+        # Setting the location for the next graph
         count += 1
+        # Setting up the subplot grid
         ax = fig.add_subplot(row, col, count)
+        # Naming the graph
         plt.title(f"{titles[c]}", size = 18)
+        # Generating the box plot
         sns.boxplot(y = column, x = x, data = df, orient = "v", hue = hue)
+        # Formatting the labels & axes
         plt.xlabel(xlabel = xlabel, size = 16)
         plt.ylabel(f"{labels[c]}", size = 16)
         plt.xticks(size = 14)
@@ -168,13 +187,21 @@ def violinplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue
     --------
     n number of violin plots arranged by the input rows and columns.
     """
+    # Setting the default position in the subplot grid
     count = 0
+    # Setting the size & backgroundcolor for each subplot
     fig = plt.figure(figsize = dim, facecolor = "white")
+    # Looping through each column
     for c, column in enumerate(columns):
+        # Setting the location for the next graph
         count += 1
+        # Setting up the subplot grid
         ax = fig.add_subplot(row, col, count)
+        # Naming the graph
         plt.title(f"{titles[c]}", size = 18)
+        # Generating the violin plot
         sns.violinplot(y = column, x = x, data = df, hue = hue, split = split, orient = "v")
+        # Formatting the labels, axes, & ticks
         plt.xlabel(xlabel = xlabel, size = 16)
         plt.ylabel(f"{labels[c]}", size = 16)
         plt.xticks(size = 14)
@@ -210,13 +237,21 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col
     --------
     n number of regression plots arranged by the input rows and columns.
     """
-    count = 0
+    # Setting the default position in the subplot grid
+    count = 
+    # Setting the size & backgroundcolor for each subplot
     fig = plt.figure(figsize = dim, facecolor = "white")
+    # Looping through each column
     for c, column in enumerate(columns):
+        # Setting the location for the next graph
         count += 1
+        # Setting up the subplot grid
         ax = fig.add_subplot(row, col, count)
+        # Naming the graph
         plt.title(f"{titles[c]}", size = 18)
+        # Generating the scatter plot
         sns.regplot(x = column, y = y, data = df, fit_reg = True,  marker = mark, color = color, line_kws = kws, ci = ci)
+        # Formatting the labels, axes, & ticks
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.ylabel(f"{ylabel}", size = 16)
         plt.xticks(ticks = ticks[c], size = 14)
@@ -246,13 +281,18 @@ def heatmap(df, columns, dim, title, vmin, vmax, cmap = "RdBu", annot = True):
     --------
     A heat map displaying the correlations between n number of columns.
     """
+    # Setting the figure size, background color, & title
     plt.figure(figsize = dim, facecolor = "white")
     plt.title(f"{title}", size = 18)
+    # Calculating Pearson's correlation using the built-in Pandas method
     corr = df[columns].corr()
+    # Masking the heat-map does not mirror it: it will end up like a triangle
     mask = np.zeros_like(corr)                                                                                
     mask[np.triu_indices_from(mask)] = True
     with sns.axes_style("white"):
+        # Graphing the heat-map
         sns.heatmap(corr, cmap = cmap,  mask = mask, vmin = vmin, vmax = vmax, annot = annot)
+    # Formatting the size of the ticks
     plt.xticks(size = 14)
     plt.yticks(size = 14);
 
@@ -283,14 +323,21 @@ def countplots(df, columns, titles, labels, ylabel, dim, row, col, orient = "h",
     --------
     n number of count plots arranged by the input rows and columns.
     """
-    fig = plt.figure(figsize = dim, facecolor = "white")
+    # Setting the default position in the subplot grid
     count = 0
+    # Setting the size & backgroundcolor for each subplot
+    fig = plt.figure(figsize = dim, facecolor = "white")
+    # Looping through each column
     for c, column in enumerate(columns):
+        # Setting the location for the next graph
         count += 1
+        # Setting up the subplot grid
         ax = fig.add_subplot(row, col, count)
-        title = titles[c]
-        plt.title(f"{title}", size = 18)
+        # Naming the graph
+        plt.title(f"{titles[c]}", size = 18)
+        # Generating the count plot
         sns.countplot(x = column, data = df, orient = orient, hue = hue)
+        # Formatting the labels & ticks
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.ylabel(f"{ylabel}", size = 16)
         plt.xticks(size = 14)
@@ -323,14 +370,21 @@ def barplots(df, columns, y, labels, ylabel, titles, dim, row, col, ci = False, 
     Returns:
     n number of barplots arranged by the input rows and columns.
     """
-    fig = plt.figure(figsize = dim, facecolor = "white")
+    # Setting the default position in the subplot grid
     count = 0
+    # Setting the size & backgroundcolor for each subplot
+    fig = plt.figure(figsize = dim, facecolor = "white")
+    # Looping through each column
     for c, column in enumerate(columns):
+        # Setting the location for the next graph
         count += 1
+        # Setting up the subplot grid
         ax = fig.add_subplot(row, col, count)
-        title = titles[c]
-        plt.title(f"{title}", size = 18)
+        # Naming the graph
+        plt.title(f"{titles[c]}", size = 18)
+        # Generating the bar graph
         sns.barplot(x = column, y = y, data = df, ci = ci, orient = orient, hue = hue)
+        # Formatting the labels & axes
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.ylabel(f"{ylabel}", size = 16)
         plt.xticks(size = 14)
@@ -364,8 +418,11 @@ def barplot(df, x, y, title, label, ylabel, ticks, dim, orient = "v", ci = False
     --------
     A single bar plot with the input dimensions.
     """
+    # Setting the figure size & background color
     plt.figure(figsize = dim, facecolor = "white")
+    # Graphing the barplot
     sns.barplot(x = x, y = y, data = df, orient = orient, ci = ci, hue = hue)
+    # Formatting the title, labels, & ticks
     plt.title(f"{title}", size = 18)
     plt.xlabel(f"{label}", size = 16)
     plt.ylabel(f"{ylabel}", size = 16)
