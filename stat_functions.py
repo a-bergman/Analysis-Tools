@@ -2,10 +2,15 @@
 
 This module contains functions that render statistics and corresponding p-values in dataframes.
 
+There are two sections:
+
+- Correlation between variables
+- Model comparison, i.e. are models distinct
+
 """
 
 #  Standard Imports
-import numpy  as pd
+import numpy  as np
 import pandas as pd
 
 # Stastical Imports
@@ -33,6 +38,8 @@ either to add a metric that does not exist or to improve something does already 
 
 # TO DO: Add a 5X2 CV F test
 # TO DO: Add a Cochran's Q test
+
+# CORRELATION BETWEEN VARIABLES
   
 # Numeric - Numeric Data
 
@@ -44,7 +51,7 @@ def pearsonr_dataframe(df, x, y, columns, alpha = 0.05):
     x       : column to find correlations against          : str       : :
     y       : list of columns to be correlated against x   : str       : :
     columns : list of columns to be named in the dataframe : str       : :
-    p       : p-value threshold for significance           : int       : :
+    alpha   : p-value threshold for significance           : int       : :
 
     Description:
     ------------
@@ -79,12 +86,11 @@ def pointbiserialr_dataframe(df, x, y, columns, alpha = 0.05):
     x       : column with binary data                      : str       : :
     y       : list of columns with numeric data            : str       : :
     columns : list of columns to be named in the dataframe : str       : :
-    p       : p-value threshold for signifiance            : int       : :
+    alpha   : p-value threshold for signifiance            : int       : :
 
     Description:
     ------------
     Generates a list of point-biserial r coefficients and accompanying p-values for a **binary** variable and numeric variables.
-    This correlation test assumes that the binary variable is _naturally_ binary _not_ artificially binary, i.e pass/fail.
 
     Null Hypothesis:
     ----------------
@@ -115,7 +121,7 @@ def chisquared_dataframe(df, x, y, columns, alpha = 0.05):
     x       : name of categorical variable to be correlated to : str       : :
     y       : list of categorical variables to correlated to x : str       : :
     columns : list of columns to be named in the dataframe     : str       : :
-    p       : p-value threshold for significance               : int       : :
+    alpha   : p-value threshold for significance               : int       : :
 
     Description:
     ------------
@@ -150,6 +156,8 @@ def chisquared_dataframe(df, x, y, columns, alpha = 0.05):
     chi2_df = pd.DataFrame([chi2_coefs, chi2_pvals, pval_sig, chi2_dofs], index = ["Statistic", "P Value", "Significant", "DOF"], columns = columns).T
     return chi2_df
 
+# MODEL COMPARISON: TESTING FOR DIFFERENCE
+
 def mcnemars_dataframe(y_true, preds_1, preds_2, index, columns):
     """
     Parameters:
@@ -174,42 +182,43 @@ def mcnemars_dataframe(y_true, preds_1, preds_2, index, columns):
     mcnemars_dataframe = pd.DataFrame(tb, index = index, columns = columns)
     return mcnemars_dataframe
 
-def mcnemars_test(a, b, alpha = 0.05, exact = False):
+def mcnemars_test(a, b, alpha = 0.05):
     """
     Parameters:
     -----------
     a     : the first classification model                                    : Series : :
     b     : the second classification model                                   : Series : :
     alpha : the value used to judge significance                              : float  : :
-    exact : whether or not to use a binomial distribution to find the p-value : Bool   : :
 
     Description:
     ------------
-    Generates McNemar's chi-squared statistic, the associated p-value, and an interpretation of the p-value for two classification model
+    Generates McNemar's chi-squared statistic, the associated p-value, and an interpretation of the p-value for **two** classification models
 
     Null Hypothesis:
     ----------------
-    The two classifiers are identical, i.e. the disagreement is the same.
+    The two models' disagreement is the same, i.e. the models are the same
 
     Returns:
     --------
-    A dataframe containing McNemar's chi-squared statistic, the associated p-value, and the p-values interpretation.
+    A dataframe containing McNemar's chi-squared statistic, the associated p-value, and the p-values' interpretation.
 
     """
-    # We need a len>25 to be able to use `exact = False`
+    # Checkin the length of our models
+    # If the length > 25 the p-value will be calculated normally
     if len(a) > 25 and len(b) > 25:
-        # Generating a contingency table out of the two models
-        ct = pd.crosstab(a,b)
-        # Calculating the McNemar's score
-        result = mcnemar(ct, exact = exact)
-        # Rounding the statistic & p-value to 5 decimal places
-        stat = round(result.statistic,3)
-        pval = round(result.pvalue,5)
-        # Indicating if the p-value is significant based on the input alpha value
-        pval_sig = "True" if pval < alpha else "False"
-        # Generating a df of the three values
-        mcnemar_df = pd.DataFrame([stat, pval, pval_sig], index = ["Statistic", "P-Value", "Interpretation"], columns = ["Values"]).T 
-        return mcnemar_df
-    # Telling the user to set `exact = True` if there are <25 values
+        exact = True
+    # If the length < 25 the p-value will be calculated with a binomial distribution
     else:
-        print("If the number of values is <25, please set `Exact = True`.")
+        exact = False
+    # Generating a contingency table out of the two models
+    ct = pd.crosstab(a,b)
+    # Calculating the McNemar's score
+    result = mcnemar(ct, exact = exact)
+    # Rounding the statistic & p-value to 3 & 5 decimal places respectively
+    stat = round(result.statistic,3)
+    pval = round(result.pvalue,5)
+    # Indicating if the p-value is significant based on the input alpha value
+    pval_sig = "True" if pval < alpha else "False"
+    # Generating a df of the three values
+    mcnemar_df = pd.DataFrame([stat, pval, pval_sig], index = ["Statistic", "P-Value", "Interpretation"], columns = ["Values"]).T 
+    return mcnemar_df
