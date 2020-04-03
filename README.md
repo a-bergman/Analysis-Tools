@@ -100,7 +100,7 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 | Statistic               | Data Type               | Description                                                                                                     |
 |:------------------------|:-----------------------:|:----------------------------------------------------------------------------------------------------------------|
 | **χ<sup>2</sup>**       | Categorical-Categorical | Creates a dataframe with the χ<sup>2</sup> stats., p-values, & degrees of freedom for two categorical variables |
-| **McNemar's Test**      | Categorical-Categorical | Creates a dataframe with McNemar's test statistic, p-value, & interpretation of the p-value for two classifiers |
+| **McNemar's Test**      | Categorical-Categorical | Creates a dataframe with McNemar's test statistic, p-value, & interpretation of the p-value for **two** classifiers |
 | **McNemar's Dataframe** | Categorical-Categorical | Creates a dataframe of the McNemar's contingency table                                                          |
 | **Pearson's r**         | Numeric-Numeric         | Creates a dataframe with the Pearson's r coefs. and p-values for two numeric variables                          |
 | **Point Biserial r**    | Binary-Numeric          | Creates a dataframe with the point biserial r coefs. and p-values for binary & numeric variables                |
@@ -148,7 +148,8 @@ I am focusing on statistical functions at the moment, but I am open to adding mo
 
 **`stat_functions.py`**
 
-3/29/2020:
+4/3/2020:
 
-- Changed the `p` parameter to `alpha`; the default value of `alpha = 0.05` stays the same
-- Added `mcnemars_dataframe` and `mcnemars_test` to aid in judging two classification models
+- Updated the docstrings to reflect the change from `p` to `alpha`
+- Added logic to automatically calculated the value of `exact` in `mcnemars_test`
+- Added note in `mcnemars_test` that it can only be run with 2 models
