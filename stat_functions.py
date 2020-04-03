@@ -31,7 +31,8 @@ either to add a metric that does not exist or to improve something does already 
 
 """
 
-# TO DO: Add a 5X2 CV t-test
+# TO DO: Add a 5X2 CV F test
+# TO DO: Add a Cochran's Q test
   
 # Numeric - Numeric Data
 
