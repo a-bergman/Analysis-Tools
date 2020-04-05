@@ -34,8 +34,6 @@ parameter : definition : type : possible values (if applicable)
 
 """
 
-# TO DO: Add a Cochran's Q test
-
 ############### CORRELATION BETWEEN VARIABLES ###############
   
 # Numeric - Numeric Data
