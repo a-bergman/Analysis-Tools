@@ -1,6 +1,6 @@
 """
 
-This module contains functions that render statistics and corresponding p-values in dataframes.
+This module contains functions that render statistics, corresponding p-values, & interpretations of the p-values in dataframes.
 
 There are two sections:
 
@@ -14,7 +14,7 @@ import numpy  as np
 import pandas as pd
 
 # Stastical Imports
-from mlxtend.evaluate                     import mcnemar_table
+from mlxtend.evaluate                     import mcnemar_table, combined_ftest_5x2cv
 from scipy.stats                          import pearsonr, pointbiserialr
 from scipy.stats                          import chi2_contingency
 from statsmodels.stats.contingency_tables import mcnemar
@@ -23,23 +23,20 @@ from statsmodels.stats.contingency_tables import mcnemar
 
 The docstrings for each function contain the following:
 
-- parameters  : values which must be entered, some of which have defaults
-- description : what each function does
-- returns     : the output of each function
+- parameters      : values which must be entered, some of which are defaults
+- description     : what each function does
+- null hypothesis : description of what each function is testing
+- returns         : the output of each function
 
 The parameters section of each docstring is set up as:
 
 parameter : definition : type : possible values (if applicable)
 
-These functions are designed to build off of what is available in already sci-kit learn: 
-either to add a metric that does not exist or to improve something does already exist.
-
 """
 
-# TO DO: Add a 5X2 CV F test
 # TO DO: Add a Cochran's Q test
 
-# CORRELATION BETWEEN VARIABLES
+############### CORRELATION BETWEEN VARIABLES ###############
   
 # Numeric - Numeric Data
 
@@ -55,7 +52,8 @@ def pearsonr_dataframe(df, x, y, columns, alpha = 0.05):
 
     Description:
     ------------
-    Generates a list of Pearson's r correlation coefficients and accompanying p-values for two numeric variables.
+    Generates a list of Pearson's r correlation coefficients & accompanying p-values for two numeric variables
+    The r coefficients range from -1 to 1
 
     Null Hypothesis:
     ----------------
@@ -63,8 +61,8 @@ def pearsonr_dataframe(df, x, y, columns, alpha = 0.05):
 
     Returns:
     --------
-    A dataframe with three columns: the float Pearson's r coefficient (a float from -1 to 1), the corresponding p-value, and the significance of the
-    p-value.  The coefficient and p-value are both rounded to 5 decimal placs.
+    A dataframe containing Pearson's r coefficient, the corresponding p-value, & the significance of the p-value.
+    The coefficient & p-value are both rounded to 5 decimal placs.
     """
     # Generating a list of the coefficients & rounding them to 5 decimal places
     r_coef = [round(pearsonr(x = df[x], y = df[i])[0],5) for i in y]
@@ -90,7 +88,8 @@ def pointbiserialr_dataframe(df, x, y, columns, alpha = 0.05):
 
     Description:
     ------------
-    Generates a list of point-biserial r coefficients and accompanying p-values for a **binary** variable and numeric variables.
+    Generates a list of point-biserial r coefficients & accompanying p-values for a **binary** variable & numeric variables.
+    The point-biserial r coefficients range from -1 to 1
 
     Null Hypothesis:
     ----------------
@@ -98,8 +97,7 @@ def pointbiserialr_dataframe(df, x, y, columns, alpha = 0.05):
 
     Returns:
     --------
-    A dataframe with three columns: the float point-biserial r coefficient (a float from -1 to 1), the corresponding p-value, and the significance
-    of the p-value.  Both the coefficient and p-value are rounded to 5 decimal places.
+    A dataframe containing the point-biserial r coefficient, the corresponding p-value, & the significance of the p-value.
     """
     # Generating a list of the coefficients & rounding them to 5 decimal places
     pbr_coef = [round(pointbiserialr(x = df[x], y = df[i])[0],5) for i in y]
@@ -125,7 +123,8 @@ def chisquared_dataframe(df, x, y, columns, alpha = 0.05):
 
     Description:
     ------------
-    Generates a list of chi squared statistics, corresponding p-values, and degrees of freedom for pairs of categorical variables.
+    Generates a list of chi-squared statistics, corresponding p-values, & degrees of freedom for pairs of categorical variables.
+    The chi-squared statistic ranges from 0 to +∞
 
     Null Hypothesis:
     ----------------
@@ -133,8 +132,7 @@ def chisquared_dataframe(df, x, y, columns, alpha = 0.05):
     
     Returns:
     --------
-    A dataframe with four columns, the chi squared statistic (a float from 0 to +∞), the accompanying p-value, signifiance of the p-value,
-    and the degrees of freedom. The statistic and p-value are rounded to 5 decimal places.
+    A dataframe containing the chi squared statistic, the accompanying p-value, signifiance of the p-value, & the degrees of freedom. 
     """
     # Setting empty variables for the `for` loop
     chi2_coefs = []
@@ -156,25 +154,27 @@ def chisquared_dataframe(df, x, y, columns, alpha = 0.05):
     chi2_df = pd.DataFrame([chi2_coefs, chi2_pvals, pval_sig, chi2_dofs], index = ["Statistic", "P Value", "Significant", "DOF"], columns = columns).T
     return chi2_df
 
-# MODEL COMPARISON: TESTING FOR DIFFERENCE
+############### MODEL COMPARISON: TESTING FOR DIFFERENCE ###############
+
+# Classifiers
 
 def mcnemars_dataframe(y_true, preds_1, preds_2, index, columns):
     """
     Parameters:
     -----------
-    y_true  : the actual values                                      : Series :
-    preds_1 : the first classification model to be compared          : Series :
-    preds_2 : the second classification mdoel to be compared         : Series :
-    index   : list of index labels for the dataframe                 : str    :
-    columns : list of column labels for the dataframe                : str    :
+    y_true  : the actual values                              : Series : :
+    preds_1 : the first classification model to be compared  : Series : :
+    preds_2 : the second classification mdoel to be compared : Series : :
+    index   : list of index labels for the dataframe         : str    : :
+    columns : list of column labels for the dataframe        : str    : :
 
     Description:
     ------------
-    Generates a contingency for a McNemar's test.
+    Generates a contingency table for a McNemar's test.
 
     Returns:
     --------
-    A dataframe containing the correct and incorrect predictions for 2 models which allows for the calculation of McNemar's chi-squared statistic.
+    A dataframe containing the correct & incorrect predictions for two classification models which allows for the calculation of McNemar's test statistic.
     """
     # Generating a contingency table for the two models
     tb = mcnemar_table(y_target = y_true, y_model1 = preds_1, y_model2 = preds_2)
@@ -186,13 +186,14 @@ def mcnemars_test(a, b, alpha = 0.05):
     """
     Parameters:
     -----------
-    a     : the first classification model                                    : Series : :
-    b     : the second classification model                                   : Series : :
-    alpha : the value used to judge significance                              : float  : :
+    a     : the first classification model       : Series : :
+    b     : the second classification model      : Series : :
+    alpha : the value used to judge significance : float  : :
 
     Description:
     ------------
-    Generates McNemar's chi-squared statistic, the associated p-value, and an interpretation of the p-value for **two** classification models
+    Generates McNemar's test statistic, the associated p-value, & an interpretation of the p-value for **two** classification models
+    This function is independant of `mcnemars_dataframe`
 
     Null Hypothesis:
     ----------------
@@ -200,7 +201,7 @@ def mcnemars_test(a, b, alpha = 0.05):
 
     Returns:
     --------
-    A dataframe containing McNemar's chi-squared statistic, the associated p-value, and the p-values' interpretation.
+    A dataframe containing McNemar's test statistic, the associated p-value, & the p-values' interpretation.
 
     """
     # Checkin the length of our models
@@ -222,3 +223,38 @@ def mcnemars_test(a, b, alpha = 0.05):
     # Generating a df of the three values
     mcnemar_df = pd.DataFrame([stat, pval, pval_sig], index = ["Statistic", "P-Value", "Interpretation"], columns = ["Values"]).T 
     return mcnemar_df
+
+# Regressors
+
+def cross_validated_ftest(a, b, X, y, alpha = 0.05, metric = "neg_mean_absolute_error"):
+    """
+    Parameters:
+    -----------
+    a      : a Scikit-Learn regression model                         : model     : :
+    b      : a Scikit-Learn regression model                         : model     : :
+    X      : the X variable containing data features                 : DataFrame : :
+    y      : the y variable containing target values                 : Series    : :
+    alpha  : the value by which significance is judged               : int       : :
+    metric : the metric used for calculation of the f-test statistic : str       : :
+
+    Description:
+    ------------
+    Generates a 5x2 cross-validated F-test statistic, its p-value, & an interpretation of the p-value for **two** regression models.
+    To view acceptable `metric` values run `sklearn.metrics.SCORERS.keys()`.
+
+    Null Hypothesis:
+    ----------------
+    There are no statistical differences between two regression models
+
+    Returns:
+    --------
+    A dataframe containing the F-test score, its p-value, & the p-value's interpretation
+    """
+    # Performing the cross-validated f-test
+    # Saving the test statistic & p-value
+    f_stat, pval = combined_ftest_5x2cv(estimator1 = a, estimator2 = b, X = X, y = y, scoring = metric, random_seed = 42)
+    # Interpreting the significance based on the input alpha
+    pval_sig = "True" if pval < alpha else "False"
+    # Saving the f-test statistic, p-value, & p-value significance in a df
+    ftest_df = pd.DataFrame([f_stat, pval, pval_sig], index = ["F Score", "P Value", "Significant"], columns = ["Score"]).T
+    return ftest_df
