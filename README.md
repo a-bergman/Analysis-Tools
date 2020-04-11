@@ -97,14 +97,14 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 
 ### `stat_functions` Contents
 
-| Statistic               | Data Type                   Description                                                                                                     |
-|:------------------------|:-----------------------:|:----------------------------------------------------------------------------------------------------------------|
-| **χ<sup>2</sup>**       | Categorical-Categorical | Creates a dataframe with the χ<sup>2</sup> stats., p-values, & degrees of freedom for two categorical variables |
-| **McNemar's Test**      | Classifier - Classifier  | Creates a dataframe with McNemar's test statistic, p-value, & interpretation of the p-value for **two** classifiers |
-| **McNemar's Dataframe** | Classifier-Classifier | Creates a dataframe of the McNemar's contingency table                                                          |
-| **Pearson's r**         | Numeric-Numeric         | Creates a dataframe with the Pearson's r coefs. and p-values for two numeric variables                          |
-| **Point Biserial r**    | Binary-Numeric          | Creates a dataframe with the point biserial r coefs. and p-values for binary & numeric variables                |
-| **Cross-Validated F-Test** | Regressor - Regressor | Creates a datafrmae with McNemar's test statistic, p-value, & interpretation for **two** regressors |
+| Statistic                  | Data Type               | Description                                                                                          |
+|:---------------------------|:---------------        :| :----------------------------------------------------------------------------------------------------|
+| **χ<sup>2</sup>**          | Categorical-Categorical | A dataframe with the χ<sup>2</sup> stats., p-values, & degrees of freedom for 2 variables            |
+| **McNemar's Test**         | Classifier - Classifier | A dataframe with McNemar's statistic, p-value, & interpretation of the p-value for 2 classifiers     |
+| **McNemar's Dataframe**    | Classifier-Classifier   | A dataframe containing a contingency table for the McNemar's test                                    |
+| **Pearson's r**            | Numeric-Numeric         | A dataframe containing the Pearson's r coefs., p-values, & interpretation for numeric variables      |
+| **Point Biserial r**       | Binary-Numeric          | A dataframe with the point-biserial r coefs., p-values, & interpreation for numeric & binary variables |
+| **Cross-Validated F-Test** | Regressor - Regressor   | A datafrmae with the 5X2 cross-validated F-score, p-value, & interpretation for **two** regressors   |
 
 
 -----
