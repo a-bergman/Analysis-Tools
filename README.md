@@ -98,7 +98,7 @@ There are two sets of graphs included in the .py file: graphs for EDA and graphs
 ### `stat_functions` Contents
 
 | Statistic                  | Data Type               | Description                                                                                          |
-|:---------------------------|:---------------        :| :----------------------------------------------------------------------------------------------------|
+|:---------------------------|:-----------------------:| :----------------------------------------------------------------------------------------------------|
 | **χ<sup>2</sup>**          | Categorical-Categorical | A dataframe with the χ<sup>2</sup> stats., p-values, & degrees of freedom for 2 variables            |
 | **McNemar's Test**         | Classifier - Classifier | A dataframe with McNemar's statistic, p-value, & interpretation of the p-value for 2 classifiers     |
 | **McNemar's Dataframe**    | Classifier-Classifier   | A dataframe containing a contingency table for the McNemar's test                                    |
