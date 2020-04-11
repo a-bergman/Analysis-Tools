@@ -104,7 +104,7 @@ def pointbiserialr_dataframe(df, x, y, columns, alpha = 0.05):
     # Indicating if each p-value is significant based on the input alpha value
     pval_sig = ["True" if i < alpha else "False" for i in pbr_pval]
     # Generating the df of the values
-    pbr_dataframe = pd.DataFrame([pbr_coef, pbr_pval, pval_sig], index = ["Coefficient.", "P-Value", "Significant"], columns = columns).T
+    pbr_dataframe = pd.DataFrame([pbr_coef, pbr_pval, pval_sig], index = ["Coefficient", "P-Value", "Significant"], columns = columns).T
     return pbr_dataframe
 
 # Categorical - Categorical Data
@@ -149,7 +149,7 @@ def chisquared_dataframe(df, x, y, columns, alpha = 0.05):
     # Indicating if each p-value is significant based on the input alpha value
     pval_sig = ["True" if i < alpha else "False" for i in chi2_pvals]
     # Generating a df based on the values
-    chi2_df = pd.DataFrame([chi2_coefs, chi2_pvals, pval_sig, chi2_dofs], index = ["Statistic", "P Value", "Significant", "DOF"], columns = columns).T
+    chi2_df = pd.DataFrame([chi2_coefs, chi2_pvals, pval_sig, chi2_dofs], index = ["Statistic", "P-Value", "Significant", "DOF"], columns = columns).T
     return chi2_df
 
 ############### MODEL COMPARISON: TESTING FOR DIFFERENCE ###############
@@ -254,5 +254,5 @@ def cross_validated_ftest(a, b, X, y, alpha = 0.05, metric = "neg_mean_absolute_
     # Interpreting the significance based on the input alpha
     pval_sig = "True" if pval < alpha else "False"
     # Saving the f-test statistic, p-value, & p-value significance in a df
-    ftest_df = pd.DataFrame([f_stat, pval, pval_sig], index = ["F Score", "P Value", "Significant"], columns = ["Score"]).T
+    ftest_df = pd.DataFrame([f_stat, pval, pval_sig], index = ["F Score", "P-Value", "Significant"], columns = ["Score"]).T
     return ftest_df
