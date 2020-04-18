@@ -117,8 +117,8 @@ Pull requests are welcome, but for any major issues please open an issue first t
 
 ## Road Map
 
-- Bokeh Interactive functions
-
+- Bokeh interactive functions
+- Statistical tests for EDA and model evaluation
 -----
 
 ## Project Status
