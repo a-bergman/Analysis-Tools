@@ -29,9 +29,7 @@ The only function which is not designed for multiple outputs is the KDE function
 #        the explained variance ration from
 #        sklearn's PCA algorithm
 
-# TO DO: QQ (quantile-quantile) plot
-
-# Numeric Graphs
+############### Numeric Graphs ###############
 
 def histograms(df, columns, titles, labels, ylabel, ticks, dim, row, col):
     """
@@ -296,7 +294,7 @@ def heatmap(df, columns, dim, title, vmin, vmax, cmap = "RdBu", annot = True):
     plt.xticks(size = 14)
     plt.yticks(size = 14);
 
-# Categorical Graphs
+############### Categorical Graphs ###############
 
 def countplots(df, columns, titles, labels, ylabel, dim, row, col, orient = "h", hue = None):
     """

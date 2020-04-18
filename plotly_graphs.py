@@ -9,7 +9,7 @@ import plotly.graph_objs     as go
 # Setting basic graph appearance
 pio.templates.default = "simple_white"
 
-# Color schema
+# Color schemata
 c_default             = ["rgb(31,119,180)"]
 c_complimentary       = ["rgb(31,119,180)", "rgb(180,93,31)"]
 c_split_complimentary = ["rgb(31,119,180)", "rgb(180,168,31)", "rgb(180,31,43)"]
@@ -65,7 +65,7 @@ def color_scheme(c_type, scheme = "default"):
     else:
         print("Please check your scheme input!")
 
-# Numeric Data
+############### Numeric Data ###############
 
 def histogram(df, x, width, height, bins, title, xlabel, ticks, hue = None, color = ["rgb(31,119,180)"], ytitle = 0.95, ylabel = "Count"):
     """
@@ -137,10 +137,8 @@ def double_histogram(data, names, texts, bins, title, width, height, xlabel, tic
     # Adding the second histogram & setting basic the appearance
     fig.add_trace(go.Histogram(x = data[1], name = names[1], text = texts[1], nbinsx = bins[1]))
     # Setting labels & the title
-    fig.update_layout(barmode = mode, xaxis_title = xlabel, yaxis_title = ylabel, width = width, 
-                      height = height, font = dict(size = 18), legend_orientation = "v", 
-                      title = dict(text = title, y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"),
-                      legend = dict(font = dict(size = 14), bordercolor = "black", borderwidth = 1))
+    fig.update_layout(barmode = mode, xaxis_title = xlabel, yaxis_title = ylabel, width = width, height = height, font = dict(size = 18), legend_orientation = "v", 
+                      title = dict(text = title, y = ytitle, x = 0.5, xanchor = "center", yanchor = "top"), legend = dict(font = dict(size = 14), bordercolor = "black", borderwidth = 1))
     fig.update_traces(opacity = opacity)
     # Formatting the x-axis
     fig.update_xaxes(title_font = dict(size = 16), tickfont = dict(size = 14), tickvals = ticks)
@@ -334,7 +332,7 @@ def heatmap(df, cols, labels, width, height, title, zmax = 1, zmin = -1, scale =
     fig.update_yaxes(title_font = dict(size = 16), tickfont = dict(size = 14))
     fig.show()
 
-# Categorical Data
+############### Categorical Data ###############
 
 def bar_chart(df, col, widths, width, height, title, xlabel, ticks, text_pos = "auto", color = "rgb(31,119,180)", ytitle = 0.9, ylabel = "Count"):
     """
@@ -372,10 +370,13 @@ def bar_chart(df, col, widths, width, height, title, xlabel, ticks, text_pos = "
     fig.update_yaxes(tickvals = ticks, title_font = dict(size = 16), tickfont = dict(size = 14))
     fig.show()
     
-# Evaluation Graphs
+############### Evaluation Graphs ###############
 
-# Utility Functions
+# In Progress
 
+############### Utility Functions ###############
+
+# I'm planning on replacing this table with one from plotly.figure_factory
 def table(h_values, c_values, width = 300, height = 500, h_fill = ["rgb(31, 119, 180)"], c_fill = ["rgb(235,235,235)"]):
     """
     Parameters:
@@ -400,7 +401,6 @@ def table(h_values, c_values, width = 300, height = 500, h_fill = ["rgb(31, 119,
     # Setting the table including the header and cells
     fig = go.Figure(data = [go.Table(header = dict(values = h_values, fill = dict(color = h_fill),line_color = "black", font = dict(color = "white", size = 16)),
                                      cells  = dict(values = c_values, fill = dict(color = c_fill),line_color = "black", font = dict(color = "black", size = 12)))])
-    # I'm planning on replacing this function with one from plotly.figure_factory
     # Setting the dimensions
     fig.update_layout(width = width, height = height, margin = go.layout.Margin(l = 25, r = 25, b = 1, t = 25, pad = 0))
     fig.show()

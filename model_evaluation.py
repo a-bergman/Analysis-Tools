@@ -8,18 +8,15 @@ The functions that provide metrics not currently found in `sklearn.metrics come 
 """
  
 #  Standard Imports
-
 import pandas            as pd
 import matplotlib.pyplot as plt
 import numpy             as np
 import seaborn           as sns
 
 # Statistical & Math Imports
-
 from math import sqrt
 
 # Classification Metrics
-
 from sklearn.metrics import confusion_matrix, matthews_corrcoef
 from sklearn.metrics import roc_auc_score, average_precision_score
 from sklearn.metrics import fbeta_score, balanced_accuracy_score
@@ -27,7 +24,6 @@ from sklearn.metrics import precision_score, recall_score
 from sklearn.metrics import precision_recall_curve
 
 # Regression Metrics
-
 from sklearn.metrics import r2_score
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 
@@ -48,7 +44,7 @@ either to add a metric that does not exist or to improve something does already 
 
 """
 
-# Regression metrics
+############### Regression Metrics ###############
 
 def adj_r2(X, y_true, y_predicted):
     """
@@ -76,7 +72,7 @@ def adj_r2(X, y_true, y_predicted):
     r2_adj = 1 - quotient
     return r2_adj
 
-# Classification metrics
+############### Classification Metrics ###############
 
 def specificity(y_true, y_predicted):
     """
@@ -118,7 +114,7 @@ def negative_predictive_value(y_true, y_predicted):
     # Returning the specificity score
     return tn / (tn + fn)
 
-# Regression summaries
+############### Regression Summaries ###############
 
 def regression_summary(X, y_true, y_predicted):
     """
@@ -169,7 +165,7 @@ def scaled_regression_summary(y_true, y_predicted):
     regression_summary = pd.DataFrame([rmse, mae, r2], index = ["RMSE", "MAE", "R2"], columns = ["Score"])
     return regression_summary
 
-# Classification Summaries
+############### Classification Summaries ###############
 
 """
 These are binary classification summaries since binary classification is most common.
@@ -222,9 +218,7 @@ def classification_summary(y_true, y_predicted):
     binary_classification_summary = pd.DataFrame([acc, sen, spe, mcc, auc], index = ["Sensitivity", "Specificity", "MCC", "AUROC"], columns = ["Scores"])
     return binary_classification_summary
 
-# Evaluation Graphs
-
-# Classification Models
+############### Graphs For Evaluating Classifiers ###############
 
 def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "darkorange", baseline_color = "darkblue"):
     """
@@ -324,7 +318,7 @@ def prc_curve(model_proba, y_true, y_predicted, dim, model_name, ns_line = "--",
     plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16)
     plt.tight_layout();
 
-# Regression Models
+############### Graphs For Evaluating Regressors ################
 
 def residualplots(df, columns, x, dim, titles, row, col, xlabel = "Actual", ylabel = "Predicted"):
     """
