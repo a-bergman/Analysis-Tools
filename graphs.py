@@ -236,7 +236,7 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col
     n number of regression plots arranged by the input rows and columns.
     """
     # Setting the default position in the subplot grid
-    count = 
+    count = 0
     # Setting the size & backgroundcolor for each subplot
     fig = plt.figure(figsize = dim, facecolor = "white")
     # Looping through each column

@@ -90,7 +90,7 @@ def specificity(y_true, y_predicted):
     The specificity score: a floating point number between 0 and 1
     """
     # Generating a flatten array out of the confusion matrix and defining our four types
-    tn,fp,tp,fn = confusion_matrix(y_true, y_pred).ravel()
+    tn,fp,tp,fn = confusion_matrix(y_true, y_predicted).ravel()
     # Returning the specificity score
     return tn / (tn + fp)
 
@@ -110,7 +110,7 @@ def negative_predictive_value(y_true, y_predicted):
     The specificity score: a floating point number between 0 and 1
     """
     # Generating a flatten array out of the confusion matrix and defining our four types
-    tn,fp,tp,fn = confusion_matrix(y_true, y_pred).ravel()
+    tn,fp,tp,fn = confusion_matrix(y_true, y_predicted).ravel()
     # Returning the specificity score
     return tn / (tn + fn)
 
@@ -133,10 +133,10 @@ def regression_summary(X, y_true, y_predicted):
     A dataframe containing the RMSE, MAE, R^2, & Adjusted R^2 for a regression model
     """
     # Calculating the four metrics
-    rmse = sqrt(mean_squared_error(y, y_predicted))
-    mae  = mean_absolute_error(y, y_predicted)
-    r2   = r2_score(y, y_predicted)
-    adjr2 = r2_adj(X, y, y_predicted)
+    rmse = sqrt(mean_squared_error(y_true, y_predicted))
+    mae  = mean_absolute_error(y_true, y_predicted)
+    r2   = r2_score(y_true, y_predicted)
+    adjr2 = r2_adj(X, y_true, y_predicted)
     # Generating a df out of the four values
     regression_summary = pd.DataFrame([rmse, mae, r2], index = ["RMSE", "MAE", "R2"], columns = ["Score"])
     return regression_summary
@@ -158,9 +158,9 @@ def scaled_regression_summary(y_true, y_predicted):
     A dataframe containing the RMSE, MAE, & R^2 for a regression model whose X variables have been scaled
     """
     # Calculating our three metrics
-    rmse = sqrt(mean_squared_error(y, y_predicted))
-    mae  = mean_absolute_error(y, y_predicted)
-    r2   = r2_score(y, y_predicted)
+    rmse = sqrt(mean_squared_error(y_true, y_predicted))
+    mae  = mean_absolute_error(y_true, y_predicted)
+    r2   = r2_score(y_true, y_predicted)
     # Generating a df out of the three values
     regression_summary = pd.DataFrame([rmse, mae, r2], index = ["RMSE", "MAE", "R2"], columns = ["Score"])
     return regression_summary
@@ -210,10 +210,10 @@ def classification_summary(y_true, y_predicted):
     a dataframe.  Accuracy is not included because it is not really that informative.
     """
     # Calculating our four metrics
-    sen = recall_score(y, y_predicted)
-    spe = specificity(y, y_predicted)
+    sen = recall_score(y_true, y_predicted)
+    spe = specificity(y_true, y_predicted)
     mcc = matthews_corrcoef(y, y_predicted)
-    auc = roc_auc_score(y, y_predicted)
+    auc = roc_auc_score(y_true, y_predicted)
     # Generating a df out of the four values
     binary_classification_summary = pd.DataFrame([acc, sen, spe, mcc, auc], index = ["Sensitivity", "Specificity", "MCC", "AUROC"], columns = ["Scores"])
     return binary_classification_summary
@@ -243,7 +243,7 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "
 
     Credit:
     -------
-    This code was modified from code written by Matt Brems during our lesson on classification metrics.
+    This code was modified from code written by Matt Brems during our GA DSI lesson on classification metrics.
     """
     # Predicting model probabilities
     model_prob = [i[0] for i in model_prob.predict_proba(X_test)]
