@@ -5,7 +5,7 @@ import pandas            as pd
 import seaborn           as sns
 
 # Setting the basic appearance for the graphs
-sns.set(style = "white", palette = "deep")
+sns.set(style = "white", palette = "dark")
 
 """
 
@@ -75,7 +75,7 @@ def histograms(df, columns, titles, labels, ylabel, ticks, dim, row, col):
         plt.xticks(ticks = ticks[c], size = 14)
         plt.yticks(size = 14)
     plt.tight_layout()
-    plt.show();
+    plt.show()
 
 def kdeplots(df, cols, title, dim, colors, labels, xlabel, ylabel, ticks, shade = True):
     """
@@ -112,7 +112,8 @@ def kdeplots(df, cols, title, dim, colors, labels, xlabel, ylabel, ticks, shade 
     plt.ylabel(f"{ylabel}", size = 16)
     plt.xticks(ticks, size = 14)
     plt.yticks(size = 14)
-    plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16);
+    plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16)
+    plt.show()
     
 def boxplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue = None, xlabel = None):
     """
@@ -157,7 +158,7 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue = 
         plt.xticks(size = 14)
         plt.yticks(ticks[c], size = 14)
     plt.tight_layout()
-    plt.show();
+    plt.show()
 
 def violinplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue = None, split = False, xlabel = None):
     """
@@ -205,7 +206,7 @@ def violinplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue
         plt.xticks(size = 14)
         plt.yticks(ticks = ticks[c], size = 14)
     plt.tight_layout()
-    plt.show();
+    plt.show()
 
 
 def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col, mark = "*", color = "black", kws = {"color": "red"}, ci = None):
@@ -255,7 +256,7 @@ def regressionplots(df, columns, y, titles, labels, ylabel, ticks, dim, row, col
         plt.xticks(ticks = ticks[c], size = 14)
         plt.yticks(size = 14)
     plt.tight_layout()
-    plt.show();
+    plt.show()
 
 def heatmap(df, columns, dim, title, vmin, vmax, cmap = "RdBu", annot = True):
     """
@@ -292,7 +293,8 @@ def heatmap(df, columns, dim, title, vmin, vmax, cmap = "RdBu", annot = True):
         sns.heatmap(corr, cmap = cmap,  mask = mask, vmin = vmin, vmax = vmax, annot = annot)
     # Formatting the size of the ticks
     plt.xticks(size = 14)
-    plt.yticks(size = 14);
+    plt.yticks(size = 14)
+    plt.show()
 
 ############### Categorical Graphs ###############
 
@@ -341,7 +343,7 @@ def countplots(df, columns, titles, labels, ylabel, dim, row, col, orient = "h",
         plt.xticks(size = 14)
         plt.yticks(size = 14)
     plt.tight_layout()
-    plt.show();
+    plt.show()
 
 def barplots(df, columns, y, labels, ylabel, titles, dim, row, col, ci = False, orient = "v", hue = None):
     """
@@ -388,7 +390,7 @@ def barplots(df, columns, y, labels, ylabel, titles, dim, row, col, ci = False, 
         plt.xticks(size = 14)
         plt.yticks(size = 14)
     plt.tight_layout()
-    plt.show();
+    plt.show()
 
 def barplot(df, x, y, title, label, ylabel, ticks, dim, orient = "v", ci = False, hue = None):
     """
@@ -426,4 +428,5 @@ def barplot(df, x, y, title, label, ylabel, ticks, dim, orient = "v", ci = False
     plt.ylabel(f"{ylabel}", size = 16)
     plt.xticks(size = 14)
     plt.yticks(ticks = ticks, size = 14)
-    plt.tight_layout();
+    plt.tight_layout()
+    plt.show()
