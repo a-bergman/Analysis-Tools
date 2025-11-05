@@ -21,6 +21,7 @@ For these functions to run properly, you should have the following installed:
 - Statsmodels
 - [Plotly](https://plotly.com/python/)
 - [Mlxtend](http://rasbt.github.io/mlxtend/)
+- [RAPIDS cuML](https://docs.rapids.ai/api/cuml/stable/)
 
 -----
 
