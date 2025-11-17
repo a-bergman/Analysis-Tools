@@ -22,6 +22,7 @@ from sklearn.metrics import roc_auc_score, average_precision_score
 from sklearn.metrics import fbeta_score, balanced_accuracy_score
 from sklearn.metrics import precision_score, recall_score
 from sklearn.metrics import precision_recall_curve
+from IPython.display import display, HTML, display_html
 
 # Regression Metrics
 from sklearn.metrics import r2_score
@@ -43,6 +44,32 @@ These functions are designed to build off of what is available in already sci-ki
 either to add a metric that does not exist or to improve something does already exist.
 
 """
+
+############### Display Utilities  ###############
+
+def display_side_by_side(*args):
+    """
+    Parameters:
+    -----------
+    *args : names of dataframe objects to be displayed side-by-side : df : :
+
+    Description:
+    ------------
+    Displays two or more dataframe objects side by side in a Jupyter notebook cell.
+
+    Returns:
+    --------
+    Two or more dataframe objects displayed side-by-side
+
+    Credit:
+    -------
+    Credit for this code goes to user `ntg` on stackoverflow
+    https://stackoverflow.com/questions/38783027/jupyter-notebook-display-two-pandas-tables-side-by-side/44923103#44923103
+    """
+    html_str=""
+    for df in args:
+        html_str+=df.to_html()
+    display_html(html_str.replace("table","table style='display:inline'"),raw=True)
 
 ############### Regression Metrics ###############
 
