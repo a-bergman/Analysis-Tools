@@ -165,7 +165,7 @@ def regression_summary(X, y_true, y_predicted):
     r2   = r2_score(y_true, y_predicted)
     adjr2 = r2_adj(X, y_true, y_predicted)
     # Generating a df out of the four values
-    regression_summary = pd.DataFrame([rmse, mae, r2], index = ["RMSE", "MAE", "R2"], columns = ["Score"])
+    regression_summary = pd.DataFrame([rmse, mae, r2, adjr2], index = ["RMSE", "MAE", "R2", "Adj. R2"], columns = ["Score"])
     return regression_summary
 
 def scaled_regression_summary(y_true, y_predicted):
@@ -247,18 +247,19 @@ def classification_summary(y_true, y_predicted):
 
 ############### Graphs For Evaluating Classifiers ###############
 
-def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "darkorange", baseline_color = "darkblue"):
+def roc_curve(model, X_test, y_test, y_predicted, title, dim, line_width, roc_color = "#733b14", baseline_color = "#144c73"):
     """
     Parameters:
     -----------
-    model_prob     : the model used for prediction        :               : :
-    X_test         : the X values                         : np.ndarray    : :
-    y_test         : true y values                        : np.ndarray    : :
-    y_predicted    : the model predictions                : np.ndarray    : :
-    title          : title of the graph                   : str           : :
-    dim            : tuple of the dimensions of the graph : int           : :
-    roc_color      : color value of the ROC curve         : str           : :
-    baseline_color : color value of the baseline          : str           : :
+    model_prob     : the model used for prediction        :               :   :
+    X_test         : the X values                         : np.ndarray    :   :
+    y_test         : true y values                        : np.ndarray    :   :
+    y_predicted    : the model predictions                : np.ndarray    :   :
+    title          : title of the graph                   : str           :   :
+    dim            : tuple of the dimensions of the graph : int           :   :
+    line_width     : width of the curve lines             : int           : 4 :
+    roc_color      : color value of the ROC curve         : str           :   :
+    baseline_color : color value of the baseline          : str           :   :
 
     Descriptions:
     -------------
@@ -273,7 +274,7 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "
     This code was modified from code written by Matt Brems during our GA DSI lesson on classification metrics.
     """
     # Predicting model probabilities
-    model_prob = [i[0] for i in model_prob.predict_proba(X_test)]
+    model_prob = [i for i in model.predict_proba(X_test)[1]]
     # Generating a df our of the probabilities
     model_pred_df = pd.DataFrame({"true_values": y_test, "pred_probs": model_prob})
     # Setting our thresholds for the graph
@@ -293,8 +294,8 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "
     fpr_values = [false_positive_rate(model_pred_df, "true_values", "pred_probs", prob) for prob in thresholds]
     # Graph settings
     plt.figure(figsize = dim, facecolor = "white")
-    plt.plot(fpr_values, tpr_values, color = roc_color, label = "ROC Curve")
-    plt.plot(np.linspace(0, 1, 500), np.linspace(0, 1, 500), color = baseline_color, label = "Baseline")
+    plt.plot(fpr_values, tpr_values, color = roc_color, label = "ROC Curve",linewidth = line_width)
+    plt.plot(np.linspace(0, 1, 500), np.linspace(0, 1, 500), color = baseline_color, label = "Baseline",linewidth = line_width)
     rocauc_score = round(roc_auc_score(y_test, y_predicted), 5)
     plt.title(f"{title} With A Score of {rocauc_score}", fontsize = 18)
     plt.ylabel("Sensitivity", size = 16)
@@ -304,7 +305,65 @@ def roc_curve(model_prob, X_test, y_test, y_predicted, title, dim, roc_color = "
     plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16)
     plt.tight_layout()
 
-def prc_curve(model_proba, y_true, y_predicted, dim, model_name, ns_line = "--", ns_color = "navy", prc_color = "darkorange"):
+def roc_curve_ss(model, X_test, y_test, y_predicted, title, dim, line_width, roc_color = "#733b14", baseline_color = "#144c73"):
+    """
+    Parameters:
+    -----------
+    model_prob     : the model used for prediction        :               :   :
+    X_test         : the X values                         : np.ndarray    :   :
+    y_test         : true y values                        : np.ndarray    :   :
+    y_predicted    : the model predictions                : np.ndarray    :   :
+    title          : title of the graph                   : str           :   :
+    dim            : tuple of the dimensions of the graph : int           :   :
+    line_width     : width of the curve lines             : int           : 4 :
+    roc_color      : color value of the ROC curve         : str           :   :
+    baseline_color : color value of the baseline          : str           :   :
+
+    Descriptions:
+    -------------
+    Plots a Receiver Operating Characteristic for a model and includes the AUROC score in the title.
+
+    Returns:
+    --------
+    Creates a ROC graph for a given model's predictions and allows for appearance control.
+
+    Credit:
+    -------
+    This code was modified from code written by Matt Brems during our GA DSI lesson on classification metrics.
+    """
+    # Predicting model probabilities
+    model_prob = model.predict_proba(X_test)[:, 1]
+    # Generating a df our of the probabilities
+    model_pred_df = pd.DataFrame({"true_values": y_test.reset_index(drop=True), "pred_probs": model_prob})
+    # Setting our thresholds for the graph
+    thresholds = np.linspace(0, 1, 500) 
+    # Calculating the true positive rate
+    def true_positive_rate(df, true_col, pred_prob_col, threshold):
+        true_positive = df[(df[true_col] == 1) & (df[pred_prob_col] >= threshold)].shape[0]
+        false_negative = df[(df[true_col] == 1) & (df[pred_prob_col] < threshold)].shape[0]
+        return true_positive / (true_positive + false_negative)
+    # Calculating the false positive rate
+    def false_positive_rate(df, true_col, pred_prob_col, threshold):
+        true_negative = df[(df[true_col] == 0) & (df[pred_prob_col] <= threshold)].shape[0]
+        false_positive = df[(df[true_col] == 0) & (df[pred_prob_col] > threshold)].shape[0]
+        return 1 - (true_negative / (true_negative + false_positive))
+    # Defining lists of the rates
+    tpr_values = [true_positive_rate(model_pred_df, "true_values", "pred_probs", prob) for prob in thresholds]
+    fpr_values = [false_positive_rate(model_pred_df, "true_values", "pred_probs", prob) for prob in thresholds]
+    # Graph settings
+    plt.figure(figsize = dim, facecolor = "white")
+    plt.plot(fpr_values, tpr_values, color = roc_color, label = "ROC Curve",linewidth = line_width)
+    plt.plot(np.linspace(0, 1, 500), np.linspace(0, 1, 500), color = baseline_color, label = "Baseline",linewidth = line_width)
+    rocauc_score = round(roc_auc_score(y_test, y_predicted), 5)
+    plt.title(f"{title} With A Score of {rocauc_score}", fontsize = 18)
+    plt.ylabel("Sensitivity", size = 16)
+    plt.xlabel("1 - Specificity", size = 16)
+    plt.xticks(size = 14)
+    plt.yticks(size = 14)
+    plt.legend(bbox_to_anchor = (1.04, 1), loc = "upper left", fontsize = 16)
+    plt.tight_layout()
+
+def prc_curve(model_proba, y_true, y_predicted, dim, model_name, line_width, ns_color = "#144c73", prc_color = "#733b14"):
     # This can be modified to plot more than one model
     """
     Parameters:
@@ -335,8 +394,8 @@ def prc_curve(model_proba, y_true, y_predicted, dim, model_name, ns_line = "--",
     # Graph settings
     plt.figure(figsize = (dim), facecolor = "white")
     # Making step-plots for both predictors
-    plt.step([0,1], [no_skill, no_skill], label = "No Skill", linestyle = ns_line, color = ns_color)
-    plt.step(recall, precision, label = "KNN", color = prc_color)
+    plt.step([0,1], [no_skill, no_skill], label = "No Skill", color = ns_color, linewidth = line_width)
+    plt.step(recall, precision, label = model_name, color = prc_color,linewidth = line_width)
     plt.title(f"PRC For {model_name.capitalize()} With An AP Of {round(ap,2)}", size = 18)
     plt.xlabel("Recall", size = 16)
     plt.xticks(size = 14)
