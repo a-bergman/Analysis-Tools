@@ -5,7 +5,7 @@ import pandas            as pd
 import seaborn           as sns
 
 # Setting the basic appearance for the graphs
-sns.set(style = "white", palette = "dark")
+sns.set_theme(style = "white", palette = "dark")
 
 """
 
@@ -24,10 +24,8 @@ The only function which is not designed for multiple outputs is the KDE function
 
 """
 
-# TO DO: I'm planning to eventually come up
-#        with a function that would graph
-#        the explained variance ration from
-#        sklearn's PCA algorithm
+# TO DO: Replace the deprecated `sns.displot`
+#        with whatever is replacing it.
 
 ############### Numeric Graphs ###############
 
@@ -56,13 +54,13 @@ def histograms(df, columns, titles, labels, ylabel, ticks, dim, row, col):
     # Setting the default position in the subplot grid
     count = 0
     # Setting the size & backgroundcolor for each subplot
-    fig = plt.figure(figsize = dim, facecolor = "white")
+    fig = plt.figure(figsize=dim, facecolor="white")
     # Looping through each column
     for c, column in enumerate(columns):
         # Setting the location for the next graph
         count += 1
         # Setting up the subplot grid
-        ax = fig.add_subplot(row, col, count)
+        ax = fig.add_subplot(row,col,count)
         # Naming the graph
         plt.title(f"Distribution Of {titles[c]}", size = 18)
         # Generating the histogram plot
@@ -160,22 +158,23 @@ def boxplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue = 
     plt.tight_layout()
     plt.show()
 
-def violinplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue = None, split = False, xlabel = None):
+def violinplots(df, columns, titles, labels, ticks, dim, row, col, palette, x = None, hue = None, split = False, xlabel = None):
     """
     Parameters:
     ----------- 
-    df      : dataframe source of data                       : dataframe :     :
-    columns : list of columns to be plotted                  : str       :     :
-    x       : categorical variable to divide data by         : NoneType  :     :
-    titles  : list of titles for each plot                   : str       :     :
-    labels  : list of the y-labels for each plot             : str       :     :
-    ticks   : list of ranges for the x-ticks                 : np.range  :     :
-    dim     : tuple of the dimensions of each plot           : int       :     :
-    row     : how many rows will be generated                : int       :     :
-    col     : how many columns will be generated             : int       :     :
-    hue     : categorical variable to divide the data by     : NoneType  :     :
-    split   : whether or not to split the hue onto each side : Bool      :     :
-    xlabel  : label for the x axis                           : NoneType  :     :
+    df      : dataframe source of data                       : dataframe :                   :
+    columns : list of columns to be plotted                  : str       :                   :
+    x       : categorical variable to divide data by         : NoneType  :                   :
+    titles  : list of titles for each plot                   : str       :                   :
+    labels  : list of the y-labels for each plot             : str       :                   :
+    ticks   : list of ranges for the x-ticks                 : np.arange :                   :
+    dim     : tuple of the dimensions of each plot           : int       :                   :
+    row     : how many rows will be generated                : int       :                   :
+    col     : how many columns will be generated             : int       :                   :
+    palette : color palette to be used; list or str          : list/str  : "Dark2","#B45D1F" :
+    hue     : categorical variable to divide the data by     : NoneType  :                   :
+    split   : whether or not to split the hue onto each side : Bool      :                   :
+    xlabel  : label for the x axis                           : NoneType  :                   :
 
     Descriptions:
     -------------
@@ -199,7 +198,7 @@ def violinplots(df, columns, titles, labels, ticks, dim, row, col, x = None, hue
         # Naming the graph
         plt.title(f"{titles[c]}", size = 18)
         # Generating the violin plot
-        sns.violinplot(y = column, x = x, data = df, hue = hue, split = split, orient = "v")
+        sns.violinplot(y = column, x = x, data = df, hue = hue, split = split, palette = palette, orient = "v")
         # Formatting the labels, axes, & ticks
         plt.xlabel(xlabel = xlabel, size = 16)
         plt.ylabel(f"{labels[c]}", size = 16)
@@ -298,21 +297,21 @@ def heatmap(df, columns, dim, title, vmin, vmax, cmap = "RdBu", annot = True):
 
 ############### Categorical Graphs ###############
 
-def countplots(df, columns, titles, labels, ylabel, dim, row, col, orient = "h", hue = None):
+def countplots(df, columns, titles, labels, ylabel, dim, row, col, palette, orient = "h", hue = None):
     """
     Parameters:
     -----------
-    df      : dataframe source of data                    : dataframe :      :
-    columns : list of the columns to be plotted           : str       :      :
-    titles  : list of the titles for each plot            : str       :      :
-    labels  : list of the x-labels for each plot          : str       :      :
-    ylabel  : list of the ylabel for each plt             : str       :      :
-    dim     : tuple of the dimensions of each plot        : int       :      :
-    row     : how many rows will be generated             : int       :      :
-    col     : how many columns will be generated          : int       :      :
-    ci      : whether or not to add a confidence interval : Bool/str  : "sd" :
-    orient  : orientation of each plot                    : str       : "v"  :
-    hue     : which column will be used for color-coding  : str       :      :
+    df      : dataframe source of data                    : dataframe :                   :
+    columns : list of the columns to be plotted           : str       :                   :
+    titles  : list of the titles for each plot            : str       :                   :
+    labels  : list of the x-labels for each plot          : str       :                   :
+    ylabel  : list of the ylabel for each plt             : str       :                   :
+    dim     : tuple of the dimensions of each plot        : int       :                   :
+    row     : how many rows will be generated             : int       :                   :
+    col     : how many columns will be generated          : int       :                   :
+    palette : color palette to be used; list or str       : list/str  : "Dark2","#B45D1F" :
+    orient  : orientation of each plot                    : str       : "v"               :
+    hue     : which column will be used for color-coding  : str       :                   :
     
     Description:
     -------------   
@@ -336,7 +335,7 @@ def countplots(df, columns, titles, labels, ylabel, dim, row, col, orient = "h",
         # Naming the graph
         plt.title(f"{titles[c]}", size = 18)
         # Generating the count plot
-        sns.countplot(x = column, data = df, orient = orient, hue = hue)
+        sns.countplot(x = column, data = df, orient = orient, hue = hue, palette = palette)
         # Formatting the labels & ticks
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.ylabel(f"{ylabel}", size = 16)
@@ -345,22 +344,120 @@ def countplots(df, columns, titles, labels, ylabel, dim, row, col, orient = "h",
     plt.tight_layout()
     plt.show()
 
-def barplots(df, columns, y, labels, ylabel, titles, dim, row, col, ci = False, orient = "v", hue = None):
+def countplots_dt(df, columns, titles, labels, ylabel, dim, row, col, palette, orient = "h", hue = None):
     """
     Parameters:
     -----------
-    df     : dataframe source of data                   : dataframe :      :
-    x      : list of the x inputs for each plot         : str       :      :
-    y      : list of the y input for each plot          : str       :      :
-    labels : list of the x-labels for each plot         : str       :      :
-    ylabel : y-label for each plot                      : str       :      :
-    titles : list of the titles for each plot           : strs      :      :
-    dim    : tuple of the dimensions of each plot       : int       :      :
-    row    : how many rows will be generated            : int       :      :
-    col    : how many columns will be generated         : int       :      :
-    ci     : whether or not to add confidence interval  : Bool      : "sd" :
-    orient : orientation of each bar plot               : str       : "v"  :
-    hue    : which column will be used for color-coding : str       :      :
+    df      : dataframe source of data                    : dataframe :                   :
+    columns : list of the columns to be plotted           : str       :                   :
+    titles  : list of the titles for each plot            : str       :                   :
+    labels  : list of the x-labels for each plot          : str       :                   :
+    ylabel  : list of the ylabel for each plt             : str       :                   :
+    dim     : tuple of the dimensions of each plot        : int       :                   :
+    row     : how many rows will be generated             : int       :                   :
+    col     : how many columns will be generated          : int       :                   :
+    palette : color palette to be used; list or str       : list/str  : "Dark2","#B45D1F" :
+    orient  : orientation of each plot                    : str       : "v"               :
+    hue     : which column will be used for color-coding  : str       :                   :
+    
+    Description:
+    -------------   
+    Creates a count plot for columns in a Pandas dataframe containing categorical data.  
+    This type of plot explicitly counts the categories in a dataframe column.
+
+    Returns:
+    --------
+    n number of count plots arranged by the input rows and columns.
+    """
+    # Setting the default position in the subplot grid
+    count = 0
+    # Setting the size & backgroundcolor for each subplot
+    fig = plt.figure(figsize = dim, facecolor = "white")
+    # Looping through each column
+    for c, column in enumerate(columns):
+        # Setting the location for the next graph
+        count += 1
+        # Setting up the subplot grid
+        ax = fig.add_subplot(row, col, count)
+        # Naming the graph
+        plt.title(f"{titles[c]}", size = 18)
+        # Generating the count plot
+        sns.countplot(x = column, data = df, orient = orient, palette = palette, hue = hue)
+        # Formatting the labels & ticks
+        plt.xlabel(f"{labels[c]}", size = 16)
+        plt.ylabel(f"{ylabel}", size = 16)
+        plt.xticks(size = 14)
+        plt.yticks(size = 14)
+        x_dates = df[column].dt.strftime("%Y-%m-%d").sort_values().unique()
+        ax.set_xticklabels(labels=x_dates, rotation=45, ha='right')
+    plt.tight_layout()
+    plt.show()
+
+def countplots_order(df, columns, titles, labels, ylabel, dim, row, col, palette, orient = "h", hue = None):
+    """
+    Parameters:
+    -----------
+    df      : dataframe source of data                    : dataframe :                   :
+    columns : list of the columns to be plotted           : str       :                   :
+    titles  : list of the titles for each plot            : str       :                   :
+    labels  : list of the x-labels for each plot          : str       :                   :
+    ylabel  : list of the ylabel for each plt             : str       :                   :
+    dim     : tuple of the dimensions of each plot        : int       :                   :
+    row     : how many rows will be generated             : int       :                   :
+    col     : how many columns will be generated          : int       :                   :
+    palette : color palette to be used; list or str       : list/str  : "Dark2","#B45D1F" :
+    orient  : orientation of each plot                    : str       : "v"               :
+    hue     : which column will be used for color-coding  : str       :                   :
+    
+    Description:
+    -------------   
+    Creates a count plot for columns in a Pandas dataframe containing categorical data sorted by category values descending.  
+    This type of plot explicitly counts the categories in a dataframe column.
+
+    Returns:
+    --------
+    n number of count plots arranged by the input rows and columns.
+    """
+    # Setting the default position in the subplot grid
+    count = 0
+    # Setting the size & backgroundcolor for each subplot
+    fig = plt.figure(figsize = dim, facecolor = "white")
+    # Looping through each column
+    for c, column in enumerate(columns):
+        # Setting the location for the next graph
+        count += 1
+        # Setting up the subplot grid
+        ax = fig.add_subplot(row, col, count)
+        # Naming the graph
+        plt.title(f"{titles[c]}", size = 18)
+        # Generating the count plot
+        sns.countplot(x = column, data = df, orient = orient, hue = hue, palette = palette, order = df[column].value_counts().index)
+        # Formatting the labels & ticks
+        plt.xlabel(f"{labels[c]}", size = 16)
+        plt.ylabel(f"{ylabel}", size = 16)
+        plt.xticks(size = 14)
+        plt.yticks(size = 14)
+    plt.tight_layout()
+    plt.show()
+
+def barplots(df, columns, y, labels, ylabel, titles, dim, row, col, palette, errorbar = "ci", estimator = "mean", orient = "v", hue = None):
+    """
+    Parameters:
+    -----------
+    df        : dataframe source of data                     : dataframe :                   :
+    x         : list of the x inputs for each plot           : str       :                   :
+    y         : list of the y input for each plot            : str       :                   :
+    labels    : list of the x-labels for each plot           : str       :                   :
+    ylabel    : y-label for each plot                        : str       :                   :
+    titles    : list of the titles for each plot             : strs      :                   :
+    dim       : tuple of the dimensions of each plot         : int       :                   :
+    row       : how many rows will be generated              : int       :                   :
+    col       : how many columns will be generated           : int       :                   :
+    errorbar  : method to calculate the error bar            : str       : "ci"              :
+    estimator : measure of central tendency to be calculated : str       : "mean"            :
+    palette   : color palette to be used; list or str        : list/str  : "Dark2","#B45D1F" :
+    orient    : orientation of each bar plot                 : str       : "v"               :
+    hue       : which column will be used for color-coding   : str       :                   :
 
     Description:
     ------------
@@ -383,7 +480,7 @@ def barplots(df, columns, y, labels, ylabel, titles, dim, row, col, ci = False, 
         # Naming the graph
         plt.title(f"{titles[c]}", size = 18)
         # Generating the bar graph
-        sns.barplot(x = column, y = y, data = df, ci = ci, orient = orient, hue = hue)
+        sns.barplot(x = column, y = y, data = df, estimator = estimator, errorbar = errorbar, orient = orient, hue = hue, palette = palette)
         # Formatting the labels & axes
         plt.xlabel(f"{labels[c]}", size = 16)
         plt.ylabel(f"{ylabel}", size = 16)
@@ -392,21 +489,23 @@ def barplots(df, columns, y, labels, ylabel, titles, dim, row, col, ci = False, 
     plt.tight_layout()
     plt.show()
 
-def barplot(df, x, y, title, label, ylabel, ticks, dim, orient = "v", ci = False, hue = None):
+def barplot(df, x, y, title, label, ylabel, ticks, dim, palette, estimator = "mean", errorbar = "ci",hue = None):
     """
     Parameters:
     -----------
-    df     : dataframe source of the data               : dataframe :      :
-    x      : the column to be the x-axis                : str       :      :
-    y      : the column to be the y-axis                : str       :      :
-    title  : title of the graph                         : str       :      :
-    label  : the label of the x-axis                    : str       :      :
-    ylabel : the label of the y-axis                    : str       :      :
-    yticks : range for the y-ticks                      : np.arange :      : 
-    dim    : tuple of the graph dimensions              : int       :      :
-    orient : orientation of the graph                   : str       : "v"  :
-    ci     : whether or not to add confidence interval  : Bool      : "sd" :
-    hue    : which column will be used for color-coding : str       :      :
+    df        : dataframe source of the data                 : dataframe :                   :
+    x         : the column to be the x-axis                  : str       :                   :
+    y         : the column to be the y-axis                  : str       :                   :
+    title     : title of the graph                           : str       :                   :
+    label     : the label of the x-axis                      : str       :                   :
+    ylabel    : the label of the y-axis                      : str       :                   :
+    yticks    : range for the y-ticks                        : np.arange :                   : 
+    dim       : tuple of the graph dimensions                : int       :                   :
+    errorbar  : method to calculate the error bar            : str       : "ci"              :
+    estimator : measure of central tendency to be calculated : str       : "mean"            :
+    palette   : color palette to be used; list or str        : list/str  : "Dark2","#B45D1F" :
+    orient    : orientation of the graph                     : str       : "v"               :
+    hue       : which column will be used for color-coding   : str       :                   :
 
     Description:
     ------------
@@ -421,7 +520,7 @@ def barplot(df, x, y, title, label, ylabel, ticks, dim, orient = "v", ci = False
     # Setting the figure size & background color
     plt.figure(figsize = dim, facecolor = "white")
     # Graphing the barplot
-    sns.barplot(x = x, y = y, data = df, orient = orient, ci = ci, hue = hue)
+    sns.barplot(x = x, y = y, data = df, hue = hue, palette = palette, estimator = estimator, errorbar = errorbar)
     # Formatting the title, labels, & ticks
     plt.title(f"{title}", size = 18)
     plt.xlabel(f"{label}", size = 16)
